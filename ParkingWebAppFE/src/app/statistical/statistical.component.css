@@ -1,0 +1,73 @@
+
+.col-nav {
+  background: #008080;
+  width: 100%;
+  box-shadow: 5px 2px 5px #4e555b;
+  /*border-radius: 5px;*/
+}
+
+
+.col-nav .color-nav a{
+  color: white;
+  transition: 1s;
+
+}
+
+.col-nav .color-nav a:hover{
+  color: #ffe533;
+  background: #008080;
+  transform: scale(1.5);
+  /*transform: rotateX(180deg);*/
+  border-radius: 50%;
+}
+
+
+.container-fluid .row .left {
+  background: whitesmoke;
+  width: 100%;
+  box-shadow: 5px 2px 10px #4e555b;
+}
+
+
+.container-fluid .row .left .chia-cot {
+  display: flex;
+}
+
+.container-fluid .row .col-on {
+  background: whitesmoke;
+  width: 100%;
+  box-shadow: 5px 5px 10px #4e555b;
+}
+
+.container-fluid .row .col-bellow {
+  background: whitesmoke;
+  width: 100%;
+  box-shadow: 5px 5px 10px #4e555b;
+}
+.note {
+
+}
+
+.container-fluid .row .chia-cot .note{
+  opacity: 1;
+  transition: 5s;
+}
+.container-fluid .row .chia-cot .note:hover {
+  transform: rotate(360deg);
+  margin-left: 200px;
+  /*background: #005cbf;*/
+}
+
+.container-fluid .row .chia-cot .note1{
+  opacity: 1;
+  transition: 2s;
+  margin-top: 20px;
+
+}
+.container-fluid .row .chia-cot .note1:hover {
+  transform: scale(1.5);
+  margin-left: 50px;
+  /*background: #005cbf;*/
+}
+
+
