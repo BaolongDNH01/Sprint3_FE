@@ -19,7 +19,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ParkingWebAppFE" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -32,6 +32,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603721189026</updated>
       <workItem from="1603721190580" duration="694000" />
+      <workItem from="1603844892445" duration="18000" />
     </task>
     <servers />
   </component>
@@ -39,9 +40,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="548" y="155" key="FileChooserDialogImpl" timestamp="1603721266060">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="685" y="198" key="FileChooserDialogImpl" timestamp="1603844909061">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="548" y="155" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1603721266060" />
+    <state x="685" y="198" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1603844909061" />
   </component>
 </project>

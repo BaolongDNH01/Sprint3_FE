@@ -1,0 +1,43 @@
+<div class="container-fluid m-auto ">
+  <div class="row mt-5 ml-5">
+    <div class="col-md-3">
+      <label>Ngày bắt đầu : </label>
+      <input type="date" >
+    </div>
+    <div class="col-md-3">
+      <label>Ngày kết thúc : </label>
+      <input type="date">
+    </div>
+
+    <div class="col-md-3">
+      <button class="btn btn-primary" type="submit">Update</button>
+      <button class="btn btn-primary" type="submit">Close</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+
+    <div class="col-md-8 mt-5 ml-5 mb-5 left">
+
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-6">
+          <google-chart #chart
+                        [title]="title"
+                        [type]="type"
+                        [data]="data"
+                        [options]="options"
+                        [width]="width"
+                        [height]="height">
+          </google-chart>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
