@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="row text-white page-style align-items-center ">
+    <div class="title col-6 mt-2">
+      <h4 class="align-items-center">HỆ THỐNG QUẢN LÍ BÃI ĐỖ XE</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2 border-nav">
+      <div class="item-nav row">
+        <a class="link" href="#"><i class="fa fa-home fa-2x text-warning" aria-hidden="true"></i> Trang chủ</a>
+      </div>
+      <div class="item-nav row">
+        <a class="link" href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Quản lý nhân viên</a>
+      </div>
+      <div class="item-nav row">
+        <a class="link" href="#"><i class="fa fa-users" aria-hidden="true"></i> Quản lí khách hàng</a>
+      </div>
+      <div class="item-nav row">
+        <a class="link" href="#"><i class="fa fa-car" aria-hidden="true"></i> Quản lí xe ra / vào</a>
+      </div>
+      <div class="item-nav row main-color">
+        <a class="link" href="#"><i class="fa fa-braille" aria-hidden="true"></i> Quản lí bãi đỗ</a>
+      </div>
+      <div class="item-nav row">
+        <a class="link" href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Quản lí vé</a>
+      </div>
+      <div class="item-nav row">
+        <a class="link" href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i> Thống kê</a>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="row d-flex justify-content-center text-decoration-none">
+        <div class="col-4">
+          <a href="#"><h3>Quản lí xe</h3></a>
+        </div>
+        <div class="col-4">
+          <a href="#"><h3>Sơ đồ trạng thái</h3></a>
+        </div>
+      </div>
+      <div class="row">
+        <canvas #canvas class="view bg-secondary"
+                [ngStyle]="{'height': getHeightView()}">
+        </canvas>
+      </div>
+    </div>
+    <div class="col-2">
+      <!--      chỗ để item thu nhỏ của các tầng-->
+    </div>
+  </div>
+</div>
+
