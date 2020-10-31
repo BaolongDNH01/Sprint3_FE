@@ -9,12 +9,14 @@ import {ChartsModule} from 'ng2-charts';
 import { StatisticsByDateComponent } from './statistics-by-date/statistics-by-date.component';
 import {GoogleChartsModule} from 'angular-google-charts';
 import {CustomerModule} from './customer/customer.module';
+import { ParkingManagementComponent } from './parking-management/parking-management.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StatisticalComponent,
-    StatisticsByDateComponent
+    StatisticsByDateComponent,
+    ParkingManagementComponent
   ],
   imports: [
     BrowserModule,

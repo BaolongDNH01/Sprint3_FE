@@ -162,5 +162,7 @@ export class ParkingMapComponent implements OnInit {
       this.ctx.stroke();
     });
   }
+
+  getHeightView(): void {}
 }
 
