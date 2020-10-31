@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Chart} from 'chart.js';
+import {CustomerService} from '../customer/customer.service';
+
 @Component({
   selector: 'app-statistical',
   templateUrl: './statistical.component.html',
@@ -9,9 +11,24 @@ import {Chart} from 'chart.js';
 export class StatisticalComponent implements OnInit {
   PieChart = [];
   a = 22;
-  constructor() { }
+  countCustomer: number;
+  countCar: number
+
+  constructor(
+    private customerService: CustomerService
+  ) {
+  }
+
+  findAllCustomer(): void {
+    this.customerService.findAll().subscribe(
+      list => {
+        this.countCustomer = list.length;
+      }
+    );
+  }
 
   ngOnInit(): void {
+    this.findAllCustomer();
     // @ts-ignore
     this.PieChart = new Chart('pieChart', {
       type: 'pie',
