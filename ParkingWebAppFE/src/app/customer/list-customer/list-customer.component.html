@@ -77,7 +77,54 @@
               <td>{{customer.phone}}</td>
               <td>{{customer.email}}</td>
               <td>{{customer.address}}</td>
-              <td><button class="add-customer a">Xe</button></td>
+              <td>
+                <!-- Button trigger modal -->
+                <button (click)="findCarByCustomer(customer.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  Xe
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 *ngIf="showCar === true" class="modal-title" id="exampleModalLabel">Thông tin xe của khách hàng <span class="text-danger">{{customerDetail.nameCustomer}}</span></h5>
+                        <h5 *ngIf="showCar === false" class="modal-title" id="exampleModalLabel1">Khách hàng <span class="text-danger">{{customerDetail.nameCustomer}}</span> chưa có xe nào!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" *ngIf="showCar === true">
+                        <table class="table table-dark">
+                          <thead>
+                          <tr>
+                            <th scope="col">Id xe</th>
+                            <th scope="col">Loại xe</th>
+                            <th scope="col">Loại vé</th>
+                            <th scope="col">Thời hạn vé</th>
+                            <th scope="col">Màu xe</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let car of carList">
+                            <th scope="row">{{car.carId}}</th>
+                            <td>{{car.type}}</td>
+                            <td>Otto</td>
+                            <td>Otto</td>
+                            <td>{{car.color}}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </td>
               <td><a class="fa fa-pencil" aria-hidden="true"></a></td>
               <td><a class="fa fa-trash-o" aria-hidden="true"></a></td>
             </tr>
