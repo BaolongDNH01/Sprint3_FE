@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', consolas;
+  width: 100%;
+  height: 100vh;
+  background-color: #ddd;
+}
+
+.main-area {
+  height: 100vh;
+}
+.main-list {
+  width: 95%;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  overflow: auto;
+}
+
+.main-table thead th {
+  background: teal;
+  color: #fff
+}
+.main-table tr {
+  transition: all .3s;
+}
+
+.main-table tr:hover {
+  background: lightblue;
+}
+
+.action-icon {
+  cursor: pointer;
+}
+
+.main-title {
+  background: teal;
+  color: #fff;
+  
+}
+
+.page-link {
+  color: black;
+}
+
+.plus {
+  transition: all .4s;
+}
+
+.plus:hover {
+  transform: scale(1.1);
+  box-shadow: 5px 5px 10px grey;
+}
