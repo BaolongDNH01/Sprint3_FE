@@ -4,5 +4,6 @@ export interface Car {
   license: string;
   color: string;
   producer: string;
-
+  type: string;
+  ticket: number;
 }

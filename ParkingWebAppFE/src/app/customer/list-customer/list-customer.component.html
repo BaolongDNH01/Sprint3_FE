@@ -106,12 +106,12 @@
                           </tr>
                           </thead>
                           <tbody>
-                          <tr *ngFor="let car of carList">
-                            <th scope="row">{{car.carId}}</th>
-                            <td>{{car.type}}</td>
-                            <td>Otto</td>
-                            <td>Otto</td>
-                            <td>{{car.color}}</td>
+                          <tr *ngFor="let car of arrCar">
+                            <th scope="row">{{car[0]}}</th>
+                            <td>{{car[1]}}</td>
+                            <td >{{car[2]}}</td>
+                            <td>{{car[3]}}</td>
+                            <td>{{car[4]}}</td>
                           </tr>
                           </tbody>
                         </table>
