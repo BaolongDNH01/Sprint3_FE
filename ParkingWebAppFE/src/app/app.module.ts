@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -9,6 +9,8 @@ import {ChartsModule} from 'ng2-charts';
 import { StatisticsByDateComponent } from './statistics-by-date/statistics-by-date.component';
 import {GoogleChartsModule} from 'angular-google-charts';
 import {CustomerModule} from './customer/customer.module';
+import { TicketModule } from './ticket/ticket.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,14 +19,17 @@ import {CustomerModule} from './customer/customer.module';
     StatisticsByDateComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     NgxPaginationModule,
     ParkingLotManageModule,
     ChartsModule,
     GoogleChartsModule,
-    CustomerModule
+    CustomerModule,
+    TicketModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
