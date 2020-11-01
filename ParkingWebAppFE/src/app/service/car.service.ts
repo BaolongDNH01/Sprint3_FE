@@ -4,6 +4,17 @@ import {Observable} from 'rxjs';
 import {Car} from '../car/car';
 import {HttpClient} from '@angular/common/http';
 
+export const listImage = [
+  ['in', '/assets/images/Singapore_1990_vehicle_registration_plate_of_a_silver_Ford_Focus.jpg'],
+  ['out', '/assets/images/38e981110046fc18a557_xzcs.jpg'],
+  ['in', '/assets/images/56FCYikaub.jpg'],
+  ['out', '/assets/images/bien-so-o-to-mercedes-1.jpg'],
+  ['in', '/assets/images/dau-gia-bien-so-dep.jpg'],
+  ['out', '/assets/images/download.jpg'],
+  ['out', '/assets/images/Normal-2016-Lexus-LX-LX-570-SUV-Crossover-4WD-5-7L-8cyl-6A-20170720065118119.jpg'],
+  ['in', '/assets/images/o-to-co-duoc-lap-hai-bien-so-xe-dai-hay-khong-oto-ebd0.jpg']
+];
+
 @Injectable({
   providedIn: 'root'
 })

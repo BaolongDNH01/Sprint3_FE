@@ -13,8 +13,8 @@ import { TicketModule } from './ticket/ticket.module';
 import { ParkingManagementComponent } from './parking-management/parking-management.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import {RouterModule} from '@angular/router';
-import {FormsModule} from '@angular/forms';
 import {CarService} from './service/car.service';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 
 
@@ -35,7 +35,9 @@ import {AppRoutingModule} from './app-routing.module';
     GoogleChartsModule,
     CustomerModule,
     FormsModule,
-    TicketModule
+    TicketModule,
+    BrowserModule,
+    ReactiveFormsModule
 
   ],
   providers: [],
