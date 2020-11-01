@@ -10,13 +10,10 @@ import { StatisticsByDateComponent } from './statistics-by-date/statistics-by-da
 import {GoogleChartsModule} from 'angular-google-charts';
 import {CustomerModule} from './customer/customer.module';
 import { TicketModule } from './ticket/ticket.module';
-import { AppRoutingModule } from './app-routing.module';
 import { ParkingManagementComponent } from './parking-management/parking-management.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import {RouterModule} from '@angular/router';
-import {FormsModule} from '@angular/forms';
-import {CarService} from './service/car.service';
-import {AppRoutingModule} from '../app-routing.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AppRoutingModule} from './app-routing.module';
 
 
 @NgModule({
@@ -36,8 +33,9 @@ import {AppRoutingModule} from '../app-routing.module';
     GoogleChartsModule,
     CustomerModule,
     FormsModule,
-    AppRoutingModule,
-    TicketModule
+    TicketModule,
+    BrowserModule,
+    ReactiveFormsModule
 
   ],
   providers: [],
