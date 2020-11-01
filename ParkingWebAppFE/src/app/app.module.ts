@@ -12,6 +12,9 @@ import {CustomerModule} from './customer/customer.module';
 import { ParkingManagementComponent } from './parking-management/parking-management.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import {RouterModule} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {CarService} from './service/car.service';
+import {AppRoutingModule} from '../app-routing.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import {RouterModule} from '@angular/router';
     ChartsModule,
     GoogleChartsModule,
     CustomerModule,
-    RouterModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

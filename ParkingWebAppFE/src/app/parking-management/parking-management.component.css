@@ -1,0 +1,69 @@
+#avatar {
+  height: 3rem;
+  width: 3rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+li :hover {
+  background-color: teal;
+  color: white;
+}
+
+.sidebar {
+  padding-right: 20px;
+  padding-top: 20px;
+  min-height: calc(100vh - 50px);
+  font-size: 18px;
+}
+
+.image-camera {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+}
+
+table {
+  background-color: white;
+  border: 5px solid black;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+td {
+  background-color: white;
+  border: 5px solid black;
+  width: 100px;
+  height: 25px;
+}
+
+.left {
+  border-left: none;
+  text-align: end;
+}
+
+.right {
+  border-right: none;
+  text-align: start;
+}
+
+.empty {
+  border: none;
+}
+
+.left:hover, .right:hover {
+  background-color: #4e555b;
+  cursor: pointer;
+}
+.leftTop, .rightTop {
+  border-right: none;
+  border-left: none;
+}
+
+.nav-item {
+  cursor: pointer;
+}

@@ -66,8 +66,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ParkingWebAppFE:build",
-            "proxyConfig": "src/proxy.conf.json"
+            "browserTarget": "ParkingWebAppFE:build"
           },
           "configurations": {
             "production": {

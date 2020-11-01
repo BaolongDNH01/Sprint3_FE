@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {CarService} from '../service/car.service';
+import {Car} from '../car/car';
+import {CustomerService} from '../customer/customer.service';
 
 @Component({
   selector: 'app-parking-management',
@@ -10,28 +14,32 @@ export class ParkingManagementComponent implements OnInit {
   imageURL = '/assets/Singapore_1990_vehicle_registration_plate_of_a_silver_Ford_Focus.jpg';
   img64: string;
   body = new FormData();
-  formIn = new Form
-  constructor() { }
+  formIn: FormGroup;
+  car: Car;
+  constructor( private carService: CarService, private customerService: CustomerService) {
+    // this.formIn = this.formBuilder.group({
+    //   license: ['', Validators.required],
+    //   dateIn: ['', Validators.required],
+    //   timeIn: ['', Validators.required],
+    // });
+  }
 
   ngOnInit(): void {
+
+  }
+
+  getLicense(): void {
     this.getBase64ImageFromUrl(this.imageURL).then(result => {
       console.log(result);
       this.body.append('upload', result);
-      this.body.append('regions', 'vn');
+      this.body.append('regions', 'gb');
+    }).then(() => {
+      this.carService.getLicense(this.body).subscribe(next => {
+          console.log(next.results[0].plate);
+          console.log(next.results[0].vehicle.type);
+        },
+        error => console.log(error));
     });
-  }
-  getLicense(): void {
-    fetch(this.proxyUrl + 'https://api.platerecognizer.com/v1/plate-reader/', {
-      method: 'POST',
-      headers: {
-        Authorization: 'Token b254bd5bb420657fdf9b07b597db61a8dbaee6e8'
-      },
-      body: this.body
-    }).then(res => res.json())
-      .then(json => console.log(json))
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
    async getBase64ImageFromUrl(imageUrl): Promise<any>{

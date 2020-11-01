@@ -21,4 +21,7 @@ export class CustomerService {
   deleteCustomer(id: number): Observable<any>{
     return this.httpClient.delete(this.API_URL + 'delete-customer/' + id);
   }
+  findByLicense(license: string): Observable<Customer>{
+    return this.httpClient.get<Customer>(this.API_URL + 'find-customer/' + license);
+  }
 }
