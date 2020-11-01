@@ -10,6 +10,7 @@ export class ParkingManagementComponent implements OnInit {
   imageURL = '/assets/Singapore_1990_vehicle_registration_plate_of_a_silver_Ford_Focus.jpg';
   img64: string;
   body = new FormData();
+  formIn = new Form
   constructor() { }
 
   ngOnInit(): void {

@@ -1,0 +1,77 @@
+<div class="container-fluid p-0">
+  <div class="col-sm-12 navbar sticky-top" style="background-color: teal">
+    <div class="navbar-brand">
+      <p class="h3 text-capitalize font-weight-bold text-white">
+        Hệ Thống Quản Lý Bãi Đỗ Xe
+      </p>
+    </div>
+    <div class="d-inline-flex justify-content-end align-content-center">
+      <div class="nav-item d-inline-flex">
+        <span class="h4 text-white nav-link mr-1">Xin Chào:</span>
+        <img id="avatar" alt="avatar.jpg"
+             src="./resources/imgs/120891861_3797910913563915_6199979348285001921_n.jpg"
+             class="img-fluid rounded-circle">
+        <a href="#" class="h4 font-weight-bold text-white nav-link mr-1 ml-1">Admin</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link h4 text-white">
+          <i class="fa fa-sign-out mr-1" aria-hidden="true"></i>
+          Đăng Xuất
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="fa fa-home" aria-hidden="true"></i>
+              Trang chủ
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              Quản lý nhân viên
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="fa fa-address-book-o" aria-hidden="true"></i>
+              Quản lý khách hàng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="fa fa-car" aria-hidden="true"></i>
+              Quản lý xe vào / ra
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" onclick="popupCenter({url: 'parking_management.html', title: 'xtf', w: 1000, h: 900});" class="nav-link active">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              Quản lý bãi đỗ
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="fa fa-ticket" aria-hidden="true"></i>
+              Quản lý vé
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="fa fa-bar-chart" aria-hidden="true"></i>
+              Thống kê
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

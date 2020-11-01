@@ -10,13 +10,16 @@ import { StatisticsByDateComponent } from './statistics-by-date/statistics-by-da
 import {GoogleChartsModule} from 'angular-google-charts';
 import {CustomerModule} from './customer/customer.module';
 import { ParkingManagementComponent } from './parking-management/parking-management.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     StatisticalComponent,
     StatisticsByDateComponent,
-    ParkingManagementComponent
+    ParkingManagementComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { ParkingManagementComponent } from './parking-management/parking-managem
     ParkingLotManageModule,
     ChartsModule,
     GoogleChartsModule,
-    CustomerModule
+    CustomerModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
