@@ -8,7 +8,8 @@ import { DeleteTicketComponent } from './components/list-ticket/delete-ticket/de
 
 export const ticketRoutes: Routes = [
   {
-    path: 'all',
+    path: '',
+    pathMatch: 'full',
     component: ListTicketComponent,
   },
   {
@@ -16,14 +17,13 @@ export const ticketRoutes: Routes = [
     component: CreateTicketComponent
   },
   {
-    path: 'edit',
+    path: 'edit/:idTicket',
     component: EditTicketComponent
   },
   {
     path: 'delete',
     component: DeleteTicketComponent
-  }
-
+  },
 ];
 
 @NgModule({

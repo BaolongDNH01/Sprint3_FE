@@ -4,6 +4,7 @@ import { Router, RouterModule, Routes } from '@angular/router';
 import {HomepageComponent} from './homepage/homepage.component';
 import {ParkingManagementComponent} from './parking-management/parking-management.component';
 
+
 export const routes: Routes = [
   {
     path: 'ticket',

@@ -12,6 +12,8 @@ import {CustomerModule} from './customer/customer.module';
 import { TicketModule } from './ticket/ticket.module';
 import { ParkingManagementComponent } from './parking-management/parking-management.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import {RouterModule} from '@angular/router';
+import {CarService} from './service/car.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 
