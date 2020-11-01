@@ -17,4 +17,8 @@ export class TicketService {
   getAllTicket(): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(`${this.TICKET_API}/all`);
   }
+  // quan
+  getTicket(id: number): Observable<Ticket>{
+    return this.http.get<Ticket>(this.TICKET_API + '/' + id);
+  }
 }
