@@ -14,8 +14,8 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
   imageList = listImage;
   index = 0;
   proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  imageInURL: string;
-  imageOutURL: string;
+  imageInURL = '/assets/images/cctv1.png';
+  imageOutURL = '/assets/images/cctv1.png';
   img64: string;
   body = new FormData();
   formIn: FormGroup;
