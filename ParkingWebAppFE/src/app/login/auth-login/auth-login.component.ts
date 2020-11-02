@@ -59,7 +59,6 @@ export class AuthLoginComponent implements OnInit {
 
   reloadPage(): void {
     window.location.reload();
-    window.location.href = '';
   }
 
   ngOnInit(): void {
@@ -75,16 +74,16 @@ export class AuthLoginComponent implements OnInit {
       this.email = this.jwtService.getEmail();
 
       // Handling authorities granted
-      // this.roles.every(role => {
-      //   if (role === 'ROLE_ADMIN') {
-      //     this.authority = 'admin';
-      //     return false;
-      //   } else if (role === 'ROLE_MEMBER') {
-      //     this.authority = 'member';
-      //     return false;
-      //   }
-      //   return true;
-      // });
+      this.roles.every(role => {
+        if (role === 'ROLE_ADMIN') {
+          this.authority = 'admin';
+          return false;
+        } else if (role === 'ROLE_MEMBER') {
+          this.authority = 'member';
+          return false;
+        }
+        return true;
+      });
     }
   }
 }
