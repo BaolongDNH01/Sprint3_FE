@@ -67,8 +67,8 @@
               <th scope="col" colspan="3">Tác vụ</th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let customer of customerList">
+            <tbody *ngFor="let customer of customerList">
+            <tr *ngIf="customer.id !== id">
               <th scope="row">1</th>
               <td>{{customer.nameCustomer}}</td>
               <td>{{customer.birthday}}</td>
@@ -79,8 +79,8 @@
               <td>{{customer.address}}</td>
               <td>
                 <!-- Button trigger modal -->
-                <button (click)="findCarByCustomer(customer.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                  Xe
+                <button (click)="findCarByCustomer(customer.id)" type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                  <i class="fa fa-car" aria-hidden="true"></i>
                 </button>
 
                 <!-- Modal -->
@@ -122,12 +122,90 @@
                     </div>
                   </div>
                 </div>
-
-
               </td>
-              <td><a class="fa fa-pencil" aria-hidden="true"></a></td>
-              <td><a class="fa fa-trash-o" aria-hidden="true"></a></td>
+              <td><button (click)="editFormCustomer(customer.id)" class="btn fa fa-pencil" aria-hidden="true">
+              </button></td>
+              <td><button class="btn fa fa-trash-o" aria-hidden="true"></button></td>
             </tr>
+
+
+<!--
+           ***
+           Edit customer-->
+            <tr *ngIf="customer.id === id" [formGroup]="formCustomer" class="bg-danger">
+              <th scope="row">1</th>
+              <td><input class="form-control" formControlName="nameCustomer" type = text></td>
+              <td><input class="form-control" formControlName="birthday" type = date></td>
+              <td>
+                <select class="form-control" formControlName="gender" type = text>
+                  <option>Nam</option>
+                  <option>Nu</option>
+                </select>
+              </td>
+              <td><input class="form-control" formControlName="idCard" type = text></td>
+              <td><input class="form-control" formControlName="phone" type = text></td>
+              <td><input class="form-control" formControlName="email" type = text></td>
+              <td><input class="form-control" formControlName="address" type =text></td>
+              <td>
+                <!-- Button trigger modal -->
+                <button (click)="findCarByCustomer(customer.id)" type="button" class="btn" data-toggle="modal" data-target="#exampleModal1">
+                  <i class="fa fa-wrench" aria-hidden="true"></i>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                  <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel3">Chỉnh sửa xe khách hàng <span class="text-danger">{{customerDetail.nameCustomer}}</span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" *ngIf="showCar === true">
+                        <table class="table table-dark">
+                          <thead>
+                          <tr>
+                            <th scope="col">Id xe</th>
+                            <th scope="col">Loại xe</th>
+                            <th scope="col">Loại vé</th>
+                            <th scope="col">Thời hạn vé</th>
+                            <th scope="col">Màu xe</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let car of arrCar">
+                            <th scope="row">{{car[0]}}</th>
+                            <td><input class="form-control" type="text"></td>
+                            <td><input class="form-control" type="text"></td>
+                            <td><input class="form-control" type="text"></td>
+                            <td><input class="form-control" type="text"></td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button *ngIf="customer.id !== id" (click)="editFormCustomer(customer.id)" class="btn fa fa-pencil" aria-hidden="true"></button>
+                <button *ngIf="customer.id === id" class="btn fa fa-check" aria-hidden="true"></button>
+              </td>
+              <td><button class="btn fa fa-trash-o" aria-hidden="true"></button></td>
+
+            </tr>
+
+
+
+
+
+
+
+
             </tbody>
           </table>
         </div>
