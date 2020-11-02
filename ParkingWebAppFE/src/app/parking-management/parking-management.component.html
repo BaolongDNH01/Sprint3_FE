@@ -1,71 +1,85 @@
-<div class="row">
-  <div id="in" class="col-sm-6">
+<div class="row m-auto">
+  <div id="in" class="col-md-12 col-lg-6">
     <div class="row card">
       <div class="card-header col-sm-12 text-center">
         <span class="h4">Xe vào</span>
       </div>
       <div class="card-body col-sm-12">
-        <form [formGroup]="formIn" (submit)="submitIn()"  class="row form-group">
-          <div id="inFront" class="col-sm-6 text-center">
+        <form [formGroup]="formIn" (submit)="submitIn()" class="row form-group">
+          <div id="inFront" class="col-md-12 col-lg-6 mt-2 text-center">
             <img id="cameraInFrontSide" class="image-camera"
                  [src]="imageInURL"
                  alt="front.jpg">
-            <div class="mt-2 ml-5 text-sm-left">
-              <label class="text-black h5" for="timeIn">Thời gian vào</label><br>
-              <input formControlName="timeIn" class="form-control-lg"
-                     [value]="formIn.get('timeIn').value | date: 'HH:mm:ss'" readonly required id="timeIn" type="text">
-              <span class="text-danger font-weight-bold">*</span>
-            </div>
           </div>
-          <div id="inBack" class="col-sm-6 text-center">
+          <div id="inBack" class="col-md-12 col-lg-6 mt-2 text-center">
             <img id="cameraInBackSide" class="image-camera"
                  [src]="imageInURL" alt="front.jpg">
-            <div class="mt-2 ml-5 text-sm-left">
-              <label class="text-black h5" for="dateIn">Ngày</label><br>
-              <input formControlName="dateIn" class="form-control-lg"
-                     [value]="formIn.get('dateIn').value | date: 'dd/MM/yyyy'" readonly required id="dateIn" type="text">
-              <span class="text-danger font-weight-bold">*</span>
+          </div>
+          <div id="plate" class="col-sm-12 mt-3">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="mt-2 text-sm-left">
+                  <label class="text-black h5" for="timeIn" step="1">Thời gian vào </label>
+                  <input formControlName="timeIn" placeholder="HH:MM:SS" class="form-control-lg"
+                         [value]="formIn.get('timeIn').value | date: 'HH:mm:ss'"
+                         readonly required id="timeIn" type="text">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mt-2 text-sm-left">
+                  <label class="text-black h5" for="dateIn">Ngày</label><br>
+                  <input formControlName="dateIn" placeholder="DD/MM/YYYY" class="form-control-lg"
+                         [value]="formIn.get('dateIn').value | date: 'dd/MM/yyyy'"
+                         readonly required id="dateIn" type="text">
+                </div>
+              </div>
+              <div class="col-sm-6 mt-2">
+                <button type="button" (click)="getLicense(imageInURL, 'in')" class="btn btn-lg btn-outline-secondary btn-info text-white font-weight-bold">
+                  Tìm Xe
+                </button>
+              </div>
+              <div class="col-sm-6 mt-2">
+                <input formControlName="licenseIn" id="plateIn" type="text" placeholder="Biển số xe" readonly required
+                       class="form-control-lg">
+                <span class="text-danger font-weight-bold">*</span>
+              </div>
             </div>
           </div>
-          <div id="plate" class="col-sm-12 mt-3 d-inline-flex">
-            <div class="col-sm-6 p-0 ml-5">
-              <button type="button" (click)="getLicense(imageInURL, 'in')" class="btn btn-lg btn-outline-secondary btn-info text-white font-weight-bold">
-                Tìm Xe</button>
-            </div>
-            <div class="col-sm-6">
-              <input formControlName="licenseIn" id="plateIn" type="text" placeholder="Biển số xe" required readonly class="form-control-lg">
-              <span class="text-danger font-weight-bold">*</span>
-            </div>
-          </div>
-          <div id="driverInfo" class="col-sm-12 mt-5 pt-2">
+          <div id="driverInfo" class="col-sm-12 mt-2 pt-2">
             <div class="row">
               <div class="col-sm-6">
                 <input type="text" formControlName="customerName"
-                       readonly required class="form-control-lg border-top-0 border-left-0 border-right-0"
+                       readonly required
+                       class="form-control-lg border-top-0 border-left-0 border-right-0"
                        placeholder="Họ Tên Khách Hàng">
                 <span class="text-danger font-weight-bold">*</span>
               </div>
               <div class="col-sm-6">
                 <input type="text" formControlName="email"
-                       readonly required class="form-control-lg border-top-0 border-left-0 border-right-0"
+                       readonly required
+                       class="form-control-lg border-top-0 border-left-0 border-right-0"
                        placeholder="Email">
                 <span class="text-danger font-weight-bold">*</span>
               </div>
               <div class="col-sm-6 mt-2">
                 <input type="text" formControlName="floor"
-                       readonly required class="form-control-lg border-top-0 border-left-0 border-right-0"
+                       readonly required
+                       class="form-control-lg border-top-0 border-left-0 border-right-0"
                        placeholder="Tầng">
                 <span class="text-danger font-weight-bold">*</span>
               </div>
               <div class="col-sm-6 mt-2">
                 <input type="text" formControlName="parkingLot"
-                       readonly required class="form-control-lg border-top-0 border-left-0 border-right-0"
+                       readonly required
+                       class="form-control-lg border-top-0 border-left-0 border-right-0"
                        placeholder="Vị trí đỗ">
                 <span class="text-danger font-weight-bold">*</span>
               </div>
               <hr>
               <div class="col-sm-12 mt-4 justify-content-center">
-                <button class="btn-lg btn-outline-secondary btn-info text-white" type="submit">Xác nhận</button>
+                <button class="btn-lg btn-outline-secondary btn-info text-white"
+                        type="submit">Xác nhận
+                </button>
               </div>
             </div>
           </div>
@@ -73,52 +87,65 @@
       </div>
     </div>
   </div>
-  <div id="out" class="col-sm-6">
-    <div class="row card p-0">
+  <div id="out" class="col-md-12 col-lg-6">
+    <div class="row card">
       <div class="card-header col-sm-12 text-center">
         <span class="h4">Xe ra</span>
       </div>
       <div class="card-body col-sm-12">
         <form [formGroup]="formOut" (submit)="submitOut()" class="row form-group">
-          <div id="outFront" class="col-sm-6 text-center">
+          <div id="outFront" class="col-md-12 col-lg-6 mt-2 text-center">
+            <img class="image-camera"
+                 [src]="imageOutURL"
+                 alt="front.jpg">
+          </div>
+          <div id="outBack" class="col-md-12 col-lg-6 mt-2 text-center">
             <img class="image-camera"
                  [src]="imageOutURL" alt="front.jpg">
-            <div class="mt-2 ml-5 text-sm-left">
-              <label class="text-black h5" for="timeIn">Thời gian ra</label><br>
-              <input formControlName="timeOut" class="form-control-lg"
-                     [value]="formOut.get('timeOut').value | date: 'HH:mm:ss'" required readonly id="timeOut" type="text">
-              <span class="text-danger font-weight-bold">*</span>
-            </div>
           </div>
-          <div id="outBack" class="col-sm-6 text-center">
-            <img class="image-camera"
-                 [src]="imageOutURL" alt="back.jpg">
-            <div class="mt-2 ml-5 text-sm-left">
-              <label class="text-black h5" for="dateIn">Ngày</label><br>
-              <input formControlName="dateOut" class="form-control-lg"
-                     [value]="formOut.get('dateOut').value | date: 'dd/MM/yyyy'" required readonly id="dateOut" type="text">
-              <span class="text-danger font-weight-bold">*</span>
-            </div>
-          </div>
-          <div class="col-sm-12 mt-3 d-inline-flex">
-            <div class="col-sm-6 p-0 ml-5">
-              <button type="button" (click)="getLicense(imageOutURL, 'out')" class="btn btn-lg btn-outline-secondary btn-info text-white font-weight-bold">
-                Tìm Xe</button>
-            </div>
-            <div class="col-sm-6">
-              <input formControlName="licenseOut" id="plateOut" type="text" placeholder="Biển số xe" required readonly class="form-control-lg">
-              <span class="text-danger font-weight-bold">*</span>
-            </div>
-          </div>
-          <div id="driverOutInfo" class="col-sm-12 mt-5 pt-2">
+          <div class="col-sm-12 mt-3">
             <div class="row">
               <div class="col-sm-6">
-                <input formControlName="type" type="text" readonly required class="form-control-lg border-top-0 border-left-0 border-right-0"
+                <div class="mt-2 text-sm-left">
+                  <label class="text-black h5" for="timeOut">Thời gian ra</label><br>
+                  <input formControlName="timeOut" placeholder="HH:MM:SS" class="form-control-lg"
+                         [value]="formOut.get('timeOut').value | date: 'HH:mm:ss'"
+                         required readonly id="timeOut" type="text">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="mt-2 text-sm-left">
+                  <label class="text-black h5" for="dateOut">Ngày</label><br>
+                  <input formControlName="dateOut" placeholder="DD/MM/YYYY" class="form-control-lg"
+                         [value]="formOut.get('dateOut').value | date: 'dd/MM/yyyy'" required readonly
+                         id="dateOut" type="text">
+                </div>
+              </div>
+              <div class="col-sm-6 mt-2">
+                <button type="button" (click)="getLicense(imageOutURL, 'out')"
+                        class="btn btn-lg btn-outline-secondary btn-info text-white font-weight-bold">
+                  Tìm Xe
+                </button>
+              </div>
+              <div class="col-sm-6 mt-2">
+                <input formControlName="licenseOut" type="text" id="plateOut"
+                       placeholder="Biển số xe" readonly required
+                       class="form-control-lg">
+                <span class="text-danger font-weight-bold">*</span>
+              </div>
+            </div>
+          </div>
+          <div id="driverOutInfo" class="col-sm-12 mt-2 pt-2">
+            <div class="row">
+              <div class="col-sm-6">
+                <input formControlName="type" type="text" readonly required type="text"
+                       class="form-control-lg border-top-0 border-left-0 border-right-0"
                        placeholder="Loại xe">
                 <span class="text-danger font-weight-bold">*</span>
               </div>
               <div class="col-sm-6">
-                <input formControlName="parkingLot" type="text" readonly required class="form-control-lg border-top-0 border-left-0 border-right-0"
+                <input formControlName="parkingLot" type="text" readonly required
+                       class="form-control-lg border-top-0 border-left-0 border-right-0"
                        placeholder="Vị trí">
                 <span class="text-danger font-weight-bold">*</span>
               </div>
@@ -138,7 +165,9 @@
               </div>
               <hr>
               <div class="col-sm-12 mt-4">
-                <button class="btn-lg text-white btn-outline-secondary btn-info" type="submit">Xác nhận</button>
+                <button class="btn-lg text-white btn-outline-secondary btn-info"
+                        type="submit">Xác nhận
+                </button>
               </div>
             </div>
           </div>
@@ -147,4 +176,3 @@
     </div>
   </div>
 </div>
-

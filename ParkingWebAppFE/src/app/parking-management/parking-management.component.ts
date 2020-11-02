@@ -54,31 +54,30 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
       this.body.append('regions', 'gb');
     }).then(() => {
       this.carService.getLicense(this.body).subscribe(next => {
+          const now = new Date();
+          console.log(now);
+          switch (camera) {
+            case 'in':
+              this.formIn.patchValue({licenseIn: next.results[0].plate});
+              this.formIn.patchValue({dateIn: now});
+              this.formIn.patchValue({timeIn: now});
+              // this.formIn.patchValue({customerName: data.nameCustomer});
+              // this.formIn.patchValue({email: data.email});
+              // this.formIn.patchValue({floor: ''});
+              // this.formIn.patchValue({parkingLot: ''});
+              break;
+            case 'out':
+              this.formOut.patchValue({licenseOut: next.results[0].plate});
+              this.formOut.patchValue({dateOut: now});
+              this.formOut.patchValue({timeOut: now});
+              // this.formOut.patchValue({type: ''});
+              // this.formOut.patchValue({parkingLot: ''});
+              // this.formOut.patchValue({ticketStart: ''});
+              // this.formOut.patchValue({ticketEnd: ''});
+              break;
+          }
           this.customerService.findByLicense(next.results[0].plate).subscribe(data => {
             this.customer = data;
-            console.log(this.customer);
-            const now = new Date();
-            console.log(now);
-            switch (camera) {
-                case 'in':
-                  this.formIn.patchValue({licenseIn: next.results[0].plate});
-                  this.formIn.patchValue({dateIn: now});
-                  this.formIn.patchValue({timeIn: now});
-                  this.formIn.patchValue({customerName: data.nameCustomer});
-                  this.formIn.patchValue({email: data.email});
-                  this.formIn.patchValue({floor: ''});
-                  this.formIn.patchValue({parkingLot: ''});
-                  break;
-                case 'out':
-                  this.formOut.patchValue({licenseOut: next.results[0].plate});
-                  this.formOut.patchValue({dateOut: now});
-                  this.formOut.patchValue({timeOut: now});
-                  this.formOut.patchValue({type: ''});
-                  this.formOut.patchValue({parkingLot: ''});
-                  this.formOut.patchValue({ticketStart: ''});
-                  this.formOut.patchValue({ticketEnd: ''});
-                  break;
-              }
           },
             error => {
             console.log('Xe Chua Dang Ky Thong Tin');
