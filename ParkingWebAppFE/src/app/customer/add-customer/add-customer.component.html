@@ -1,8 +1,9 @@
-<div class="container mt-md-5">
-  <div class="main-list rounded shadow p-md-5">
+<div class="container-fluid p-0 m-0">
+  <div class="main-list shadow pb-md-5 pl-md-5 pr-md-5 pt-md-1">
     <br>
     <h2>THÊM KHÁCH HÀNG</h2>
     <!---->
+    <br>
     <div class="row">
       <div class="col-md-6">
         <div class="row">
@@ -56,6 +57,7 @@
     <!--    -->
     <br>
     <h2>THÊM XE KHÁCH HÀNG</h2>
+    <br>
     <div class="row">
       <table class="table table-bordered">
         <thead>
@@ -92,32 +94,9 @@
       </div>
       <div class="col-md-4">
         <button class="btn-save btn btn-success">Lưu</button>
-
-        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Bạn có muốn xoá không?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger">Xoá</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!--Modal xoá-->
-<script>
-  $('#myModal').on('shown.bs.modal', function () {
-    $('#myInput').trigger('focus')
-  })
-</script>
+
