@@ -6,6 +6,7 @@ import {Car} from '../../car/car';
 import {TicketService} from '../../ticket/services/ticket.service';
 import {Ticket} from '../../ticket/models/Ticket';
 import {tick} from '@angular/core/testing';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-list-customer',
@@ -20,7 +21,21 @@ export class ListCustomerComponent implements OnInit {
   showDate = '';
   showTypeTicket = '';
   arrCar = [];
-  constructor(private customerService: CustomerService, private carService: CarService, private ticketService: TicketService) { }
+  customerClass = new Customer();
+  id = 0;
+  formCustomer: FormGroup;
+  constructor(private customerService: CustomerService, private carService: CarService, private ticketService: TicketService,
+              private fb: FormBuilder) {
+    this.formCustomer = this.fb.group({
+      nameCustomer: ['', [Validators.required]],
+      birthday: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      idCard: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+    });
+  }
 
   ngOnInit(): void {
     this.customerService.findAll().subscribe(
@@ -28,6 +43,7 @@ export class ListCustomerComponent implements OnInit {
         this.customerList = next;
       }, error => {
         this.customerList = new Array();
+      }, () => {
       }
     );
   }
@@ -67,6 +83,27 @@ export class ListCustomerComponent implements OnInit {
             }
           }
         );
+      }
+    );
+  }
+
+
+
+  editFormCustomer(id: number): void{
+    this.id = id;
+    this.customerService.findById(id).subscribe(
+      next => {
+        this.customerClass = next;
+      }, error => {
+        this.customerClass = new Customer();
+      }, () => {
+        this.formCustomer.patchValue({nameCustomer: this.customerClass.nameCustomer});
+        this.formCustomer.patchValue({birthday: this.customerClass.birthday});
+        this.formCustomer.patchValue({email: this.customerClass.email});
+        this.formCustomer.patchValue({phone: this.customerClass.phone});
+        this.formCustomer.patchValue({gender: this.customerClass.gender});
+        this.formCustomer.patchValue({idCard: this.customerClass.idCard});
+        this.formCustomer.patchValue({address: this.customerClass.address});
       }
     );
   }

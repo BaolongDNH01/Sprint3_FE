@@ -1,13 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: Arial, consolas;
-  background-color: #ddd;
-}
 
 /*H2*/
 h2{
@@ -59,7 +50,9 @@ h2{
   width: 150px;
 }
 
-.btn-save{
+.btn-close{
   /*position: absolute;*/
+  margin-top: 15px;
   width: 150px;
+  height: 35px;
 }
