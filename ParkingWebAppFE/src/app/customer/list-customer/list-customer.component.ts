@@ -52,7 +52,7 @@ export class ListCustomerComponent implements OnInit {
                 this.ticketService.getTicket(this.carList[i].ticket).subscribe(
                   next => {
                     this.showDate = next.startDate + ' - ' + next.endDate;
-                    this.showTypeTicket = next.tickTypeDetail;
+                    this.showTypeTicket = next.ticketTypeDetail;
                   }, error => {
                     this.showDate = '';
                     this.showTypeTicket = '';
