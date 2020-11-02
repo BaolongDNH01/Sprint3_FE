@@ -12,7 +12,8 @@ import { InfoCustomerComponent } from './info-customer/info-customer.component';
   exports: [
     ListCustomerComponent,
     HttpClientModule,
-    AddCustomerComponent
+    AddCustomerComponent,
+    InfoCustomerComponent
   ],
   imports: [
     CommonModule,
