@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, consolas;
+  background-color: #ddd;
+}
+
+/*H2*/
+h2{
+  font-size: x-large;
+  font-weight: bolder;
+  color: #0056b3;
+  margin-left: 0;
+}
+
+/*input*/
+.input-info{
+  text-align: left;
+  align-items: start;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+/*Bảng*/
+.main-list {
+  background-color: rgba(255, 255, 255, 0.7);
+  overflow: auto;
+}
+
+.main-table tr {
+  transition: all .3s;
+}
+
+.main-table tr:hover {
+  background: lightblue;
+}
+
+/*Tiêu đề*/
+.title-customer{
+  color: white;
+}
+
+/*Sửa, xoá*/
+.btn-edit{
+  color: #007bff;
+}
+
+.btn-delete{
+  color: red;
+}
+
+/*Lưu, thêm*/
+.btn-creat{
+  width: 150px;
+}
+
+.btn-save{
+  /*position: absolute;*/
+  width: 150px;
+}
