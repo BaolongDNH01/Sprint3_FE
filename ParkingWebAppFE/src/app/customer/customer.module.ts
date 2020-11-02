@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListCustomerComponent } from './list-customer/list-customer.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -11,8 +12,9 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
     ListCustomerComponent,
     HttpClientModule
   ],
-  imports: [
-    CommonModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+    ]
 })
 export class CustomerModule { }
