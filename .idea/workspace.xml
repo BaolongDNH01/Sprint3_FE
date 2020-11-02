@@ -37,6 +37,16 @@
         <RuleState>
           <option name="name" value="StatusDashboardGroupingRule" />
         </RuleState>
+
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
       </list>
     </option>
   </component>
@@ -53,6 +63,8 @@
       <workItem from="1603987406912" duration="42000" />
       <workItem from="1604201658980" duration="37000" />
       <workItem from="1604279247660" duration="137000" />
+
+      <workItem from="1604280984762" duration="74000" />
     </task>
     <servers />
   </component>
@@ -71,9 +83,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="276" key="FileChooserDialogImpl" timestamp="1603987448163">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="526" y="193" key="FileChooserDialogImpl" timestamp="1604281052891">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="526" y="193" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1604281052891" />
     <state x="740" y="276" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1603987448163" />
   </component>
 </project>
