@@ -3,7 +3,5 @@ export class JwtResponse {
   token: string;
   username: string;
   email: string;
-  avatar: string;
-  wallet: string;
   authorities: string[];
 }

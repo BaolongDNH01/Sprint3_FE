@@ -5,7 +5,6 @@ export class SocialSignUpInfo {
   email: string;
   address: string;
   phoneNumber: string;
-  avatar: string;
   role: string[];
 
   constructor(
@@ -14,7 +13,6 @@ export class SocialSignUpInfo {
     email: string,
     address: string,
     phoneNumber: string,
-    avatar: string,
 
     ) {
       this.username = username;
@@ -22,7 +20,6 @@ export class SocialSignUpInfo {
       this.email = email;
       this.address = address;
       this.phoneNumber = phoneNumber;
-      this.avatar = avatar;
       this.userPassword = '123123';
       this.role = ['member'];
   }

@@ -5,12 +5,14 @@ import {JwtService} from './service/jwt.service';
 import {AuthService} from './service/auth.service';
 import {AuthHttpInterceptor} from './auth/auth-http.interceptor';
 import {FormatUsernameService} from './service/format-username.service';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
   declarations: [AuthLoginComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService, JwtService, AuthHttpInterceptor, FormatUsernameService]
 
