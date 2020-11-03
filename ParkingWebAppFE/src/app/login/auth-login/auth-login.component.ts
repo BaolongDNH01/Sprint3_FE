@@ -37,7 +37,7 @@ export class AuthLoginComponent implements OnInit {
       this.loginForm.value.password
     );
     this.authLogin(this.loginInfo);
-    this.router.navigateByUrl('home');
+    this.router.navigateByUrl('');
   }
 
   authLogin(loginInfo: LoginInfo): void {
