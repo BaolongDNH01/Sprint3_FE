@@ -1,25 +1,46 @@
 <div class="container-fluid p-0">
-  <div class="main-area d-flex justify-content-center align-items-center">
-    <div class="main-list rounded shadow-lg">
+  <div class="main-area d-flex justify-content-center align-items-start">
+    <div class="main-list rounded shadow-lg mt-5">
       <div class="row p-0 m-0 d-flex align-items-center main-title">
         <div class="col-6 p-3 m-0">
           <h1>DANH SÁCH VÉ</h1>
         </div>
-        <div class="col-6 p-0 m-0">
-          <div class="input-group w-75">
+      </div>
+      <div class="d-flex justify-content-between" style="background-color: teal;">
+        <div class="p-2">
+          <div class="input-group ml-2">
             <div class="input-group-prepend">
               <span class="input-group-text">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </span>
             </div>
-            <input type="text" class="form-control" placeholder="Nhập từ khoá...">
-            <button class="btn btn-danger ml-4 shadow plus">Tìm kiếm</button>
-            <button class="btn btn-success ml-4 shadow plus">Thêm mới
-              <i class="fa fa-plus" aria-hidden="true"></i>
+            <input type="text" class="form-control" placeholder="Nhập từ khoá..." [(ngModel)]="keywordSearch">
+            <!-- <button class="btn btn-danger ml-4 shadow plus">Tìm kiếm</button> -->
+          </div>
+        </div>
+        <div class="ml-auto p-2">
+          <pagination-controls (pageChange)="page = $event" class="text-light"></pagination-controls>
+        </div>
+
+        <div class="ml-auto p-2">
+          <button class="btn btn-success ml-4 shadow plus mr-3" (click)="showCreateForm()">Thêm mới
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="mr-4 mt-2">
+          <div class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle border-dark bg-dark shadow"
+              data-toggle="dropdown">
             </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Danh sách vé hết hạn</a>
+              <a class="dropdown-item" href="#">Danh sách vé xoá</a>
+              <a class="dropdown-item" href="#">Cài đặt</a>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="row p-0 m-0">
         <table class="table main-table">
           <thead>
@@ -34,34 +55,88 @@
               <th class="text-center border-top-0">VỊ TRÍ</th>
               <th class="text-center border-top-0">LOẠI VÉ</th>
               <th class="text-center border-top-0">GIÁ</th>
+              <th class="text-center border-top-0">TRẠNG THÁI</th>
               <th class="text-center border-top-0" colspan="2">TÁC VỤ</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let ticket of ticketList;">
+            <tr *ngIf="checkCreate">
+              <h1>hahah</h1>
+              <form [formGroup]="createTicketForm">
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="ticketId">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="carPlate">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="customerName">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="startDate">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="endDate">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="floorName">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="zoneName">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="parkingLot">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="ticketTypeDetail">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="price">
+                </td>
+                <td class="text-center">
+                  <input type="text" class="form-control" placeholder="" formControlName="ticketStatus">
+                </td>
+                <td class="text-center">
+                  <a class="border-0 text-info action-icon" (ngSubmit)="submitCreateTicket()">
+                    <i class="fa fa-2x fa-check" aria-hidden="true"></i>
+                  </a>
+                </td>
+                <td class="text-center">
+                  <a class="border-0 text-danger action-icon" *ngIf="checkCreate">
+                    <i class="fa fa-2x fa-times" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </form>
+            </tr>
+            <tr
+              *ngFor="let ticket of ticketList | filter: keywordSearch | paginate: { itemsPerPage: 5, currentPage: page }">
               <td class="text-center">{{ ticket.ticketId }}</td>
               <td class="text-center">{{ ticket.carPlate }}</td>
               <td class="text-center">{{ ticket.customerName }}</td>
-              <td class="text-center">{{ ticket.startDate | date: 'dd-MM-yyyy'}}</td>
-              <td class="text-center">{{ ticket.endDate | date: 'dd-MM-yyyy'}}</td>
+              <td class="text-center">{{ ticket.startDate | date: 'dd/MM/yy'}}</td>
+              <td class="text-center">{{ ticket.endDate | date: 'dd/MM/yy'}}</td>
               <td class="text-center">{{ ticket.floorName }}</td>
               <td class="text-center">{{ ticket.zoneName }}</td>
               <td class="text-center">{{ ticket.parkingLot }}</td>
               <td class="text-center">{{ ticket.ticketTypeDetail }}</td>
               <td class="text-center">{{ ticket.price | currency: 'VND'}}</td>
               <td class="text-center">
+                <span class="badge badge-pill badge-info"> {{ ticket.ticketStatus }}</span>
+              </td>
+              <td class="text-center">
                 <a class="border-0 text-info action-icon" [routerLink]="['edit', ticket.ticketId]">
                   <i class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i>
                 </a>
               </td>
-              <td class="text-center" data-toggle="tooltip" data-placement="left" title="Thử nhấn nút xoá..">
-                <a class="border-0 text-danger action-icon" data-toggle="modal" data-target="#exampleModalCenter">
+              <td class="text-center" data-toggle="tooltip" data-placement="left">
+                <a class="border-0 text-danger action-icon" data-toggle="modal"
+                  [attr.data-target]="'#deleteModal'+ ticket.ticketId">
                   <i class="fa fa-2x fa-trash-o" aria-hidden="true"></i>
                 </a>
               </td>
 
               <!-- Delete confirm dialog -->
-              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+              <div class="modal fade" [id]="'deleteModal' + ticket.ticketId" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
@@ -72,11 +147,11 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      Bạn chắc chắn muốn xoá ?
-                      <img src="https://cdn.iconscout.com/icon/free/png-512/sad-emoji-17-894764.png" alt="icon-delete">
+                      Xoá vé xe [{{ ticket.carPlate }}] ?
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-lg btn-success plus shadow">
+                      <button type="button" class="btn btn-lg btn-success plus shadow"
+                        (click)="acceptDelete(ticket.ticketId)">
                         <i class="fa fa-check" aria-hidden="true"></i>
                         Đồng ý
                       </button>
@@ -88,7 +163,6 @@
                   </div>
                 </div>
               </div>
-              
             </tr>
           </tbody>
         </table>
@@ -121,16 +195,6 @@
             </div>
           </div>
         </div>
-
-        <nav class="d-flex justify-content-center w-100 paging">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Trước</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Sau</a></li>
-          </ul>
-        </nav>
       </div>
     </div>
   </div>

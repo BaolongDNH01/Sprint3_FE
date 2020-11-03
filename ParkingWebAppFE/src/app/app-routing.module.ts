@@ -7,14 +7,18 @@ import {ParkingManagementComponent} from './parking-management/parking-managemen
 
 export const routes: Routes = [
   {
-    path: 'ticket',
-    loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)
-  },
-  {
     path: '', component: HomepageComponent, children: [
-      {path: '', component: ParkingManagementComponent}
+      {
+        path: '',
+        component: ParkingManagementComponent
+      },
+      {
+        path: 'ticket',
+        loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)
+      },
     ]
-  }
+  },
+
 ];
 
 @NgModule({

@@ -16,6 +16,7 @@ import {RouterModule} from '@angular/router';
 import {CarService} from './service/car.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {AppRoutingModule} from './app-routing.module';
     AppRoutingModule,
     BrowserModule,
     NgxPaginationModule,
+    Ng2SearchPipeModule,
     ParkingLotManageModule,
     ChartsModule,
     GoogleChartsModule,
