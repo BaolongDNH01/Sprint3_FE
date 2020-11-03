@@ -24,4 +24,7 @@ export class CustomerService {
   findByLicense(license: string): Observable<Customer>{
     return this.httpClient.get<Customer>(this.API_URL + 'find-customer/' + license);
   }
+  editCustomer(customer: Customer): Observable<void>{
+    return this.httpClient.post<void>(this.API_URL + 'edit-customer', customer);
+  }
 }
