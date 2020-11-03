@@ -17,6 +17,10 @@ import {CarService} from './service/car.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AddUserComponent } from './user/add-user/add-user.component';
+import { ListUserComponent } from './user/list-user/list-user.component';
+import {UserModule} from './user/user.module';
+import {LoginModule} from './login/login.module';
 
 
 @NgModule({
@@ -25,7 +29,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     StatisticalComponent,
     StatisticsByDateComponent,
     ParkingManagementComponent,
-    HomepageComponent
+    HomepageComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -39,8 +43,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FormsModule,
     TicketModule,
     BrowserModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    UserModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent],

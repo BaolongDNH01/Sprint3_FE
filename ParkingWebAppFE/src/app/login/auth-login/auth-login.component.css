@@ -1,0 +1,14 @@
+.custom-margin{
+  margin-top: 15%;
+}
+
+.form-login{
+  border: black 1px solid;
+  border-radius: 10px;
+  box-shadow: gray 5px 5px 10px 2px;
+  z-index: 1;
+  background-color: white;
+}
+body{
+  /*background: url("~assets/images/login.jpg");*/
+}

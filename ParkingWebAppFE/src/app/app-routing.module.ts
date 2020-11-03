@@ -1,8 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Router, RouterModule, Routes} from '@angular/router';
 import {HomepageComponent} from './homepage/homepage.component';
 import {ParkingManagementComponent} from './parking-management/parking-management.component';
+import {AuthLoginComponent} from './login/auth-login/auth-login.component';
+import {ListUserComponent} from './user/list-user/list-user.component';
 
 
 export const routes: Routes = [
@@ -29,4 +31,5 @@ export const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
