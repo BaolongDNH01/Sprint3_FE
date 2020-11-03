@@ -8,6 +8,7 @@ import { StatisticalComponent } from './statistical/statistical.component';
 import {ChartsModule} from 'ng2-charts';
 import { StatisticsByDateComponent } from './statistics-by-date/statistics-by-date.component';
 import {GoogleChartsModule} from 'angular-google-charts';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {GoogleChartsModule} from 'angular-google-charts';
     NgxPaginationModule,
     ParkingLotManageModule,
     ChartsModule,
-    GoogleChartsModule
+    GoogleChartsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
