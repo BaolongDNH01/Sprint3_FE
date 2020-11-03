@@ -1,3 +1,5 @@
+import {Rank} from './Rank';
+
 export class User {
   userId: number;
   fullName: string;
@@ -8,6 +10,7 @@ export class User {
   birthday: string;
   address: string;
   gender: string;
+  rank: Rank;
 
   constructor() {
   }

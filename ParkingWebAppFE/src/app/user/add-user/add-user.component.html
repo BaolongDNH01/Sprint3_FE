@@ -3,21 +3,21 @@
     <h3 class="text-secondary p-3">Thêm nhân viên mới</h3>
   </div>
 </div>
-<form class="ml-5">
+<form class="ml-5" [formGroup]="userForm" (ngSubmit)="onSubmit()">
   <div id="create" class="pt-4 pr-5">
     <div class="form-group row ">
 
       <label class="col-sm-2 col-form-label text-right">Họ tên :</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" placeholder="Họ tên">
+        <input type="text" class="form-control" placeholder="Họ tên" formControlName="fullName">
       </div>
       <label class="col-sm-2 col-form-label text-right">Giới tính :</label>
       <div class="col-sm-4 pt-2">
         <div class="form-check-inline">
-          <input type="radio" class="form-check-input " name="optradio" checked>Nam
+          <input type="radio" class="form-check-input " name="optradio" value="Nam" checked formControlName="gender">Nam
         </div>
         <div class="form-check-inline">
-          <input type="radio" class="form-check-input" name="optradio">Nữ
+          <input type="radio" class="form-check-input" name="optradio" value="Nữ" formControlName="gender">Nữ
         </div>
       </div>
 
@@ -25,25 +25,26 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label text-right">Ngày sinh :</label>
       <div class="col-sm-4">
-        <input type="date" class="form-control" placeholder="YYYY-MM-DD">
+        <input type="date" class="form-control" placeholder="YYYY-MM-DD" formControlName="birthday">
       </div>
       <label class="col-sm-2 col-form-label text-right">SDT :</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" placeholder="SDT ">
+        <input type="text" class="form-control" placeholder="số điện thoại " formControlName="phone">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label text-right">Địa chỉ :</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" placeholder="Địa chỉ">
+        <input type="text" class="form-control" placeholder="Địa chỉ" formControlName="address">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label text-right">Cấp bậc :</label>
       <div class="col-sm-4">
-        <select class="form-control">
-          <option value="1">Bảo vệ</option>
-          <option value="2">Tiếp tân</option>
+        <select class="form-control" formControlName="rank">
+          <option value="1">Nhân viên giữ xe</option>
+          <option value="2">Bảo vệ</option>
+          <option value="3">Nhân viên bảo trì</option>
         </select>
       </div>
 
@@ -51,11 +52,11 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label text-right">Email :</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" placeholder="example@gmail.com">
+        <input type="text" class="form-control" placeholder="example@gmail.com" formControlName="email">
       </div>
       <label class="col-sm-2 col-form-label text-right">Mật khẩu :</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" placeholder="MK nhân viên">
+        <input type="text" class="form-control" placeholder="MK nhân viên" formControlName="password">
       </div>
     </div>
     <div class="form-group row ">
