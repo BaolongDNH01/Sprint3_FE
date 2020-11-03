@@ -1,0 +1,96 @@
+div.page-style {
+  background: teal;
+  height: 60px;
+}
+
+.main-color {
+  background: lawngreen;
+}
+
+.main-color-text {
+  color: teal;
+}
+
+img.circle-pic {
+  border-radius: 50%;
+  width: 36px;
+}
+
+.logout {
+  color: white;
+}
+
+.logout:hover {
+  color: yellow;
+}
+
+div.item-nav {
+  padding: 10px;
+}
+
+.border-nav {
+  border-right: 3px solid #c7d4ce;
+  height: 90vh;
+}
+
+.link {
+  text-decoration: none !important;
+  color: black;
+}
+
+.button-custom {
+  width: 30%;
+  border-radius: 50px;
+  background-color: #910c00;
+  color: white;
+  margin: 20px;
+  outline: none !important;
+}
+
+input.input-custom {
+  width: 40%;
+  border-radius: 50px;
+  padding-left: 20px;
+  outline: none;
+}
+
+thead {
+  background-color: #849c9a;
+}
+
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  outline: none !important;
+
+}
+
+body {
+  position: relative;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 460px;
+  overflow: auto;
+}
+
+.container-fluid .row .test {
+}
+
+#create {
+  margin-top: 10px;
+  width: 90%;
+  border-radius: 15px;
+  box-shadow: gray 2px 8px 7px 4px;
+  clear: both;
+  padding: 10px;
+}
+
+#create label {
+  color: #0f6674;
+  font-weight: bold;
+}

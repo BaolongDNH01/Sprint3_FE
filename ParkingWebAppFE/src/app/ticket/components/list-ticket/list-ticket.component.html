@@ -1,0 +1,137 @@
+<div class="container-fluid p-0">
+  <div class="main-area d-flex justify-content-center align-items-center">
+    <div class="main-list rounded shadow-lg">
+      <div class="row p-0 m-0 d-flex align-items-center main-title">
+        <div class="col-6 p-3 m-0">
+          <h1>DANH SÁCH VÉ</h1>
+        </div>
+        <div class="col-6 p-0 m-0">
+          <div class="input-group w-75">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+            </div>
+            <input type="text" class="form-control" placeholder="Nhập từ khoá...">
+            <button class="btn btn-danger ml-4 shadow plus">Tìm kiếm</button>
+            <button class="btn btn-success ml-4 shadow plus">Thêm mới
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row p-0 m-0">
+        <table class="table main-table">
+          <thead>
+            <tr>
+              <th class="text-center border-top-0">ID VÉ</th>
+              <th class="text-center border-top-0">ID XE</th>
+              <th class="text-center border-top-0">KHÁCH HÀNG</th>
+              <th class="text-center border-top-0">BẮT ĐẦU</th>
+              <th class="text-center border-top-0">KẾT THÚC</th>
+              <th class="text-center border-top-0">TẦNG</th>
+              <th class="text-center border-top-0">KHU</th>
+              <th class="text-center border-top-0">VỊ TRÍ</th>
+              <th class="text-center border-top-0">LOẠI VÉ</th>
+              <th class="text-center border-top-0">GIÁ</th>
+              <th class="text-center border-top-0" colspan="2">TÁC VỤ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ticket of ticketList;">
+              <td class="text-center">{{ ticket.ticketId }}</td>
+              <td class="text-center">{{ ticket.carPlate }}</td>
+              <td class="text-center">{{ ticket.customerName }}</td>
+              <td class="text-center">{{ ticket.startDate | date: 'dd-MM-yyyy'}}</td>
+              <td class="text-center">{{ ticket.endDate | date: 'dd-MM-yyyy'}}</td>
+              <td class="text-center">{{ ticket.floorName }}</td>
+              <td class="text-center">{{ ticket.zoneName }}</td>
+              <td class="text-center">{{ ticket.parkingLot }}</td>
+              <td class="text-center">{{ ticket.ticketTypeDetail }}</td>
+              <td class="text-center">{{ ticket.price | currency: 'VND'}}</td>
+              <td class="text-center">
+                <a class="border-0 text-info action-icon" [routerLink]="['edit', ticket.ticketId]">
+                  <i class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+              </td>
+              <td class="text-center" data-toggle="tooltip" data-placement="left" title="Thử nhấn nút xoá..">
+                <a class="border-0 text-danger action-icon" data-toggle="modal" data-target="#exampleModalCenter">
+                  <i class="fa fa-2x fa-trash-o" aria-hidden="true"></i>
+                </a>
+              </td>
+
+              <!-- Delete confirm dialog -->
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Bạn chắc chắn muốn xoá ?
+                      <img src="https://cdn.iconscout.com/icon/free/png-512/sad-emoji-17-894764.png" alt="icon-delete">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-lg btn-success plus shadow">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Đồng ý
+                      </button>
+                      <button type="button" class="btn btn-lg btn-danger plus shadow" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        Huỷ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Delete confirm dialog -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Bạn chắc chắn muốn xoá ?
+                <img src="https://cdn.iconscout.com/icon/free/png-512/sad-emoji-17-894764.png" alt="icon-delete">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-lg btn-success plus shadow">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                  Đồng ý
+                </button>
+                <button type="button" class="btn btn-lg btn-danger plus shadow" data-dismiss="modal">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                  Huỷ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="d-flex justify-content-center w-100 paging">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Trước</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

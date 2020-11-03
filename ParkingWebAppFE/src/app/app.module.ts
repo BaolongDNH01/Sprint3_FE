@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -8,23 +8,45 @@ import { StatisticalComponent } from './statistical/statistical.component';
 import {ChartsModule} from 'ng2-charts';
 import { StatisticsByDateComponent } from './statistics-by-date/statistics-by-date.component';
 import {GoogleChartsModule} from 'angular-google-charts';
-import {HttpClientModule} from '@angular/common/http';
+import {CustomerModule} from './customer/customer.module';
+import { TicketModule } from './ticket/ticket.module';
+import { ParkingManagementComponent } from './parking-management/parking-management.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import {RouterModule} from '@angular/router';
+import {CarService} from './service/car.service';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AppRoutingModule} from './app-routing.module';
+import { AddUserComponent } from './user/add-user/add-user.component';
+import { ListUserComponent } from './user/list-user/list-user.component';
+import {UserModule} from './user/user.module';
+import {LoginModule} from './login/login.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     StatisticalComponent,
-    StatisticsByDateComponent
+    StatisticsByDateComponent,
+    ParkingManagementComponent,
+    HomepageComponent,
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     NgxPaginationModule,
     ParkingLotManageModule,
     ChartsModule,
     GoogleChartsModule,
-    HttpClientModule
+    CustomerModule,
+    FormsModule,
+    TicketModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    UserModule,
+    LoginModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
