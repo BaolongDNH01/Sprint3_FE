@@ -45,7 +45,9 @@ export class ListCustomerComponent implements OnInit {
       color: ['', [Validators.required]],
       producer: ['', [Validators.required]],
       type: ['', Validators.required],
-      ticket: ['', Validators.required]
+      ticket: ['', Validators.required],
+      parkings: ['', Validators.required],
+      customerId: ['']
     });
   }
 
@@ -130,10 +132,7 @@ export class ListCustomerComponent implements OnInit {
     );
   }
   formEditCar(id: number): void{
-    this.idCar = id;
-  }
-  editCar(): void{
-    this.carService.findById(this.idCar).subscribe(
+    this.carService.findById(id).subscribe(
       next => {
         this.carClass = next;
       }, error => {},
@@ -144,7 +143,45 @@ export class ListCustomerComponent implements OnInit {
         this.formCar.patchValue({producer: this.carClass.producer});
         this.formCar.patchValue({type: this.carClass.type});
         this.formCar.patchValue({ticket: this.carClass.ticket});
+        this.formCar.patchValue({customerId: this.carClass.customerId});
+        this.formCar.patchValue({parkings: this.carClass.parkings});
       }
     );
+    this.idCar = id;
+  }
+  editCar(id: number): void{
+    this.carClass = Object.assign({}, this.formCar.value);
+    console.log(this.carClass);
+    this.carService.editCar(this.carClass).subscribe(
+      next => {
+      }, error => {},
+      () => {
+        this.idCar = 0;
+        this.carService.findCarByCustomer(id).subscribe(
+          next => {
+            this.carList = next;
+            console.log(this.id);
+          }, error => {
+          }
+        );
+      }
+    );
+  }
+
+  delete(idCar: number, idCustomer): void{
+    this.carService.deleteCar(idCar).subscribe(
+      next => {},
+      error => {},
+      () => {
+        alert('Xóa thành công!');
+        this.carService.findCarByCustomer(idCustomer).subscribe(
+          next => {
+            this.carList = next;
+            console.log(this.id);
+          }, error => {
+          }
+        );
+      }
+    )
   }
 }

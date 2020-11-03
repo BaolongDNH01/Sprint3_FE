@@ -5,6 +5,8 @@ export class Car {
   color: string;
   producer: string;
   type: string;
-  ticket: number;
+  ticket: number[];
+  customerId: number;
+  parkings: number[];
   constructor() {}
 }

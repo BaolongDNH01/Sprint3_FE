@@ -112,15 +112,15 @@
                             <td >{{car.color}}</td>
                             <td>{{car.license}}</td>
                             <td><button (click)="formEditCar(car.carId)" class="btn bg-white fa fa-pencil-square-o" aria-hidden="true"></button></td>
-                            <td>Xóa</td>
+                            <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
                           </tr>
                           <tr *ngIf="car.carId == idCar" [formGroup]="formCar">
-                            <th scope="row"><input formControlName="producer" type="text"></th>
-                            <td><input formControlName="type" type="text"></td>
-                            <td ><input formControlName="color" type="text"></td>
-                            <td><input formControlName="license" type = text></td>
-                            <td><button (click)="editCar()" class="btn bg-white fa fa-check-square-o" aria-hidden="true"></button></td>
-                            <td>Xóa</td>
+                            <th scope="row"><input formControlName="producer" type="text" class="form-control"></th>
+                            <td><input formControlName="type" type="text" class="form-control"></td>
+                            <td ><input formControlName="color" type="text" class="form-control"></td>
+                            <td><input formControlName="license" type = "text" class="form-control"></td>
+                            <td><button (click)="editCar(customer.id)" class="btn bg-white fa fa-check-square-o" aria-hidden="true"></button></td>
+                            <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
                           </tr>
                           </tbody>
                         </table>
