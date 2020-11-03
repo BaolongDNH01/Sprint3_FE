@@ -11,46 +11,22 @@ import { DetailUserComponent } from './user/detail-user/detail-user.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    component: AuthLoginComponent,
-    children: [
+    path: '', children: [
+      {path: 'login', component: AuthLoginComponent},
       {
-        path: 'home',
-        component: HomepageComponent
-      },
-      {
-        path: 'parking',
-        component: ParkingManagementComponent
-      },
-      {
-        path: 'ticket',
-        loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)
-      },
-      {
-        path: 'add-user',
-        component: AddUserComponent
-      },
-      {
-        path: 'user/:id',
-        component: DetailUserComponent
+        path: '', component: HomepageComponent, children: [
+          {
+            path: 'ticket',
+            loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)
+          },
+          {path: 'add-user', component: AddUserComponent},
+          {path: 'user/:id', component: DetailUserComponent},
+          {path: 'list-user', component: ListUserComponent},
+
+        ]
       },
     ]
-  }
-];
-
-// Routing của PHƯƠNG -_-
-// {
-//   path: '', children: [
-//     {path: 'login', component: AuthLoginComponent},
-//     {
-//       path: '', component: HomepageComponent, children: [
-//         {path: 'ticket', component: ParkingManagementComponent},
-//         {path: 'add-user', component: AddUserComponent},
-//         {path: 'user/:id', component: DetailUserComponent},
-//       ]
-//     },
-//   ]
-// }];
+  }];
 
 @NgModule({
   declarations: [],
