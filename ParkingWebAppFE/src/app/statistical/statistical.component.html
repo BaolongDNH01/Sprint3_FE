@@ -7,7 +7,7 @@
           <a class="nav-link active" href="#">Tổng hợp</a>
         </li>
         <li class="nav-item color-nav">
-          <a class="nav-link" href="#">Thống kê theo ngày</a>
+          <a class="nav-link" [routerLink]="'statisticalByDate'">Thống kê theo ngày</a>
         </li>
         <li class="nav-item color-nav">
           <a class="nav-link" href="#">Thống kê theo năm</a>
@@ -49,7 +49,7 @@
 
         <div>
           <label>Số lượng nhân viên : </label>
-          <span></span>
+          <span>{{this.userCount}}</span>
           <hr>
         </div>
 
@@ -61,7 +61,7 @@
 
         <div>
           <label>Số lượng vị trí đổ : </label>
-          <span>160</span>
+          <span>{{this.countParkingLot}}</span>
           <hr>
         </div>
 

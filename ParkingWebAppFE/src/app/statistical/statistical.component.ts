@@ -4,6 +4,8 @@ import {CustomerService} from '../customer/customer.service';
 import {CarService} from '../car/car.service';
 import {TicketService} from '../ticket/services/ticket.service';
 import {Car} from '../car/car';
+import {StatisticService} from '../statistics-by-date/statistic/statistic.service';
+import {ParkingLotService} from '../parking-lot-manage/service/parking-lot.service';
 
 @Component({
   selector: 'app-statistical',
@@ -22,11 +24,15 @@ export class StatisticalComponent implements OnInit {
   color = [];
   countTypeCar = [];
   countTypeCar1: number;
+  userCount = 0;
+  countParkingLot = 0;
 
   constructor(
     private customerService: CustomerService,
     private ticketService: TicketService,
-    private carService: CarService
+    private carService: CarService,
+    private statisticService: StatisticService,
+    private parkingLotService: ParkingLotService
   ) {
   }
 
@@ -34,8 +40,17 @@ export class StatisticalComponent implements OnInit {
     this.findAllCustomer();
     this.findAllTicket();
     this.findAllCar();
-    console.log(this.typeCar);
-    console.log(this.countTypeCar);
+    this.findAllCountUser();
+    this.getAllCountParkingLot();
+
+  }
+
+  getAllCountParkingLot(): void {
+    this.parkingLotService.getAllParkingLot().subscribe(
+      list => {
+        this.countParkingLot = list.length;
+      }
+    );
   }
 
   findAllCustomer(): void {
@@ -50,6 +65,14 @@ export class StatisticalComponent implements OnInit {
     this.ticketService.getAllTicket().subscribe(
       list => {
         this.countTicket = list.length;
+      }
+    );
+  }
+
+  findAllCountUser(): void {
+    this.statisticService.getAllCountUser().subscribe(
+      list => {
+        this.userCount = list;
       }
     );
   }
@@ -72,7 +95,7 @@ export class StatisticalComponent implements OnInit {
 
               },
               () => {
-              // @ts-ignore
+                // @ts-ignore
                 this.PieChart = new Chart('pieChart', {
                   type: 'pie',
                   data: {
