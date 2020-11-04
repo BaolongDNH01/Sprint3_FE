@@ -1,8 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Router, RouterModule, Routes} from '@angular/router';
 import {HomepageComponent} from './homepage/homepage.component';
 import {ParkingManagementComponent} from './parking-management/parking-management.component';
+import {InfoCustomerComponent} from './customer/info-customer/info-customer.component';
+import {ListCustomerComponent} from './customer/list-customer/list-customer.component';
+import {AddCustomerComponent} from './customer/add-customer/add-customer.component';
 
 
 export const routes: Routes = [
@@ -11,8 +14,11 @@ export const routes: Routes = [
     loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)
   },
   {
-    path: '', component: HomepageComponent, children: [
-      {path: '', component: ParkingManagementComponent}
+    path: '', children: [
+      {path: '', component: ParkingManagementComponent},
+      {path: 'info-customer/:id', component: InfoCustomerComponent},
+      {path: 'list-customer', component: ListCustomerComponent},
+      {path: 'add-customer', component: AddCustomerComponent}
     ]
   }
 ];
@@ -25,4 +31,5 @@ export const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
