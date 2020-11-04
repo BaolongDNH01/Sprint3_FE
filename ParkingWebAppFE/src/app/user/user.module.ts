@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AddUserComponent } from './add-user/add-user.component';
 import { ListUserComponent } from './list-user/list-user.component';
 import { DetailUserComponent } from './detail-user/detail-user.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
 
@@ -17,6 +17,7 @@ import {RouterModule} from '@angular/router';
     CommonModule,
     FormsModule,
     RouterModule,
+    ReactiveFormsModule,
   ]
 })
 export class UserModule { }

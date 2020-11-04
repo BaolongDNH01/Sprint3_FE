@@ -37,12 +37,13 @@ export class AuthLoginComponent implements OnInit {
       this.loginForm.value.password
     );
     this.authLogin(this.loginInfo);
-    this.router.navigateByUrl('home');
+    this.router.navigateByUrl('');
   }
 
   authLogin(loginInfo: LoginInfo): void {
     this.subscription = this.authService.authLogin(loginInfo).subscribe({
       next: data => {
+        console.log(data);
         this.jwtService.saveUserId(data.userId);
         this.jwtService.saveToken(data.token);
         this.jwtService.saveUsername(data.username);
