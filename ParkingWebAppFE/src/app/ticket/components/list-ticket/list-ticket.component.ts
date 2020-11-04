@@ -52,20 +52,19 @@ export class ListTicketComponent implements OnInit, OnDestroy {
   }
 
   showCreateForm(): void {
-    
-    // this.createTicketForm = this.fb.group({
-    //   ticketId: [''],
-    //   carPlate: [''], // get car plate cua ben car
-    //   customerName: [''], // get customer name cua ben customer
-    //   startDate: [''],
-    //   endDate: [''],
-    //   floorName: [''],
-    //   zoneName: [''],
-    //   parkingLot: [''],
-    //   ticketTypeDetail: [''],
-    //   price: [''],
-    //   ticketStatus: ['TICKET_ENABLE'],
-    // });
+    this.createTicketForm = this.fb.group({
+      ticketId: [''],
+      carPlate: [''], // get car plate cua ben car
+      customerName: [''], // get customer name cua ben customer
+      startDate: [''],
+      endDate: [''],
+      floorName: [''],
+      zoneName: [''],
+      parkingLot: [''],
+      ticketTypeDetail: [''],
+      price: [''],
+      ticketStatus: ['TICKET_ENABLE'],
+    });
     this.checkCreate = !this.checkCreate;
     console.log('created');
   }
