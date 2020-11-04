@@ -10,6 +10,7 @@ import {User} from '../User';
 })
 export class ListUserComponent implements OnInit {
   listUser: User[];
+  curPage = 1;
 
   constructor(private router: Router,
               private userService: UserService) {
@@ -24,4 +25,12 @@ export class ListUserComponent implements OnInit {
     );
   }
 
+  // tslint:disable-next-line:typedef
+  delete(id) {
+    if (confirm('Are you sure to delete ' + id)) {
+      this.userService.delete(id).subscribe();
+      location.reload();
+    }
+
+  }
 }

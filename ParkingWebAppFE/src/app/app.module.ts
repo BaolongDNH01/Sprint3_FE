@@ -21,6 +21,7 @@ import { AddUserComponent } from './user/add-user/add-user.component';
 import { ListUserComponent } from './user/list-user/list-user.component';
 import {UserModule} from './user/user.module';
 import {LoginModule} from './login/login.module';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {LoginModule} from './login/login.module';
     StatisticsByDateComponent,
     ParkingManagementComponent,
     HomepageComponent,
+    NotificationComponent,
   ],
   imports: [
     AppRoutingModule,
