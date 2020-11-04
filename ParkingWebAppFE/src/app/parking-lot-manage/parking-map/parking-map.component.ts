@@ -148,7 +148,7 @@ export class ParkingMapComponent implements OnInit {
         parPositionX += this.centerSize + this.parSizeW;
       }
       this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH);
-      if (par.status === true) {
+      if (par.status === 'Chưa có xe') {
         this.ctx.fillStyle = 'green';
       } else {
         this.ctx.fillStyle = 'red';
@@ -189,16 +189,15 @@ export class ParkingMapComponent implements OnInit {
         parPositionY += this.centerSize + this.parSizeW;
       }
       this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH, this.parSizeW);
-      if (par.status === true) {
+      if (par.status === 'Chưa có xe') {
         this.ctx.fillStyle = 'green';
       } else {
         this.ctx.fillStyle = 'red';
       }
-      this.ctx.fillText(this.zoneName + '-' + par.id + '', parPositionX + this.parSizeW / 4, parPositionY + this.parSizeW / 2);
+      console.log(this.zoneName + '-' + par.id);
+      this.ctx.fillText(this.zoneName + '-' + par.id, parPositionX + this.parSizeW / 4, parPositionY + this.parSizeW / 2);
       this.ctx.stroke();
     });
   }
-
-  getHeightView(): void {}
 }
 
