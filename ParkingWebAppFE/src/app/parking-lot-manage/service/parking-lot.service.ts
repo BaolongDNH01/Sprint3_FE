@@ -25,4 +25,16 @@ export class ParkingLotService {
   getAllFloor(): Observable<Floor[]> {
     return this.httpClient.get<Floor[]>(this.api + '/getAllFloor');
   }
+
+  addParkingLot(par: ParkingLot): Observable<any> {
+    return this.httpClient.post<any>(this.api + '/saveParkingLot', par);
+  }
+
+  editParkingLot(par: ParkingLot): Observable<any> {
+    return this.httpClient.post<any>(this.api + '/editParkingLot', par);
+  }
+
+  getParkingLotById(id: number): Observable<ParkingLot> {
+    return this.httpClient.get<ParkingLot>(this.api + '/getParkingLotById/' + id);
+  }
 }
