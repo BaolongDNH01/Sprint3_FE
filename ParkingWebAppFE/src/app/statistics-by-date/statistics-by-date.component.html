@@ -1,18 +1,20 @@
 <div class="container-fluid m-auto ">
-  <div class="row mt-5 ml-5">
-    <div class="col-md-3">
+  <div class="row mt-10 ml-5">
+    <form [formGroup]="checkDate" (ngSubmit)="onSubmit()">
+    <div class="">
       <label>Ngày bắt đầu : </label>
-      <input type="date" >
+      <input type="date" formControlName="dateStart" >
     </div>
-    <div class="col-md-3">
+    <div class="">
       <label>Ngày kết thúc : </label>
-      <input type="date">
+      <input type="date" formControlName="dateEnd" >
     </div>
 
-    <div class="col-md-3">
-      <button class="btn btn-primary" type="submit">Update</button>
-      <button class="btn btn-primary" type="submit">Close</button>
+    <div class="">
+      <button class="btn btn-primary" type="submit">Cập nhật</button>
+      <button class="btn btn-primary" type="submit">Đóng</button>
     </div>
+    </form>
   </div>
 
   <hr>
