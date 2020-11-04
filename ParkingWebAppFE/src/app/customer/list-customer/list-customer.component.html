@@ -45,9 +45,9 @@
           <h3 class="text-secondary p-3">DANH SÁCH KHÁCH HÀNG</h3>
         </div>
         <div class="col-6">
-          <button class="button-custom">Thêm vị trí mới
+          <a href="add-customer" class="button-custom">Thêm vị trí mới
             <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
+          </a>
           <input class="input-custom" placeholder="Tìm kiếm ... ">
         </div>
       </div>
@@ -70,7 +70,7 @@
             <tbody *ngFor="let customer of customerList">
             <tr *ngIf="customer.id !== id">
               <th scope="row">1</th>
-              <td>{{customer.nameCustomer}}</td>
+              <td> <a href="info-customer/{{customer.id}}">{{customer.nameCustomer}}</a> </td>
               <td>{{customer.birthday}}</td>
               <td>{{customer.gender}}</td>
               <td>{{customer.idCard}}</td>
