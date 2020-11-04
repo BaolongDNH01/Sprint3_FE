@@ -7,6 +7,7 @@ import {TicketService} from '../../ticket/services/ticket.service';
 import {Ticket} from '../../ticket/models/Ticket';
 import {tick} from '@angular/core/testing';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-list-customer',
@@ -18,15 +19,17 @@ export class ListCustomerComponent implements OnInit {
   carList: Car[];
   showCar = true;
   customerDetail =  new Customer();
-  showDate = '';
-  showTypeTicket = '';
   arrCar = [];
   customerClass = new Customer();
   id = 0;
+  idCar = 0;
   formCustomer: FormGroup;
+  formCar: FormGroup;
+  carClass = new Car()
   constructor(private customerService: CustomerService, private carService: CarService, private ticketService: TicketService,
               private fb: FormBuilder) {
     this.formCustomer = this.fb.group({
+      id: [''],
       nameCustomer: ['', [Validators.required]],
       birthday: ['', [Validators.required]],
       email: ['', [Validators.required]],
@@ -34,6 +37,17 @@ export class ListCustomerComponent implements OnInit {
       gender: ['', [Validators.required]],
       idCard: ['', [Validators.required]],
       address: ['', [Validators.required]],
+      cars: ['']
+    });
+    this.formCar = this.fb.group({
+      carId: [],
+      license: ['', Validators.required],
+      color: ['', [Validators.required]],
+      producer: ['', [Validators.required]],
+      type: ['', Validators.required],
+      ticket: ['', Validators.required],
+      parkings: ['', Validators.required],
+      customerId: ['']
     });
   }
 
@@ -48,6 +62,7 @@ export class ListCustomerComponent implements OnInit {
     );
   }
   findCarByCustomer(id: number): void{
+    this.idCar = 0;
     this.arrCar = [];
     this.customerService.findById(id).subscribe(
       next => {
@@ -64,20 +79,6 @@ export class ListCustomerComponent implements OnInit {
           }, () => {
             if (this.carList.length !== 0){
               this.showCar = true;
-              for (let i = 0; i < this.carList.length; i++){
-                this.ticketService.getTicket(this.carList[i].ticket).subscribe(
-                  next => {
-                    this.showDate = next.startDate + ' - ' + next.endDate;
-                    this.showTypeTicket = next.ticketTypeDetail;
-                  }, error => {
-                    this.showDate = '';
-                    this.showTypeTicket = '';
-                  }, () => {
-                    this.arrCar.push([this.carList[i].carId, this.carList[i].type, this.showTypeTicket,
-                      this.showDate, this.carList[i].color]);
-                  }
-                );
-              }
             }else {
               this.showCar = false;
             }
@@ -97,6 +98,7 @@ export class ListCustomerComponent implements OnInit {
       }, error => {
         this.customerClass = new Customer();
       }, () => {
+        this.formCustomer.patchValue({id: this.customerClass.id});
         this.formCustomer.patchValue({nameCustomer: this.customerClass.nameCustomer});
         this.formCustomer.patchValue({birthday: this.customerClass.birthday});
         this.formCustomer.patchValue({email: this.customerClass.email});
@@ -104,7 +106,82 @@ export class ListCustomerComponent implements OnInit {
         this.formCustomer.patchValue({gender: this.customerClass.gender});
         this.formCustomer.patchValue({idCard: this.customerClass.idCard});
         this.formCustomer.patchValue({address: this.customerClass.address});
+        this.formCustomer.patchValue({cars: this.customerClass.cars});
       }
     );
+  }
+
+  editCustomer(): void{
+    this.customerClass = Object.assign({}, this.formCustomer.value);
+    this.customerService.editCustomer(this.customerClass).subscribe(
+      next => {},
+      error => {
+        alert('Hãy nhập email, số điện thoại, chứng minh nhân dân chính xác!');
+      },
+      () => {
+        this.customerService.findAll().subscribe(
+          next => {
+            this.customerList = next;
+          }, error => {
+            this.customerList = new Array();
+          }, () => {
+          }
+        );
+        this.id = 0;
+      }
+    );
+  }
+  formEditCar(id: number): void{
+    this.carService.findById(id).subscribe(
+      next => {
+        this.carClass = next;
+      }, error => {},
+      () => {
+        this.formCar.patchValue({carId: this.carClass.carId});
+        this.formCar.patchValue({license: this.carClass.license});
+        this.formCar.patchValue({color: this.carClass.color});
+        this.formCar.patchValue({producer: this.carClass.producer});
+        this.formCar.patchValue({type: this.carClass.type});
+        this.formCar.patchValue({ticket: this.carClass.ticket});
+        this.formCar.patchValue({customerId: this.carClass.customerId});
+        this.formCar.patchValue({parkings: this.carClass.parkings});
+      }
+    );
+    this.idCar = id;
+  }
+  editCar(id: number): void{
+    this.carClass = Object.assign({}, this.formCar.value);
+    console.log(this.carClass);
+    this.carService.editCar(this.carClass).subscribe(
+      next => {
+      }, error => {},
+      () => {
+        this.idCar = 0;
+        this.carService.findCarByCustomer(id).subscribe(
+          next => {
+            this.carList = next;
+            console.log(this.id);
+          }, error => {
+          }
+        );
+      }
+    );
+  }
+
+  delete(idCar: number, idCustomer): void{
+    this.carService.deleteCar(idCar).subscribe(
+      next => {},
+      error => {},
+      () => {
+        alert('Xóa thành công!');
+        this.carService.findCarByCustomer(idCustomer).subscribe(
+          next => {
+            this.carList = next;
+            console.log(this.id);
+          }, error => {
+          }
+        );
+      }
+    )
   }
 }

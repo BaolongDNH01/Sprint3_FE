@@ -23,4 +23,16 @@ export class CarService {
   findAllCarByType(type: string): Observable<Car[]>{
     return this.httpClient.get<Car[]>(this.URL_API + 'getAllCarByType/' + type);
   }
+  // quan
+  findById(id: number): Observable<Car>{
+    return this.httpClient.get<Car>(this.URL_API + 'car/' + id);
+  }
+  // quan
+  editCar(car: Car): Observable<Car>{
+    return this.httpClient.post<Car>(this.URL_API + 'edit-car', car);
+  }
+  // quan
+  deleteCar(id: number): Observable<any>{
+    return this.httpClient.delete<any>(this.URL_API + 'delete-car/' + id);
+  }
 }
