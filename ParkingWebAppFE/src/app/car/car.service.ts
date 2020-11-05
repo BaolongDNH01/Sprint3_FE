@@ -35,4 +35,8 @@ export class CarService {
   deleteCar(id: number): Observable<any>{
     return this.httpClient.delete<any>(this.URL_API + 'delete-car/' + id);
   }
+  // quan
+  addCar(car: Car): Observable<void>{
+    return this.httpClient.post<void>(this.URL_API + 'add-car', car);
+  }
 }
