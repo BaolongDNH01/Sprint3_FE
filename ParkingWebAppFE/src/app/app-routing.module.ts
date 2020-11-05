@@ -9,6 +9,8 @@ import { AddUserComponent } from './user/add-user/add-user.component';
 import { DetailUserComponent } from './user/detail-user/detail-user.component';
 import {StatisticalComponent} from './statistical/statistical.component';
 import {StatisticsByDateComponent} from './statistics-by-date/statistics-by-date.component';
+import {NotificationComponent} from './notification/notification.component';
+
 
 
 export const routes: Routes = [
@@ -26,6 +28,7 @@ export const routes: Routes = [
           {path: 'list-user', component: ListUserComponent},
           {path: 'statistical', component: StatisticalComponent},
           {path: 'statistical/statisticalByDate', component: StatisticsByDateComponent},
+          {path: '', component: NotificationComponent},
 
         ]
       },
