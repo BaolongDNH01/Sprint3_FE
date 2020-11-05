@@ -9,7 +9,7 @@ import {StatisticService} from './statistic/statistic.service';
   styleUrls: ['./statistics-by-date.component.css']
 })
 export class StatisticsByDateComponent implements OnInit {
-
+  lengthTotalDate = 0;
 
   constructor(
     private statisticService: StatisticService
@@ -61,10 +61,7 @@ export class StatisticsByDateComponent implements OnInit {
       list => {
         console.log(list);
         for (let k = 0; k < list.length; k++) {
-          for (let l = 0; l < list.length; l++) {
-            this.dateTotal[l].push(list[k][1].slice(0, 10));
-          }
-
+          this.dateTotal.push(list[k][1].slice(0, 10));
         }
       }, error => {
       },
@@ -73,14 +70,12 @@ export class StatisticsByDateComponent implements OnInit {
           list => {
             console.log(list);
             for (let k = 0; k < list.length; k++) {
-              for (let l = 0; l < list.length; l++) {
-                if (this.dateTotal[k][l].includes(list[k][1].slice(0, 10))) {
-                } else {
-                  this.dateTotal[k][l].push(list[k][1].slice(0, 10));
-                }
+              if (this.dateTotal.includes(list[k][1].slice(0, 10))) {
+              } else {
+                this.dateTotal.push(list[k][1].slice(0, 10));
               }
             }
-            console.log(this.dateTotal[0][0]);
+            console.log(this.dateTotal);
           }, error => {
           },
           () => {
@@ -95,19 +90,24 @@ export class StatisticsByDateComponent implements OnInit {
   createArray2D(): void {
     this.statisticService.getAllCarByDateIn(this.checkDate.value.dateStart, this.checkDate.value.dateEnd).subscribe(
       list => {
-        console.log(list);
-        console.log();
-        for (let k = 0; k < this.dateTotal.length; k++) {
+        this.lengthTotalDate = this.dateTotal.length;
+        console.log(this.dateTotal.length);
+        for (let k = 0; k < this.lengthTotalDate; k++) {
           if (k < list.length && this.dateTotal.includes(list[k][1].slice(0, 10)) && list[k][1] != null) {
             this.dateTotal.splice(this.dateTotal.indexOf(list[k][1].slice(0, 10)) + 1, 0, list[k][0]);
-            console.log(this.dateTotal);
-            console.log(this.dateTotal.indexOf(list[k][1].slice(0, 10)));
           } else {
-            // console.log(k);
-            // this.dateTotal.splice(this.dateTotal.indexOf(list[k]) + 1, 0, '0');
+            console.log(k);
+            console.log(this.dateTotal.indexOf(list[this.dateTotal.length].slice(0, 10)));
+            // this.dateTotal.splice(this.dateTotal.indexOf(list[this.dateTotal.length - 1].slice(0, 10)), 0, 0);
+            // console.log(this.dateTotal.indexOf(list[this.dateTotal.length][1].slice(0, 10)));
           }
         }
-        // console.log(this.dateTotal);
+        console.log(this.dateTotal);
+        console.log(this.dateTotal.length);
+      }, error => {
+      },
+      () => {
+
       }
     );
   }

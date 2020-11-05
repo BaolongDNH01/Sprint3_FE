@@ -11,6 +11,10 @@ import {AddParkingLotComponent} from './parking-lot-manage/add-parking-lot/add-p
 import {EditParkingLotComponent} from './parking-lot-manage/edit-parking-lot/edit-parking-lot.component';
 import {ParkingMapComponent} from './parking-lot-manage/parking-map/parking-map.component';
 import {ListParkingLotComponent} from './parking-lot-manage/list-parking-lot/list-parking-lot.component';
+import {StatisticalComponent} from './statistical/statistical.component';
+import {StatisticsByDateComponent} from './statistics-by-date/statistics-by-date.component';
+import {NotificationComponent} from './notification/notification.component';
+
 
 
 export const routes: Routes = [
@@ -29,8 +33,12 @@ export const routes: Routes = [
           {path: 'addParkingLot', component: AddParkingLotComponent},
           {path: 'editParkingLot/:id', component: EditParkingLotComponent},
           {path: 'parkingMap', component: ParkingMapComponent},
-          {path: 'listParkingLot', component: ListParkingLotComponent}
-          ]
+          {path: 'listParkingLot', component: ListParkingLotComponent},
+          {path: 'statistical', component: StatisticalComponent},
+          {path: 'statistical/statisticalByDate', component: StatisticsByDateComponent},
+          {path: '', component: NotificationComponent},
+
+        ]
       },
     ]
   }];

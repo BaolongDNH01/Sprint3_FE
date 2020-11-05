@@ -21,6 +21,7 @@ import { AddUserComponent } from './user/add-user/add-user.component';
 import { ListUserComponent } from './user/list-user/list-user.component';
 import {UserModule} from './user/user.module';
 import {LoginModule} from './login/login.module';
+import { NotificationComponent } from './notification/notification.component';
 import {StatisticModule} from './statistics-by-date/statistic/statistic.module';
 import {StatisticService} from './statistics-by-date/statistic/statistic.service';
 
@@ -32,6 +33,7 @@ import {StatisticService} from './statistics-by-date/statistic/statistic.service
     StatisticsByDateComponent,
     ParkingManagementComponent,
     HomepageComponent,
+    NotificationComponent,
   ],
   imports: [
     AppRoutingModule,
