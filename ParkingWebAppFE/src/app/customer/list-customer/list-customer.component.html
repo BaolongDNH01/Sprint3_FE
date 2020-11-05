@@ -47,13 +47,13 @@
         <div class="col-6">
           <a href="add-customer" class="button-custom">Thêm vị trí mới
             <i class="fa fa-plus" aria-hidden="true"></i>
-          </a>
-          <input class="input-custom" placeholder="Tìm kiếm ... ">
+          </button>
+          <input (input)="search()" class="input-custom" (click)="reset()" [(ngModel)]="key" placeholder="Tìm kiếm ... ">
         </div>
       </div>
       <div class="row card-body">
         <div class="col-md-12">
-          <table class="table table-responsive-md bg-white">
+          <table *ngIf="customerList.length !== 0" class="table table-responsive-md bg-white">
             <thead>
             <tr class="bg-light">
               <th scope="col">STT</th>
@@ -123,8 +123,16 @@
                             <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
                           </tr>
                           </tbody>
+                          <tr *ngIf="showAddCar === true" [formGroup]="formCar">
+                            <th scope="row"><input formControlName="producer" type="text" class="form-control"></th>
+                            <td><input formControlName="type" type="text" class="form-control"></td>
+                            <td ><input formControlName="color" type="text" class="form-control"></td>
+                            <td><input formControlName="license" type = "text" class="form-control"></td>
+                            <td><button (click)="addCar(customer.id)" class="btn bg-white" >Thêm</button></td>
+                            <td><button (click)="close()" class="btn bg-white">Hủy</button></td>
+                          </tr>
                         </table>
-                        <button class="btn btn-primary m-auto">Thêm xe</button>
+                        <button *ngIf="showAddCar === false" (click)="formAddCar(customer.id)" class="btn btn-primary m-auto">Thêm xe</button>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -147,7 +155,7 @@
               <td><input class="form-control" formControlName="nameCustomer" type = text></td>
               <td><input class="form-control" formControlName="birthday" type = date></td>
               <td>
-                <select class="form-control" formControlName="gender" type = text>
+                <select class="form-control" formControlName="gender">
                   <option>Nam</option>
                   <option>Nu</option>
                 </select>
@@ -157,20 +165,80 @@
               <td><input class="form-control" formControlName="email" type = text></td>
               <td><input class="form-control" formControlName="address" type =text></td>
               <td>
-                <button (click)="findCarByCustomer(customer.id)" type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                <!-- Button trigger modal -->
+                <button (click)="findCarByCustomer(customer.id)" type="button" class="btn" data-toggle="modal" data-target="#exampleModal5">
                   <i class="fa fa-car" aria-hidden="true"></i>
                 </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 *ngIf="showCar === true" class="modal-title" id="exampleModalLabel5">Thông tin xe của khách hàng <span class="text-danger">{{customerDetail.nameCustomer}}</span></h5>
+                        <h5 *ngIf="showCar === false" class="modal-title" id="exampleModalLabel6">Khách hàng <span class="text-danger">{{customerDetail.nameCustomer}}</span> chưa có xe nào!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" *ngIf="showCar === true">
+                        <table class="table table-dark">
+                          <thead>
+                          <tr>
+                            <th scope="col">Tên xe</th>
+                            <th scope="col">Hãng xe</th>
+                            <th scope="col">Màu xe</th>
+                            <th scope="col">Biển số</th>
+                            <th colspan="2"></th>
+                          </tr>
+                          </thead>
+                          <tbody *ngFor="let car of carList">
+                          <tr *ngIf="car.carId !== idCar">
+                            <th scope="row">{{car.producer}}</th>
+                            <td>{{car.type}}</td>
+                            <td >{{car.color}}</td>
+                            <td>{{car.license}}</td>
+                            <td><button (click)="formEditCar(car.carId)" class="btn bg-white fa fa-pencil-square-o" aria-hidden="true"></button></td>
+                            <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
+                          </tr>
+                          <tr *ngIf="car.carId == idCar" [formGroup]="formCar">
+                            <th scope="row"><input formControlName="producer" type="text" class="form-control"></th>
+                            <td><input formControlName="type" type="text" class="form-control"></td>
+                            <td ><input formControlName="color" type="text" class="form-control"></td>
+                            <td><input formControlName="license" type = "text" class="form-control"></td>
+                            <td><button (click)="editCar(customer.id)" class="btn bg-white fa fa-check-square-o" aria-hidden="true"></button></td>
+                            <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
+                          </tr>
+                          </tbody>
+                          <tr *ngIf="showAddCar === true" [formGroup]="formCar">
+                            <th scope="row"><input formControlName="producer" type="text" class="form-control"></th>
+                            <td><input formControlName="type" type="text" class="form-control"></td>
+                            <td ><input formControlName="color" type="text" class="form-control"></td>
+                            <td><input formControlName="license" type = "text" class="form-control"></td>
+                            <td><button (click)="addCar(customer.id)" class="btn bg-white" >Thêm</button></td>
+                            <td><button (click)="close()" class="btn bg-white">Hủy</button></td>
+                          </tr>
+                        </table>
+                        <button *ngIf="showAddCar === false" (click)="formAddCar(customer.id)" class="btn btn-primary m-auto">Thêm xe</button>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
               <td>
                 <button *ngIf="customer.id !== id" (click)="editFormCustomer(customer.id)" class="btn fa fa-pencil" aria-hidden="true"></button>
                 <button *ngIf="customer.id === id" (click)="editCustomer()" class="btn fa fa-check" aria-hidden="true"></button>
               </td>
               <td><button class="btn fa fa-trash-o" aria-hidden="true"></button></td>
-
             </tr>
-
             </tbody>
           </table>
+
+
+          <h3 style="text-align: center; color: #ffe533" *ngIf="customerList.length === 0">Khách hàng trống</h3>
         </div>
       </div>
     </div>

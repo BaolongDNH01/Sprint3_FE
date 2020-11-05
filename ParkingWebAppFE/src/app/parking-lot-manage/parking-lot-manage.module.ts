@@ -6,6 +6,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { AddParkingLotComponent } from './add-parking-lot/add-parking-lot.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { EditParkingLotComponent } from './edit-parking-lot/edit-parking-lot.component';
+import {AppRoutingModule} from '../app-routing.module';
 
 
 
@@ -17,10 +18,11 @@ import { EditParkingLotComponent } from './edit-parking-lot/edit-parking-lot.com
     AddParkingLotComponent,
     EditParkingLotComponent
   ],
-    imports: [
-        CommonModule,
-        NgxPaginationModule,
-        ReactiveFormsModule
-    ]
+  imports: [
+    CommonModule,
+    NgxPaginationModule,
+    ReactiveFormsModule,
+    AppRoutingModule
+  ]
 })
 export class ParkingLotManageModule { }
