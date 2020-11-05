@@ -148,4 +148,7 @@ export class StatisticalComponent implements OnInit {
     return color;
   }
 
+  reload(): void {
+    location.reload();
+  }
 }
