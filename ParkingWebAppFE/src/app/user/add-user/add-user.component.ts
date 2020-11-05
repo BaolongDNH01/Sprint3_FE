@@ -43,8 +43,9 @@ export class AddUserComponent implements OnInit {
         console.log('Create process!');
       }, error => {
         console.log('Create failed!');
+      }, () => {
+        this.router.navigateByUrl('/list-user');
       }
     );
-    this.router.navigateByUrl('');
   }
 }

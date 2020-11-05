@@ -22,9 +22,9 @@ export const routes: Routes = [
           },
           {path: 'add-user', component: AddUserComponent},
           {path: 'user/:id', component: DetailUserComponent},
+          {path: 'userInfo/:id', component: DetailUserComponent},
           {path: 'list-user', component: ListUserComponent},
           {path: '', component: NotificationComponent},
-
         ]
       },
     ]

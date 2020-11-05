@@ -1,0 +1,84 @@
+div.page-style{
+  background: teal;
+  height: 60px;
+}
+
+.main-color{
+  background: teal;
+}
+
+.main-color-text{
+  color: teal;
+}
+
+img.circle-pic{
+  border-radius: 50%;
+  width: 36px;
+}
+
+.logout {
+  color: white;
+}
+
+.logout:hover {
+  color: yellow;
+}
+
+div.item-nav{
+  padding: 10px;
+}
+
+.border-nav{
+  border-right: 3px solid #c7d4ce;
+  height: 90vh;
+}
+
+.link{
+  text-decoration: none !important;
+  color: black;
+}
+
+.button-custom{
+  width: 30%;
+  border-radius: 50px;
+  background-color: #910c00;
+  color: white;
+  margin: 20px;
+  outline: none !important;
+}
+
+input.input-custom{
+  width: 100%;
+  border-radius: 50px;
+  padding-left: 20px;
+  outline: none;
+}
+
+thead{
+  background-color: #849c9a;
+}
+
+.paginator{
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+}
+
+.paginator /deep/ .ngx-pagination .current {
+  background: rgb(131, 131, 131);
+  border-radius: 4px;
+  padding-left: 9px;
+  padding-right: 9px;
+}
+
+.paginator /deep/ .ngx-pagination a:hover, .ngx-pagination button:hover {
+  background: #d4d4d4;
+  border-radius: 3px;
+  padding-left: 9px;
+  padding-right: 9px;
+  text-decoration: none;
+}
+
+.paginator /deep/ .ngx-pagination a:focus, .ngx-pagination button:focus {
+  outline: none;
+  background: #d4d4d4;
+}

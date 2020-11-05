@@ -37,32 +37,28 @@ export class AuthLoginComponent implements OnInit {
       this.loginForm.value.password
     );
     this.authLogin(this.loginInfo);
-    this.router.navigateByUrl('');
+
   }
 
   authLogin(loginInfo: LoginInfo): void {
     this.subscription = this.authService.authLogin(loginInfo).subscribe({
       next: data => {
-        console.log(data);
         this.jwtService.saveUserId(data.userId);
         this.jwtService.saveToken(data.token);
         this.jwtService.saveUsername(data.username);
         this.jwtService.saveAuthorities(data.authorities);
         this.jwtService.saveEmail(data.email);
-        this.reloadPage();
+        this.router.navigateByUrl('');
       },
       error: (err) => {
-        console.error(err);
         this.isLogInFailed = true;
       },
     });
   }
 
-  reloadPage(): void {
-    window.location.reload();
-  }
 
   ngOnInit(): void {
+
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]

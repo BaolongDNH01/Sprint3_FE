@@ -12,3 +12,7 @@
 body{
   /*background: url("~assets/images/login.jpg");*/
 }
+
+.notice{
+  color:red;
+}
