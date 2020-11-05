@@ -14,13 +14,6 @@ export class StatisticService {
   ) {
   }
 
-  // getAllCarByDateIn(dateIn: string, dateOut: string): Observable<Paking[]> {
-  //   return this.httpClient.get<Paking[]>(this.API_URL + 'getCarByDateIn/' + dateIn + '/' + dateOut);
-  // }
-  //
-  // getAllCarByDateOut(dateIn: string, dateOut: string): Observable<Paking[]> {
-  //   return this.httpClient.get<Paking[]>(this.API_URL + 'getCarByDateOut/' + dateIn + '/' + dateOut);
-  // }
 
   getAllCarByDateIn(dateIn: string, dateOut: string): Observable<string[]> {
     return this.httpClient.get<string[]>(this.API_URL + 'getAllCarByDateIn/' + dateIn + '/' + dateOut);
@@ -28,5 +21,13 @@ export class StatisticService {
 
   getAllCarByDateOut(dateIn: string, dateOut: string): Observable<string[]> {
     return this.httpClient.get<string[]>(this.API_URL + 'getAllCarByDateOut/' + dateIn + '/' + dateOut);
+  }
+
+  getAllCarByDateInDateOut(dateIn: string, dateOut: string): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.API_URL + 'getAllCarByDateInDateOut/' + dateIn + '/' + dateOut);
+  }
+
+  getAllCountUser(): Observable<number> {
+    return this.httpClient.get<number>(this.API_URL + 'count-user');
   }
 }

@@ -1,49 +1,90 @@
-<div class="container-fluid">
-  <div class="row text-white page-style align-items-center ">
-    <div class="title col-6 mt-2">
-      <h4 class="align-items-center">HỆ THỐNG QUẢN LÍ BÃI ĐỖ XE</h4>
+<div class="row">
+  <div class="col-12">
+    <div class="row d-flex">
+      <button class="btn btn-info mt-1" [routerLink]="['../listParkingLot']">Quay lại danh sách bãi đỗ</button>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-2 border-nav">
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-home fa-2x text-warning" aria-hidden="true"></i> Trang chủ</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Quản lý nhân viên</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-users" aria-hidden="true"></i> Quản lí khách hàng</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-car" aria-hidden="true"></i> Quản lí xe ra / vào</a>
-      </div>
-      <div class="item-nav row main-color">
-        <a class="link" href="#"><i class="fa fa-braille" aria-hidden="true"></i> Quản lí bãi đỗ</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Quản lí vé</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i> Thống kê</a>
-      </div>
+    <div class="row d-flex">
+      <label>
+        <select class="btn btn-warning mt-1 mb-3" (change)="prepare($event.target.value)">
+          <option class="bg-light text-dark" *ngFor="let floor of floorList" value="{{floor.id}}">{{floor.name}}</option>
+        </select>
+      </label>
+      <button class="btn btn-secondary mt-1 mb-3 ml-4 h-75" [routerLink]="['../addParkingLot']">Thêm vị trí mới</button>
     </div>
-    <div class="col-8">
-      <div class="row d-flex justify-content-center text-decoration-none">
-        <div class="col-4">
-          <a href="#"><h3>Quản lí xe</h3></a>
-        </div>
-        <div class="col-4">
-          <a href="#"><h3>Sơ đồ trạng thái</h3></a>
-        </div>
-      </div>
-      <div class="row">
-        <canvas #canvas width="{{scrWidth}}" height="1000">
+    <div class="row">
+      <div class="col-9">
+        <canvas #canvas width="970" height="1000">
         </canvas>
       </div>
+      <div class="col-3">
+        <table class="table table-light table-bordered">
+          <thead>
+          <tr>
+            <th>khu vực</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Chiều</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let zone of zoneInFloor">
+            <th>{{zone.name}}</th>
+            <td><label>
+              <input class="" type="number" value="{{zone.positionX}}" (change)="changePositionX(zone.id, $event.target.value)">
+            </label></td>
+            <td><label>
+              <input class="" type="number" value="{{zone.positionY}}" (change)="changePositionY(zone.id, $event.target.value)">
+            </label></td>
+            <td><label>
+              <select [value]="zone.direction" class="">
+                <option value="0">Dọc</option>
+                <option value="1">Ngang</option>
+              </select>
+            </label></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="col-2">
-      <!--      chỗ để item thu nhỏ của các tầng-->
+  </div>
+</div>
+
+<button id="view" hidden data-toggle="modal" data-target="#viewModal"></button>
+
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="viewModalLabel">Thông tin vị trí đỗ</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="confirmBody">
+          <div class="row">
+            <div class="col-6">
+              <span>ID: {{parkingLotView.id}}</span>
+            </div>
+            <div class="col-6">
+              <span>Tầng: {{parkingLotView.nameFloor}}</span>
+            </div>
+            <div class="col-6">
+              <span>Khu vực: {{parkingLotView.nameZone}}</span>
+            </div>
+            <div class="col-6">
+              <h6 class="text-danger" *ngIf="parkingLotView.status">Trạng thái: Chưa có xe</h6>
+              <h6 class="text-danger" *ngIf="!parkingLotView.status">Trạng thái: Đã có xe</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button *ngIf="parkingLotView.status" type="button" class="btn btn-primary"
+                data-dismiss="modal" (click)="saveParkingLotToCreateTicket(parkingLotView)">Đặt vé
+        </button>
+      </div>
     </div>
   </div>
 </div>

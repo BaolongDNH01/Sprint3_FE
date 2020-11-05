@@ -28,7 +28,6 @@ export class EditParkingLotComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       // tslint:disable-next-line:radix
       this.id = parseInt(params.get('id'));
-      this.id = 1;
       this.parkingLotService.getParkingLotById(this.id).subscribe(
         par => {
           this.parkingLot = par;
@@ -54,7 +53,7 @@ export class EditParkingLotComponent implements OnInit {
       id: [this.parkingLot.id],
       idFloor: [this.parkingLot.idFloor, Validators.required],
       idZone: [this.parkingLot.idZone, Validators.required],
-      status: [this.parkingLot.status, Validators.required]
+      status: [this.parkingLot.status, Validators.required],
     });
   }
 

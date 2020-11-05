@@ -4,14 +4,12 @@
     <div class="col-md-11  ml-5 mt-5 mb-2 m-0 p-0">
       <ul class="nav justify-content-center col-nav ">
         <li class="nav-item color-nav">
-          <a class="nav-link active" href="#">Tổng hợp</a>
+          <a class="nav-link active" (click)="reload()">Cập nhật lại</a>
         </li>
         <li class="nav-item color-nav">
-          <a class="nav-link" href="#">Thống kê theo ngày</a>
+          <a class="nav-link" [routerLink]="'statisticalByDate'">Thống kê theo ngày,tháng,năm</a>
         </li>
-        <li class="nav-item color-nav">
-          <a class="nav-link" href="#">Thống kê theo năm</a>
-        </li>
+
 
       </ul>
     </div>
@@ -49,7 +47,7 @@
 
         <div>
           <label>Số lượng nhân viên : </label>
-          <span></span>
+          <span>{{this.userCount}}</span>
           <hr>
         </div>
 
@@ -61,7 +59,7 @@
 
         <div>
           <label>Số lượng vị trí đổ : </label>
-          <span>160</span>
+          <span>{{this.countParkingLot}}</span>
           <hr>
         </div>
 

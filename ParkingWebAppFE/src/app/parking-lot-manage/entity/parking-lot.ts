@@ -4,6 +4,9 @@ export class ParkingLot {
   nameFloor: string;
   idZone: number;
   nameZone: string;
-  status: string;
+  status: boolean;
   license: string;
+
+  constructor() {
+  }
 }

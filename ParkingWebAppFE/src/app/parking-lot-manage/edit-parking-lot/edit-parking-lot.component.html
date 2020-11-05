@@ -42,8 +42,8 @@
           <div class="col-8">
             <label>
               <select formControlName="status">
-                <option value="Đã có xe">Đã có xe</option>
-                <option value="Chưa có xe">Chưa có xe</option>
+                <option value="false">Đã có xe</option>
+                <option value="true">Chưa có xe</option>
               </select>
             </label>
           </div>
@@ -90,7 +90,8 @@
       </div>
     </div>
     <div class="row justify-content-center mb-3">
-      <button class="btn btn-outline-info custom">Thêm mới</button>
+      <button class="btn btn-outline-info custom">Chỉnh sửa</button>
+      <button class="btn btn-outline-danger custom ml-3" [routerLink]="['../../listParkingLot']">Trở lại</button>
     </div>
   </form>
 </div>

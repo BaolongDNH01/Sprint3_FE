@@ -15,7 +15,7 @@ import validate = WebAssembly.validate;
   styleUrls: ['./list-customer.component.css']
 })
 export class ListCustomerComponent implements OnInit {
-  customerList: Customer[];
+  customerList = [];
   carList: Car[];
   showCar = true;
   customerDetail =  new Customer();
@@ -25,7 +25,9 @@ export class ListCustomerComponent implements OnInit {
   idCar = 0;
   formCustomer: FormGroup;
   formCar: FormGroup;
-  carClass = new Car()
+  carClass = new Car();
+  showAddCar = false;
+  key = '';
   constructor(private customerService: CustomerService, private carService: CarService, private ticketService: TicketService,
               private fb: FormBuilder) {
     this.formCustomer = this.fb.group({
@@ -62,6 +64,7 @@ export class ListCustomerComponent implements OnInit {
     );
   }
   findCarByCustomer(id: number): void{
+    this.showAddCar = false;
     this.idCar = 0;
     this.arrCar = [];
     this.customerService.findById(id).subscribe(
@@ -145,6 +148,7 @@ export class ListCustomerComponent implements OnInit {
         this.formCar.patchValue({ticket: this.carClass.ticket});
         this.formCar.patchValue({customerId: this.carClass.customerId});
         this.formCar.patchValue({parkings: this.carClass.parkings});
+        this.showAddCar = false;
       }
     );
     this.idCar = id;
@@ -182,6 +186,67 @@ export class ListCustomerComponent implements OnInit {
           }
         );
       }
-    )
+    );
   }
+
+  formAddCar(id: number): void{
+    this.formCar.patchValue({carId: null});
+    this.formCar.patchValue({license: ''});
+    this.formCar.patchValue({color: ''});
+    this.formCar.patchValue({producer: ''});
+    this.formCar.patchValue({type: ''});
+    this.formCar.patchValue({ticket: []});
+    this.formCar.patchValue({customerId: id});
+    this.formCar.patchValue({parkings: []});
+    this.showAddCar = true;
+    this.idCar = 0;
+  }
+  close(): void{
+    this.showAddCar = false;
+  }
+
+  addCar(id: number): void{
+    this.carClass = Object.assign({}, this.formCar.value);
+    console.log(this.carClass);
+    this.carService.addCar(this.carClass).subscribe(
+      next => {},
+      error => {},
+      () => {
+        this.carService.findCarByCustomer(id).subscribe(
+          next => {
+            this.carList = next;
+          }, error => {
+            console.log('error');
+            this.carList = new Array();
+          }, () => {
+            this.showAddCar = false;
+            if (this.carList.length !== 0){
+              this.showCar = true;
+            }else {
+              this.showCar = false;
+            }
+          }
+        );
+      }
+    );
+  }
+  search(): void{
+    this.customerService.findAll().subscribe(
+      next => {
+        this.customerList = next;
+      }, error => {
+        this.customerList = new Array();
+      }, () => {
+        this.customerList = this.customerList.filter(res => {
+          return res.nameCustomer.toLocaleLowerCase().match(this.key.toLocaleLowerCase());
+        });
+        console.log(this.customerList.length + ' li');
+      }
+    );
+  }
+  reset(): void{
+    this.key = '';
+    this.search();
+  }
+
 }
