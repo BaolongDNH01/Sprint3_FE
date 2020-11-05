@@ -3,6 +3,7 @@ import {ParkingLotService} from '../service/parking-lot.service';
 import {ParkingLot} from '../entity/parking-lot';
 import {Floor} from '../entity/floor';
 import {Zone} from '../entity/zone';
+import {Ticket} from '../../ticket/models/Ticket';
 
 @Component({
   selector: 'app-parking-map',
@@ -26,6 +27,9 @@ export class ParkingMapComponent implements OnInit {
   private parSizeH = 60;
   scrWidth: number;
   zoneName: string;
+  arrParkingLotPosition = [];
+  parkingLotView = new ParkingLot;
+  ticket: Ticket = null;
 
   constructor(private parkingLotService: ParkingLotService) {
   }
@@ -34,7 +38,7 @@ export class ParkingMapComponent implements OnInit {
     this.getScreenSize();
   }
 
-  @HostListener('window:resize', ['$event'])
+  // @HostListener('window:resize', ['$event'])
   getScreenSize(event?): void {
     this.scrWidth = window.innerWidth * 67 / 100;
 
@@ -95,9 +99,15 @@ export class ParkingMapComponent implements OnInit {
         }
         this.zoneName = this.zoneName.trim();
       }
-
-
       this.showAllComponent(zone);
+    });
+
+    // tạo sự kiện click
+    this.canvas.nativeElement.addEventListener('click', (evt) => {
+      const rect = this.canvas.nativeElement.getBoundingClientRect();
+      const x = evt.clientX - rect.left;
+      const y = evt.clientY - rect.top;
+      this.checkClick(x, y);
     });
   }
 
@@ -147,7 +157,16 @@ export class ParkingMapComponent implements OnInit {
       if (count % 2 === 0 && count !== 1) {
         parPositionX += this.centerSize + this.parSizeW;
       }
+
       this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH);
+      //  lưu thông tin chỗ đỗ xe vào array riêng
+      // tslint:disable-next-line:no-shadowed-variable
+      const width = this.parSizeW;
+      // tslint:disable-next-line:no-shadowed-variable
+      const height = this.parSizeH;
+      const a = {parPositionX, parPositionY, width, height, par};
+      this.arrParkingLotPosition.push(a);
+
       if (par.status === 'Chưa có xe') {
         this.ctx.fillStyle = 'green';
       } else {
@@ -189,14 +208,31 @@ export class ParkingMapComponent implements OnInit {
         parPositionY += this.centerSize + this.parSizeW;
       }
       this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH, this.parSizeW);
+      // tslint:disable-next-line:no-shadowed-variable
+      const width = this.parSizeW;
+      // tslint:disable-next-line:no-shadowed-variable
+      const height = this.parSizeH;
+      const a = {parPositionX, parPositionY, width, height, par};
+      this.arrParkingLotPosition.push(a);
       if (par.status === 'Chưa có xe') {
         this.ctx.fillStyle = 'green';
       } else {
         this.ctx.fillStyle = 'red';
       }
-      console.log(this.zoneName + '-' + par.id);
       this.ctx.fillText(this.zoneName + '-' + par.id, parPositionX + this.parSizeW / 4, parPositionY + this.parSizeW / 2);
       this.ctx.stroke();
+    });
+  }
+
+  checkClick(mX, mY): void {
+    this.arrParkingLotPosition.forEach(arr => {
+      if (mX >= arr.parPositionX && mX <= arr.parPositionX + arr.width) {
+        if (mY >= arr.parPositionY && mY <= arr.parPositionY + arr.height) {
+          this.parkingLotView = arr.par;
+          document.getElementById('view').click();
+          return;
+        }
+      }
     });
   }
 }
