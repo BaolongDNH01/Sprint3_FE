@@ -10,7 +10,7 @@
           <div class="input-info col-md-3">
             Họ tên:
           </div>
-          <div class="input-info col-md-6 ml-md-1">
+          <div class="input-info col-md-6">
             <input disabled type="text" class="form-control" placeholder="{{customer.nameCustomer}}">
           </div>
         </div>
@@ -19,8 +19,17 @@
           <div class="input-info col-md-3">
             Ngày sinh:
           </div>
-          <div class="col-md-6 ml-md-1">
-            <input disabled type="text" class="form-control disabled" placeholder="{{customer.birthday}}">
+          <div class="col-md-6">
+            <input disabled type="text" class="form-control disabled" placeholder="{{customer.birthday| date: 'dd/MM/yyyy'}}">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="input-info col-md-3">
+            Địa chỉ:
+          </div>
+          <div class="col-md-6">
+            <input disabled type="text" class="form-control disabled" placeholder="{{customer.address}}">
           </div>
         </div>
       </div>
@@ -43,17 +52,18 @@
                    placeholder="{{customer.phone}}">
           </div>
         </div>
+        <br>
+        <div class="row">
+          <div class="input-info col-md-3">
+            Email:
+          </div>
+          <div class="col-md-6">
+            <input disabled type="text" class="form-control disabled" placeholder="{{customer.email}}">
+          </div>
+        </div>
       </div>
     </div>
-    <br>
-    <div class="row">
-      <div class="input-info col-md-1">
-        Địa chỉ:
-      </div>
-      <div class="col-md-9 ml-5">
-        <input disabled type="text" class="form-control disabled" placeholder="{{customer.address}}">
-      </div>
-    </div>
+
     <!--    -->
     <br>
     <h2>XE KHÁCH HÀNG</h2>
