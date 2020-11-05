@@ -7,6 +7,9 @@ import { AuthLoginComponent } from './login/auth-login/auth-login.component';
 import { ListUserComponent } from './user/list-user/list-user.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { DetailUserComponent } from './user/detail-user/detail-user.component';
+import {ListCustomerComponent} from './customer/list-customer/list-customer.component';
+import {AddCustomerComponent} from './customer/add-customer/add-customer.component';
+import {InfoCustomerComponent} from './customer/info-customer/info-customer.component';
 import {AddParkingLotComponent} from './parking-lot-manage/add-parking-lot/add-parking-lot.component';
 import {EditParkingLotComponent} from './parking-lot-manage/edit-parking-lot/edit-parking-lot.component';
 import {ParkingMapComponent} from './parking-lot-manage/parking-map/parking-map.component';
@@ -30,6 +33,9 @@ export const routes: Routes = [
           {path: 'add-user', component: AddUserComponent},
           {path: 'user/:id', component: DetailUserComponent},
           {path: 'list-user', component: ListUserComponent},
+          {path: 'list-customer', component: ListCustomerComponent},
+          {path: 'add-customer', component: AddCustomerComponent},
+          {path: 'info-customer/:id', component: InfoCustomerComponent}
           {path: 'addParkingLot', component: AddParkingLotComponent},
           {path: 'editParkingLot/:id', component: EditParkingLotComponent},
           {path: 'parkingMap', component: ParkingMapComponent},
