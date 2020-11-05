@@ -20,9 +20,8 @@ export class AddUserComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       fullName: ['', [Validators.required]],
-      username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9.]+[@][a-zA-Z0-9]+[.][a-zA-Z0-9]+')]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       gender: ['Nam', [Validators.required]],
       birthday: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(12)]],
@@ -46,6 +45,6 @@ export class AddUserComponent implements OnInit {
         console.log('Create failed!');
       }
     );
-    // this.router.navigateByUrl('');
+    this.router.navigateByUrl('');
   }
 }

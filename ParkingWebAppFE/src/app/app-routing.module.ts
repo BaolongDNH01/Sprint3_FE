@@ -7,6 +7,7 @@ import { AuthLoginComponent } from './login/auth-login/auth-login.component';
 import { ListUserComponent } from './user/list-user/list-user.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { DetailUserComponent } from './user/detail-user/detail-user.component';
+import {NotificationComponent} from './notification/notification.component';
 
 
 export const routes: Routes = [
@@ -22,6 +23,7 @@ export const routes: Routes = [
           {path: 'add-user', component: AddUserComponent},
           {path: 'user/:id', component: DetailUserComponent},
           {path: 'list-user', component: ListUserComponent},
+          {path: '', component: NotificationComponent},
 
         ]
       },
