@@ -11,7 +11,7 @@
             Họ tên:
           </div>
           <div class="input-info col-md-6 ml-md-1">
-            <input disabled type="text" class="form-control" placeholder="Lê Thanh Tùng">
+            <input disabled type="text" class="form-control" placeholder="{{customer.nameCustomer}}">
           </div>
         </div>
         <br>
@@ -20,7 +20,7 @@
             Ngày sinh:
           </div>
           <div class="col-md-6 ml-md-1">
-            <input disabled type="text" class="form-control disabled" placeholder="13/05/1989">
+            <input disabled type="text" class="form-control disabled" placeholder="{{customer.birthday}}">
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
             Giới tính:
           </div>
           <div class="col-md-6">
-            <input disabled type="text" class="form-control disabled" placeholder="Nam">
+            <input disabled type="text" class="form-control disabled" placeholder="{{customer.gender}}">
           </div>
         </div>
         <br>
@@ -40,7 +40,7 @@
           </div>
           <div class="col-md-6">
             <input disabled type="text" class="form-control disabled"
-                   placeholder="0898241303">
+                   placeholder="{{customer.phone}}">
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
         Địa chỉ:
       </div>
       <div class="col-md-9 ml-5">
-        <input disabled type="text" class="form-control disabled" placeholder="28 Ngô Xuân Thu - Liên Chiểu - Đà Nẵng">
+        <input disabled type="text" class="form-control disabled" placeholder="{{customer.address}}">
       </div>
     </div>
     <!--    -->
@@ -62,29 +62,17 @@
       <table class="table table-bordered">
         <thead>
         <tr class="title-customer bg-info mt-md-0">
-          <th class="text-center">TÊN XE</th>
+          <th class="text-center">KIỂU XE</th>
           <th class="text-center">HÃNG XE</th>
           <th class="text-center">MÀU XE</th>
           <th class="text-center">BIỂN SỐ</th>
         </thead>
         <tbody>
-        <tr>
-          <td class="text-center">C250</td>
-          <td class="text-center">MERCEDES</td>
-          <td class="text-center">Black</td>
-          <td class="text-center">43C1-049.47</td>
-        </tr>
-        <tr>
-          <td class="text-center">Mazda3</td>
-          <td class="text-center">MAZDA</td>
-          <td class="text-center">Red</td>
-          <td class="text-center">43AA-567.89</td>
-        </tr>
-        <tr>
-          <td class="text-center">Camry</td>
-          <td class="text-center">TOYOTA</td>
-          <td class="text-center">Silve</td>
-          <td class="text-center">43D1-068.68</td>
+        <tr *ngFor="let car of carList ">
+          <td class="text-center">{{car.type}}</td>
+          <td class="text-center">{{car.producer}}</td>
+          <td class="text-center">{{car.color}}</td>
+          <td class="text-center">{{car.license}}</td>
         </tr>
         </tbody>
       </table>
@@ -93,7 +81,7 @@
       <div class="col-md-5">
       </div>
       <div class="col-md-4">
-        <button href="#" class="btn-close btn btn-success">Đóng</button>
+        <a href="/list-customer" class="btn-close btn btn-success">Đóng</a>
       </div>
     </div>
   </div>
