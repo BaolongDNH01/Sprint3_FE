@@ -1,6 +1,5 @@
-
 /*H2*/
-h2{
+h2 {
   font-size: x-large;
   font-weight: bolder;
   color: #0056b3;
@@ -8,7 +7,7 @@ h2{
 }
 
 /*input*/
-.input-info{
+.input-info {
   text-align: left;
   align-items: start;
   display: flex;
@@ -31,27 +30,32 @@ h2{
 }
 
 /*Tiêu đề*/
-.title-customer{
+.title-customer {
   color: white;
 }
 
 /*Sửa, xoá*/
-.btn-edit{
+.btn-edit {
   color: #007bff;
 }
 
-.btn-delete{
+.btn-delete {
   color: red;
 }
 
 /*Lưu, thêm*/
-.btn-creat{
+.btn-creat {
   width: 150px;
   height: 35px;
 }
 
-.btn-save{
+.btn-save {
   margin-top: 15px;
   width: 150px;
   height: 35px;
+}
+
+/*Invalid*/
+.notice {
+  color: red;
 }
