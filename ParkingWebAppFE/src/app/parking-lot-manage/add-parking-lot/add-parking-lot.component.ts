@@ -32,10 +32,12 @@ export class AddParkingLotComponent implements OnInit {
         this.switchFloor(1);
       }
     );
+  }
 
+  buildForm(): void{
     this.addParkingLotForm = this.formBuilder.group({
       idFloor: [1, Validators.required],
-      idZone: ['', Validators.required]
+      idZone: [this.listZoneShow[0].id, Validators.required]
     });
   }
 
@@ -50,5 +52,6 @@ export class AddParkingLotComponent implements OnInit {
         return zone;
       }
     });
+    this.buildForm();
   }
 }

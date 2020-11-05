@@ -1,13 +1,14 @@
 <div class="col-10">
 <div class="row">
-  <div class="col-6">
+  <div class="col-4">
     <h3 class="text-secondary">Danh sách bãi xe</h3>
   </div>
-  <div class="col-6">
+  <div class="col-8">
     <button class="button-custom" [routerLink]="['../addParkingLot']">Thêm vị trí mới</button>
     <label>
       <input class="input-custom" placeholder="Tìm kiếm ... ">
     </label>
+    <button class="button-custom bg-info" [routerLink]="['../parkingMap']">Bản đồ bãi đỗ</button>
   </div>
 </div>
 <div class="row text-secondary">
@@ -44,9 +45,12 @@
       <th>{{par.id}}</th>
       <td>{{par.nameZone + '-' + par.id}}</td>
       <td>{{par.nameFloor}}</td>
-      <td>{{par.status}}</td>
+      <td *ngIf="par.status">Chưa có xe</td>
+      <td *ngIf="!par.status">Đã có xe</td>
       <td>
-        <a class="text-danger m-3"> <i class="fa fa-trash-o" aria-hidden="true"></i> </a>
+        <a class="text-danger m-3" data-toggle="modal" data-target="#deleteModal" (click)="checkDelete(par)">
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </a>
         <a class="text-danger" [routerLink]="['../editParkingLot/' + par.id]"><i class="fa fa-pencil" aria-hidden="true"></i> </a>
       </td>
     </tr>
@@ -70,11 +74,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <div id="confirmBody">bạn có chắc muốn xóa sản phẩm id là: {{listProductsDelete.toString()}}?</div>
+        <div id="confirmBody">bạn có chắc muốn xóa: {{deleteItem.nameZone + '-' + deleteItem.id}}</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" (click)="deleteProducts()" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+        <button type="button" (click)="delete()" class="btn btn-primary" data-dismiss="modal">Confirm</button>
       </div>
     </div>
   </div>
