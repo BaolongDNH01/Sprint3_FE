@@ -20,6 +20,7 @@ import {LoginModule} from './login/login.module';
 import { NotificationComponent } from './notification/notification.component';
 import {StatisticModule} from './statistics-by-date/statistic/statistic.module';
 import {StatisticService} from './statistics-by-date/statistic/statistic.service';
+import {httpInterceptorProviders} from './login/auth/auth-http.interceptor';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {StatisticService} from './statistics-by-date/statistic/statistic.service
     StatisticModule
   ],
   providers: [
-    StatisticService
+    StatisticService,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
