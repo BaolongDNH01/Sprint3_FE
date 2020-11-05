@@ -3,3 +3,9 @@
   width: 100%;
   box-shadow: 5px 2px 10px #4e555b;
 }
+.title {
+  color: red;
+  text-align: center;
+
+  font-family: "Yu Gothic UI Semilight";
+}
