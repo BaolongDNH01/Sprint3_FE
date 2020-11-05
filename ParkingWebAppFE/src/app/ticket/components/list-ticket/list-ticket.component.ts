@@ -15,10 +15,12 @@ export class ListTicketComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   ticketList: Ticket[];
+  deletedTicketList: Ticket[];
   keywordSearch: string;
 
   checkCreate = false;
   checkEdit = false;
+  checkGetDeletedList = false;
 
   page = 1;
 
@@ -101,6 +103,30 @@ export class ListTicketComponent implements OnInit, OnDestroy {
 
   onEdit(idTicket: number): void {
 
+  }
+
+  onGetDeletedList(): void {
+    this.checkGetDeletedList = true;
+    this.ticketService.getDeletedTickets().subscribe({
+      next: data => {
+        this.deletedTicketList = data;
+        for (const i of this.deletedTicketList) {
+          if (i.ticketStatus === 'TICKET_DELETED') {
+            i.ticketStatus = 'Đã xoá';
+          }
+        }
+      },
+      error: err => console.log(err),
+      complete: () => {
+        console.log(this.checkGetDeletedList);
+       
+      }
+    });
+  }
+
+  backToList(): void {
+    console.log('yes');
+    this.checkGetDeletedList = false;
   }
 
   ngOnDestroy(): void {
