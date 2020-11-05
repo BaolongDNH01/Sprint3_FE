@@ -37,4 +37,16 @@ export class ParkingLotService {
   getParkingLotById(id: number): Observable<ParkingLot> {
     return this.httpClient.get<ParkingLot>(this.api + '/getParkingLotById/' + id);
   }
+
+  editZonePositionX(id: number, pX: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + '/changeZonePositionX/' + id + '/' + pX);
+  }
+
+  editZonePositionY(id: number, pY: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + '/changeZonePositionY/' + id + '/' + pY);
+  }
+
+  deleteParkingLot(id: number): Observable<any> {
+    return this.httpClient.delete(this.api + '/deleteParkingLot/' + id);
+  }
 }

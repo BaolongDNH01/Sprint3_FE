@@ -39,16 +39,16 @@ div.item-nav{
 }
 
 .button-custom{
-  width: 30%;
+  width: 22%;
   border-radius: 50px;
   background-color: #910c00;
   color: white;
-  margin: 20px;
+  margin: 6px;
   outline: none !important;
 }
 
 input.input-custom{
-  width: 100%;
+  width: 80%;
   border-radius: 50px;
   padding-left: 20px;
   outline: none;

@@ -1,102 +1,84 @@
-<div class="container-fluid">
-  <div class="row text-white page-style align-items-center ">
-    <div class="title col-6 mt-2">
-      <h4 class="align-items-center">HỆ THỐNG QUẢN LÍ BÃI ĐỖ XE</h4>
-    </div>
-    <div class="col-6 mt-1">
-      <div class="row align-items-center">
-        <div class="col-9 text-right">
-          <span>Xin chào Khánh!</span>
-        </div>
-        <div class="col-3 text-center">
-          <img class="circle-pic" src="" alt="profile picture">
-          <a class="logout ml-2">Đăng xuất</a>
-        </div>
-      </div>
-    </div>
+<div class="col-10">
+<div class="row">
+  <div class="col-4">
+    <h3 class="text-secondary">Danh sách bãi xe</h3>
   </div>
-  <div class="row">
-    <div class="col-2 border-nav">
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-home fa-2x text-warning" aria-hidden="true"></i> Trang chủ</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Quản lý nhân viên</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-users" aria-hidden="true"></i> Quản lí khách hàng</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-car" aria-hidden="true"></i> Quản lí xe ra / vào</a>
-      </div>
-      <div class="item-nav row main-color">
-        <a class="link" href="#"><i class="fa fa-braille" aria-hidden="true"></i> Quản lí bãi đỗ</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Quản lí vé</a>
-      </div>
-      <div class="item-nav row">
-        <a class="link" href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i> Thống kê</a>
-      </div>
-    </div>
-    <div class="col-10">
-      <div class="row">
-        <div class="col-6">
-          <h3 class="text-secondary p-3">Danh sách bãi xe</h3>
-        </div>
-        <div class="col-6">
-          <button class="button-custom">Thêm vị trí mới</button>
-          <label>
-            <input class="input-custom" placeholder="Tìm kiếm ... ">
-          </label>
-        </div>
-      </div>
-      <div class="row text-secondary">
-        <div class="col">
-          <h5 class="ml-3">
-            <label>
-              Tầng:
-              <select class="pl-2" (change)="filterByFloor($event.target.value)">
-                <option value="none">Tất cả</option>
-                <option *ngFor="let f of floorList" value="{{f.name}}">{{f.name}}</option>
-              </select>
-            </label>
-          </h5>
-        </div>
-      </div>
-      <div class="row">
-        <table class="table table-bordered mt-4 text-center">
-          <thead class="text-white bg-secondary">
-          <tr>
-            <th>#</th>
-            <th>Vị trí</th>
-            <th>Tầng</th>
-            <th>Tình Trạng</th>
-            <th>Tác vụ</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngIf="listParkingLotShow.length === 0" class="text-danger">Tầng không có dữ liệu !</tr>
-          <tr *ngFor="let par of listParkingLotShow | paginate: {
+  <div class="col-8">
+    <button class="button-custom" [routerLink]="['../addParkingLot']">Thêm vị trí mới</button>
+    <label>
+      <input class="input-custom" placeholder="Tìm kiếm ... ">
+    </label>
+    <button class="button-custom bg-info" [routerLink]="['../parkingMap']">Bản đồ bãi đỗ</button>
+  </div>
+</div>
+<div class="row text-secondary">
+  <div class="col">
+    <h5 class="ml-3">
+      <label>
+        Tầng:
+        <select class="pl-2" (change)="filterByFloor($event.target.value)">
+          <option value="none">Tất cả</option>
+          <option *ngFor="let f of floorList" value="{{f.name}}">{{f.name}}</option>
+        </select>
+      </label>
+    </h5>
+  </div>
+</div>
+<div class="row">
+  <table class="table table-bordered mt-4 text-center">
+    <thead class="text-white bg-secondary">
+    <tr>
+      <th>#</th>
+      <th>Vị trí</th>
+      <th>Tầng</th>
+      <th>Tình Trạng</th>
+      <th>Tác vụ</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="listParkingLotShow.length === 0" class="text-danger">Tầng không có dữ liệu !</tr>
+    <tr *ngFor="let par of listParkingLotShow | paginate: {
           id: 'listing_pagination',
           itemsPerPage: 8,
           currentPage: currentPage,
           totalItems: totalItem}">
-            <th>{{par.id}}</th>
-            <td>{{par.nameZone + '-' + par.id}}</td>
-            <td>{{par.nameFloor}}</td>
-            <td>{{par.status}}</td>
-            <td>
-              <a href="#" class="text-danger"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>
-              <a href="#" class="text-danger m-3"> <i class="fa fa-trash-o" aria-hidden="true"></i> </a>
-              <a href="#" class="text-danger"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <th>{{par.id}}</th>
+      <td>{{par.nameZone + '-' + par.id}}</td>
+      <td>{{par.nameFloor}}</td>
+      <td *ngIf="par.status">Chưa có xe</td>
+      <td *ngIf="!par.status">Đã có xe</td>
+      <td>
+        <a class="text-danger m-3" data-toggle="modal" data-target="#deleteModal" (click)="checkDelete(par)">
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </a>
+        <a class="text-danger" [routerLink]="['../editParkingLot/' + par.id]"><i class="fa fa-pencil" aria-hidden="true"></i> </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row justify-content-center">
+  <pagination-controls *ngIf="totalItem > 7" class="paginator" id="listing_pagination" maxSize="5" directionLinks="true"
+                       (pageChange)="currentPage = $event"></pagination-controls>
+</div>
+</div>
+
+<!--xóa-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="deleteModalLabel">Thông báo xóa</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div class="row justify-content-center">
-        <pagination-controls *ngIf="totalItem > 7" class="paginator" id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="currentPage = $event"></pagination-controls>
+      <div class="modal-body">
+        <div id="confirmBody">bạn có chắc muốn xóa: {{deleteItem.nameZone + '-' + deleteItem.id}}</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" (click)="delete()" class="btn btn-primary" data-dismiss="modal">Confirm</button>
       </div>
     </div>
   </div>

@@ -5,6 +5,7 @@ import { ListUserComponent } from './list-user/list-user.component';
 import { DetailUserComponent } from './detail-user/detail-user.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -18,6 +19,7 @@ import {RouterModule} from '@angular/router';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
   ]
 })
 export class UserModule { }

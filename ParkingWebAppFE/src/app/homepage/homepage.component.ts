@@ -10,12 +10,9 @@ import {AuthService} from '../login/service/auth.service';
 })
 export class HomepageComponent implements OnInit {
   roles: string[];
+  userId: string;
 
-  constructor(private jwt: JwtService, private router: Router,
-              private authService: AuthService,
-              private jwtService: JwtService,
-  ) {
-
+  constructor(private jwt: JwtService, private router: Router) {
     // dòng lệnh bắt login mới vào homepage
     // this.roles = jwt.getAuthorities();
     // if (this.roles.length === 0) {
@@ -24,7 +21,7 @@ export class HomepageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.jwt.getUserId());
+    this.userId = this.jwt.getUserId();
   }
 
 }

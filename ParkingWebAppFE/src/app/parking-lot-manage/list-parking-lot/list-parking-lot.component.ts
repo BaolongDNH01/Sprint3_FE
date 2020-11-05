@@ -14,11 +14,16 @@ export class ListParkingLotComponent implements OnInit {
   currentPage: number;
   totalItem: number;
   floorList: Floor[];
+  deleteItem = new ParkingLot;
 
   constructor(private parkingLotService: ParkingLotService) {
   }
 
   ngOnInit(): void {
+     this.prepare();
+  }
+
+  prepare(): void{
     this.parkingLotService.getAllParkingLot().subscribe(
       list => {
         this.listParkingLotApi = list;
@@ -44,5 +49,16 @@ export class ListParkingLotComponent implements OnInit {
         return par;
       }
     });
+  }
+
+  checkDelete(par: ParkingLot): void {
+    this.deleteItem = par;
+  }
+
+
+  delete(): void {
+    this.parkingLotService.deleteParkingLot(this.deleteItem.id).subscribe(
+      () => this.prepare()
+    );
   }
 }
