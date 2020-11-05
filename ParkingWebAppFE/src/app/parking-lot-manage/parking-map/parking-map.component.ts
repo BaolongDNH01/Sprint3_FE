@@ -4,6 +4,7 @@ import {ParkingLot} from '../entity/parking-lot';
 import {Floor} from '../entity/floor';
 import {Zone} from '../entity/zone';
 import {Ticket} from '../../ticket/models/Ticket';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 
 @Component({
   selector: 'app-parking-map',
@@ -17,29 +18,34 @@ export class ParkingMapComponent implements OnInit {
   private ctx: CanvasRenderingContext2D;
   private view;
   private parkingLotList: ParkingLot[] = [];
-  private zoneInFloor: Zone[] = [];
+  zoneInFloor: Zone[] = [];
   private parkingLotsEachZone: ParkingLot[] = [];
-  private floorList: Floor[] = [];
+  floorList: Floor[] = [];
   private contentSize = 50;
   private outlineSize = 40;
   private centerSize = 20;
   private parSizeW = 120;
   private parSizeH = 60;
-  scrWidth: number;
   zoneName: string;
   arrParkingLotPosition = [];
   parkingLotView = new ParkingLot;
-  ticket: Ticket = null;
+  zoneEdit: Zone;
+  scrWidth: number;
+  isInit = false;
+  floorShow = 1;
 
-  constructor(private parkingLotService: ParkingLotService) {
+  constructor(private parkingLotService: ParkingLotService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.getScreenSize();
   }
 
-  // @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', ['$event'])
   getScreenSize(event?): void {
+    this.arrParkingLotPosition = [];
     this.scrWidth = window.innerWidth * 67 / 100;
 
     this.parkingLotService.getAllFloor().subscribe(
@@ -54,7 +60,7 @@ export class ParkingMapComponent implements OnInit {
       },
       e => console.log(e),
       () => {
-        this.prepare(1);
+        this.prepare(this.floorShow);
       }
     );
   }
@@ -103,12 +109,15 @@ export class ParkingMapComponent implements OnInit {
     });
 
     // tạo sự kiện click
-    this.canvas.nativeElement.addEventListener('click', (evt) => {
-      const rect = this.canvas.nativeElement.getBoundingClientRect();
-      const x = evt.clientX - rect.left;
-      const y = evt.clientY - rect.top;
-      this.checkClick(x, y);
-    });
+    if (!this.isInit) {
+      this.canvas.nativeElement.addEventListener('click', (evt) => {
+        const rect = this.canvas.nativeElement.getBoundingClientRect();
+        const x = evt.clientX - rect.left;
+        const y = evt.clientY - rect.top;
+        this.checkClick(x, y);
+      });
+    }
+    this.isInit = true;
   }
 
   showAllComponent(zone: Zone): void {
@@ -158,7 +167,6 @@ export class ParkingMapComponent implements OnInit {
         parPositionX += this.centerSize + this.parSizeW;
       }
 
-      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH);
       //  lưu thông tin chỗ đỗ xe vào array riêng
       // tslint:disable-next-line:no-shadowed-variable
       const width = this.parSizeW;
@@ -167,19 +175,21 @@ export class ParkingMapComponent implements OnInit {
       const a = {parPositionX, parPositionY, width, height, par};
       this.arrParkingLotPosition.push(a);
 
-      if (par.status === 'Chưa có xe') {
+      if (par.status) {
         this.ctx.fillStyle = 'green';
       } else {
         this.ctx.fillStyle = 'red';
       }
+      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH);
+      this.ctx.fillStyle = 'black';
       this.ctx.fillText(this.zoneName + ' - ' + par.id, parPositionX + this.parSizeW / 2, parPositionY + this.parSizeH / 2);
       this.ctx.stroke();
     });
   }
 
   drawHorizontal(zone: Zone): void {
-    const height = this.parSizeW * 2 + this.outlineSize * 2 + this.centerSize + this.contentSize;
-    const width = this.outlineSize * 2 + this.parSizeH * (Math.ceil(this.parkingLotsEachZone.length / 2));
+    const height = this.parSizeW * 2 + this.outlineSize * 2 + this.centerSize;
+    const width = this.outlineSize * 2 + this.parSizeH * (Math.ceil(this.parkingLotsEachZone.length / 2)) + this.contentSize * 2;
     let count = 0;
     let parPositionX = zone.positionX;
     let parPositionY = zone.positionY;
@@ -192,12 +202,12 @@ export class ParkingMapComponent implements OnInit {
     this.ctx.textAlign = 'center';
     this.ctx.fillStyle = 'red';
     this.ctx.font = '15px Arial';
-    this.ctx.fillText(zone.name, zone.positionX + width / 2, zone.positionY + this.centerSize);
+    this.ctx.fillText(zone.name, zone.positionX + this.centerSize * 2, zone.positionY + height / 2);
 
 
     //  vẽ chỗ đỗ xe
-    parPositionY = parPositionY + this.contentSize;
-    parPositionX = parPositionX + this.outlineSize;
+    parPositionY = parPositionY + this.outlineSize;
+    parPositionX = parPositionX + this.outlineSize + this.contentSize;
     this.parkingLotsEachZone.forEach(par => {
       count++;
       if (count % 2 === 1 && count !== 1) {
@@ -207,18 +217,20 @@ export class ParkingMapComponent implements OnInit {
       if (count % 2 === 0 && count !== 1) {
         parPositionY += this.centerSize + this.parSizeW;
       }
-      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH, this.parSizeW);
       // tslint:disable-next-line:no-shadowed-variable
       const width = this.parSizeW;
       // tslint:disable-next-line:no-shadowed-variable
       const height = this.parSizeH;
       const a = {parPositionX, parPositionY, width, height, par};
       this.arrParkingLotPosition.push(a);
-      if (par.status === 'Chưa có xe') {
+      if (par.status) {
         this.ctx.fillStyle = 'green';
       } else {
         this.ctx.fillStyle = 'red';
       }
+      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH, this.parSizeW);
+
+      this.ctx.fillStyle = 'black';
       this.ctx.fillText(this.zoneName + '-' + par.id, parPositionX + this.parSizeW / 4, parPositionY + this.parSizeW / 2);
       this.ctx.stroke();
     });
@@ -234,6 +246,29 @@ export class ParkingMapComponent implements OnInit {
         }
       }
     });
+  }
+
+  changePositionX(id: number, pX: number): void {
+    this.parkingLotService.editZonePositionX(id, pX).subscribe(
+      () => null,
+      () => null,
+      () => window.location.reload()
+    );
+  }
+
+  changePositionY(id: number, pY: number): void {
+    this.parkingLotService.editZonePositionY(id, pY).subscribe(
+      () => null,
+      () => null,
+      () => window.location.reload()
+    );
+  }
+
+  saveParkingLotToCreateTicket(par: ParkingLot): void {
+    sessionStorage.setItem('floor', par.nameFloor);
+    sessionStorage.setItem('zone', par.nameZone);
+    sessionStorage.setItem('idParkingLot', String(par.id));
+    this.router.navigateByUrl('ticket/list').then();
   }
 }
 

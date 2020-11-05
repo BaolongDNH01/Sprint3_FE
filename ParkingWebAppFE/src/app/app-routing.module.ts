@@ -35,7 +35,7 @@ export const routes: Routes = [
           {path: 'list-user', component: ListUserComponent},
           {path: 'list-customer', component: ListCustomerComponent},
           {path: 'add-customer', component: AddCustomerComponent},
-          {path: 'info-customer/:id', component: InfoCustomerComponent}
+          {path: 'info-customer/:id', component: InfoCustomerComponent},
           {path: 'addParkingLot', component: AddParkingLotComponent},
           {path: 'editParkingLot/:id', component: EditParkingLotComponent},
           {path: 'parkingMap', component: ParkingMapComponent},

@@ -23,6 +23,10 @@ export class StatisticService {
     return this.httpClient.get<string[]>(this.API_URL + 'getAllCarByDateOut/' + dateIn + '/' + dateOut);
   }
 
+  getAllCarByDateInDateOut(dateIn: string, dateOut: string): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.API_URL + 'getAllCarByDateInDateOut/' + dateIn + '/' + dateOut);
+  }
+
   getAllCountUser(): Observable<number> {
     return this.httpClient.get<number>(this.API_URL + 'count-user');
   }

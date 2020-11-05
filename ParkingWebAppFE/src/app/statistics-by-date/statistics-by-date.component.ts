@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormControlName, FormGroup} from '@angular/forms';
 import {StatisticService} from './statistic/statistic.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -10,43 +11,26 @@ import {StatisticService} from './statistic/statistic.service';
 })
 export class StatisticsByDateComponent implements OnInit {
   lengthTotalDate = 0;
+  lengthArray2d = 0;
+  arrDataClone = [[]];
 
   constructor(
-    private statisticService: StatisticService
+    private statisticService: StatisticService,
+    private routes: Router
   ) {
-    for (this.i = 0; this.i < this.date.length; this.i++) {
-      for (let j = 0; j <= this.i; j++) {
-      }
-    }
-    console.log(this.i);
-
   }
 
   date = [['26/10', 3, 6], ['27/12', 5, 2]];
-  test = [[this.date[0][0], this.date[0][1], this.date[0][2]], [this.date[1][0], this.date[1][1], this.date[1][2]]];
-  i = 0;
-  j: number;
-  title = 'Company Hiring Report';
-  type = 'ComboChart';
-  data = this.test;
-  columnNames = ['Xe ra', 'Xe vao'];
-  options = {
-    hAxis: {
-      title: 'Department'
-    },
-    vAxis: {
-      title: 'Employee hired'
-    },
-    seriesType: 'bars',
-    series: {2: {type: 'line'}}
-  };
+
+  checkDate: any;
+  dateTotal = [];
+  title: string;
+  type: string;
+  data = [[]];
+  columnNames = [];
   width = 600;
   height = 500;
-  checkDate: any;
-  checkDateIn = [];
-  checkDateOut = [];
-  dateTotal = [];
-  array2d = [[]];
+  options: any;
 
   ngOnInit(): void {
     this.checkDate = new FormGroup({
@@ -55,61 +39,49 @@ export class StatisticsByDateComponent implements OnInit {
     });
   }
 
+  canvas(): void {
+    this.title = 'Bao cáo kết quả';
+    this.type = 'ComboChart';
+    this.data = this.arrDataClone;
+    this.columnNames = ['Xe ra', 'Xe vao'];
+    this.options = {
+      hAxis: {
+        title: 'Tổng số xe ra, xe vào theo ngày'
+      },
+      vAxis: {
+        title: ''
+      },
+      seriesType: 'bars',
+      series: {2: {type: 'line'}}
+    };
+    this.width = 600;
+    this.height = 500;
+  }
+
 
   onSubmit(): void {
-    this.statisticService.getAllCarByDateIn(this.checkDate.value.dateStart, this.checkDate.value.dateEnd).subscribe(
+
+    this.statisticService.getAllCarByDateInDateOut(this.checkDate.value.dateStart, this.checkDate.value.dateEnd).subscribe(
       list => {
         console.log(list);
-        for (let k = 0; k < list.length; k++) {
-          this.dateTotal.push(list[k][1].slice(0, 10));
+        this.dateTotal = list;
+        for (let i = 0; i < this.dateTotal.length; i++) {
+          console.log(i);
+          this.dateTotal[i][0] = this.dateTotal[i][0].slice(0, 10);
+          this.dateTotal[i][1] = parseInt(this.dateTotal[i][1]);
+          this.dateTotal[i][2] = parseInt(this.dateTotal[i][2]);
         }
       }, error => {
       },
       () => {
-        this.statisticService.getAllCarByDateOut(this.checkDate.value.dateStart, this.checkDate.value.dateEnd).subscribe(
-          list => {
-            console.log(list);
-            for (let k = 0; k < list.length; k++) {
-              if (this.dateTotal.includes(list[k][1].slice(0, 10))) {
-              } else {
-                this.dateTotal.push(list[k][1].slice(0, 10));
-              }
-            }
-            console.log(this.dateTotal);
-          }, error => {
-          },
-          () => {
-            this.createArray2D();
-          }
-        );
+        this.arrDataClone = this.dateTotal;
+        this.canvas();
       }
     );
 
   }
 
-  createArray2D(): void {
-    this.statisticService.getAllCarByDateIn(this.checkDate.value.dateStart, this.checkDate.value.dateEnd).subscribe(
-      list => {
-        this.lengthTotalDate = this.dateTotal.length;
-        console.log(this.dateTotal.length);
-        for (let k = 0; k < this.lengthTotalDate; k++) {
-          if (k < list.length && this.dateTotal.includes(list[k][1].slice(0, 10)) && list[k][1] != null) {
-            this.dateTotal.splice(this.dateTotal.indexOf(list[k][1].slice(0, 10)) + 1, 0, list[k][0]);
-          } else {
-            console.log(k);
-            console.log(this.dateTotal.indexOf(list[this.dateTotal.length].slice(0, 10)));
-            // this.dateTotal.splice(this.dateTotal.indexOf(list[this.dateTotal.length - 1].slice(0, 10)), 0, 0);
-            // console.log(this.dateTotal.indexOf(list[this.dateTotal.length][1].slice(0, 10)));
-          }
-        }
-        console.log(this.dateTotal);
-        console.log(this.dateTotal.length);
-      }, error => {
-      },
-      () => {
-
-      }
-    );
+  exit(): void {
+    this.routes.navigateByUrl('/');
   }
-
 }
