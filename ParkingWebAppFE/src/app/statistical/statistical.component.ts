@@ -89,7 +89,6 @@ export class StatisticalComponent implements OnInit {
             this.typeCar.push(list[i].type);
             this.carService.findAllCarByType(list[i].type).subscribe(
               carByType => {
-                console.log(carByType.length);
                 this.countTypeCar.push(carByType.length);
               }, error => {
 
@@ -108,7 +107,7 @@ export class StatisticalComponent implements OnInit {
                   },
                   options: {
                     title: {
-                      text: 'Bar Chart',
+                      text: 'Các hãng xe thông dụng hiện nay tại bãi',
                       display: true
                     },
                     scales: {
