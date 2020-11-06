@@ -3,8 +3,7 @@ import {ParkingLotService} from '../service/parking-lot.service';
 import {ParkingLot} from '../entity/parking-lot';
 import {Floor} from '../entity/floor';
 import {Zone} from '../entity/zone';
-import {Ticket} from '../../ticket/models/Ticket';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-parking-map',
@@ -238,11 +237,21 @@ export class ParkingMapComponent implements OnInit {
 
   checkClick(mX, mY): void {
     this.arrParkingLotPosition.forEach(arr => {
-      if (mX >= arr.parPositionX && mX <= arr.parPositionX + arr.width) {
-        if (mY >= arr.parPositionY && mY <= arr.parPositionY + arr.height) {
-          this.parkingLotView = arr.par;
-          document.getElementById('view').click();
-          return;
+      if (arr.par.direction === 0) {
+        if (mX >= arr.parPositionX && mX <= arr.parPositionX + arr.width) {
+          if (mY >= arr.parPositionY && mY <= arr.parPositionY + arr.height) {
+            this.parkingLotView = arr.par;
+            document.getElementById('view').click();
+            return;
+          }
+        }
+      } else {
+        if (mX >= arr.parPositionX && mX <= arr.parPositionX + arr.height) {
+          if (mY >= arr.parPositionY && mY <= arr.parPositionY + arr.width) {
+            this.parkingLotView = arr.par;
+            document.getElementById('view').click();
+            return;
+          }
         }
       }
     });

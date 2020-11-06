@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ParkingLotService} from '../service/parking-lot.service';
 import {ParkingLot} from '../entity/parking-lot';
 import {Floor} from '../entity/floor';
+import {FormGroup} from '@angular/forms';
+import {Zone} from '../entity/zone';
 
 @Component({
   selector: 'app-list-parking-lot',
@@ -15,15 +17,19 @@ export class ListParkingLotComponent implements OnInit {
   totalItem: number;
   floorList: Floor[];
   deleteItem = new ParkingLot;
+  listZoneAdd: Zone[] = [];
+  countZoneAdd = 1;
+  isDone = false;
+  floorAdding: Floor;
 
   constructor(private parkingLotService: ParkingLotService) {
   }
 
   ngOnInit(): void {
-     this.prepare();
+    this.prepare();
   }
 
-  prepare(): void{
+  prepare(): void {
     this.parkingLotService.getAllParkingLot().subscribe(
       list => {
         this.listParkingLotApi = list;
@@ -60,5 +66,30 @@ export class ListParkingLotComponent implements OnInit {
     this.parkingLotService.deleteParkingLot(this.deleteItem.id).subscribe(
       () => this.prepare()
     );
+  }
+
+  prepareListZone(count: number): void {
+    for (let i = 0; i < count; i++) {
+      const zone = new Zone();
+      zone.id = i;
+      zone.direction = 0;
+      this.listZoneAdd.push(new Zone());
+    }
+    this.isDone = true;
+  }
+
+  save(): void {
+    this.parkingLotService.addFloor().subscribe(
+      floor => {
+        this.floorAdding = floor;
+        this.saveZone();
+      }
+    );
+  }
+
+  saveZone(): void {
+    this.listZoneAdd.forEach(zone => {
+      this.parkingLotService.addZone(this.floorAdding, zone).subscribe();
+    });
   }
 }

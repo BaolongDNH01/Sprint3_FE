@@ -82,3 +82,8 @@ thead{
   outline: none;
   background: #d4d4d4;
 }
+
+.height{
+  height: 31px;
+  margin-top: -5px;
+}
