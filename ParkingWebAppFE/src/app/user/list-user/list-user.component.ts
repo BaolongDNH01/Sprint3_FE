@@ -20,7 +20,8 @@ export class ListUserComponent implements OnInit {
     this.userService.listUser().subscribe(
       list => {
         this.listUser = list;
-        console.log(this.listUser);
+        // xóa hiện thị admin
+        this.listUser.splice(0, 1);
       }
     );
   }
