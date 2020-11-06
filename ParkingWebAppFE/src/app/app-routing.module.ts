@@ -32,6 +32,7 @@ export const routes: Routes = [
           },
           {path: 'add-user', component: AddUserComponent},
           {path: 'user/:id', component: DetailUserComponent},
+          {path: 'userInfo/:id', component: DetailUserComponent},
           {path: 'list-user', component: ListUserComponent},
           {path: 'list-customer', component: ListCustomerComponent},
           {path: 'add-customer', component: AddCustomerComponent},
@@ -43,7 +44,6 @@ export const routes: Routes = [
           {path: 'statistical', component: StatisticalComponent},
           {path: 'statistical/statisticalByDate', component: StatisticsByDateComponent},
           {path: '', component: NotificationComponent},
-
         ]
       },
     ]

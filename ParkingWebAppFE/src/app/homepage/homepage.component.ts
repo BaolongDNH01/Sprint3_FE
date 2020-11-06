@@ -11,17 +11,35 @@ import {AuthService} from '../login/service/auth.service';
 export class HomepageComponent implements OnInit {
   roles: string[];
   userId: string;
+  checkAdmin = false;
 
-  constructor(private jwt: JwtService, private router: Router) {
+  constructor(private jwt: JwtService, private router: Router,
+              private jwtService: JwtService,
+  ) {
     // dòng lệnh bắt login mới vào homepage
-    // this.roles = jwt.getAuthorities();
-    // if (this.roles.length === 0) {
-    //   router.navigateByUrl('login');
-    // }
+    try {
+      this.roles = jwt.getAuthorities();
+      if (this.roles[0] === 'ROLE_ADMIN') {
+        this.checkAdmin = true;
+      }
+    } catch (e) {
+      this.roles = [];
+    }
+    if (this.roles.length === 0) {
+      router.navigateByUrl('login');
+    }
   }
 
   ngOnInit(): void {
     this.userId = this.jwt.getUserId();
   }
 
+  logOut(): void {
+    if (window.confirm('Are you sure to logout ?')) {
+      this.jwtService.logOut();
+      window.location.reload();
+      window.location.href = 'login';
+    }
+    this.jwtService.saveUsername(window.localStorage.getItem('usernameRemember'));
+  }
 }

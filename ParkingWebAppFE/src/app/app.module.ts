@@ -12,18 +12,15 @@ import {CustomerModule} from './customer/customer.module';
 import {TicketModule} from './ticket/ticket.module';
 import {ParkingManagementComponent} from './parking-management/parking-management.component';
 import {HomepageComponent} from './homepage/homepage.component';
-import {RouterModule} from '@angular/router';
-import {CarService} from './service/car.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { AddUserComponent } from './user/add-user/add-user.component';
-import { ListUserComponent } from './user/list-user/list-user.component';
 import {UserModule} from './user/user.module';
 import {LoginModule} from './login/login.module';
 import { NotificationComponent } from './notification/notification.component';
 import {StatisticModule} from './statistics-by-date/statistic/statistic.module';
 import {StatisticService} from './statistics-by-date/statistic/statistic.service';
+import {httpInterceptorProviders} from './login/auth/auth-http.interceptor';
 
 
 @NgModule({
@@ -53,7 +50,8 @@ import {StatisticService} from './statistics-by-date/statistic/statistic.service
     StatisticModule
   ],
   providers: [
-    StatisticService
+    StatisticService,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
