@@ -4,10 +4,8 @@ import {Customer} from '../customer';
 import {CarService} from '../../car/car.service';
 import {Car} from '../../car/car';
 import {TicketService} from '../../ticket/services/ticket.service';
-import {Ticket} from '../../ticket/models/Ticket';
-import {tick} from '@angular/core/testing';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import validate = WebAssembly.validate;
+import {Router, Routes} from '@angular/router';
 
 @Component({
   selector: 'app-list-customer',
@@ -15,6 +13,7 @@ import validate = WebAssembly.validate;
   styleUrls: ['./list-customer.component.css']
 })
 export class ListCustomerComponent implements OnInit {
+  curPage = 1;
   customerList = [];
   carList: Car[];
   showCar = true;
@@ -29,7 +28,7 @@ export class ListCustomerComponent implements OnInit {
   showAddCar = false;
   key = '';
   constructor(private customerService: CustomerService, private carService: CarService, private ticketService: TicketService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder, private router: Router) {
     this.formCustomer = this.fb.group({
       id: [''],
       nameCustomer: ['', [Validators.required]],
@@ -80,11 +79,7 @@ export class ListCustomerComponent implements OnInit {
             console.log('error');
             this.carList = new Array();
           }, () => {
-            if (this.carList.length !== 0){
-              this.showCar = true;
-            }else {
-              this.showCar = false;
-            }
+            this.showCar = this.carList.length !== 0;
           }
         );
       }
@@ -220,11 +215,8 @@ export class ListCustomerComponent implements OnInit {
             this.carList = new Array();
           }, () => {
             this.showAddCar = false;
-            if (this.carList.length !== 0){
-              this.showCar = true;
-            }else {
-              this.showCar = false;
-            }
+            this.showCar = this.carList.length !== 0;
+            this.router.navigateByUrl('/ticket/list');
           }
         );
       }
@@ -247,6 +239,25 @@ export class ListCustomerComponent implements OnInit {
   reset(): void{
     this.key = '';
     this.search();
+  }
+
+  deleteCustomer(id: number): void{
+    this.customerService.deleteCustomer(id).subscribe(
+      next => {},
+      error => {},
+      () => {
+        this.curPage = 1;
+        this.customerService.findAll().subscribe(
+          next => {
+            this.customerList = next;
+          }, error => {
+            this.customerList = new Array();
+          }, () => {
+            alert('Bạn đã xóa thành công!');
+          }
+        );
+      }
+    );
   }
 
 }

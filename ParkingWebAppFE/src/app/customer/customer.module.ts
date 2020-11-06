@@ -5,6 +5,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { InfoCustomerComponent } from './info-customer/info-customer.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -20,6 +21,7 @@ import { InfoCustomerComponent } from './info-customer/info-customer.component';
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
+        NgxPaginationModule,
     ]
 })
 export class CustomerModule { }
