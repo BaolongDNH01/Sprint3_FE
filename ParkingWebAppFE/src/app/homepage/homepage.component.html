@@ -16,7 +16,7 @@
           </button>
         </div>
         <div class="col-3 text-center">
-          <a class="logout ml-2" [routerLink]="['/login']">Đăng xuất</a>
+          <a class="logout ml-2" (click)="logOut()">Đăng xuất</a>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
               Trang chủ
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="checkAdmin">
             <a [routerLink]="['/list-user']" class="nav-link active">
               <i class="fa fa-user" aria-hidden="true"></i>
               Quản lý nhân viên
@@ -59,6 +59,10 @@
             <a routerLink="ticket/list" class="nav-link active">
               <i class="fa fa-ticket" aria-hidden="true"></i>
               Quản lý vé
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="checkAdmin">
+            <a href="#" class="nav-link active">
             </a>
           </li>
           <li class="nav-item">

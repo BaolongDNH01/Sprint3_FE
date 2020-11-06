@@ -5,7 +5,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {JwtService} from './jwt.service';
 import {LoginInfo} from '../models/login-info';
 import {JwtResponse} from '../models/jwt-response';
-import {SocialSignUpInfo} from '../models/social-signup-info';
 
 
 const httpOptions = {
@@ -30,10 +29,6 @@ export class AuthService {
 
   authLogin(loginInfo: LoginInfo): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(this.AUTH_LOGIN_API, loginInfo, httpOptions);
-  }
-
-  signUpSocialUser(socialSignUpInfo: SocialSignUpInfo): Observable<string> {
-    return this.http.post(this.AUTH_SOCIAL_SIGNUP_API, socialSignUpInfo,  {responseType: 'text'});
   }
 
   getCurrentUser(): void {
