@@ -6,6 +6,7 @@ export class ParkingLot {
   nameZone: string;
   status: boolean;
   license: string;
+  direction: number;
 
   constructor() {
   }

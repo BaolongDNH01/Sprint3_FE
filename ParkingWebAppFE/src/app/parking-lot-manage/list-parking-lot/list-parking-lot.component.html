@@ -21,6 +21,9 @@
           <option *ngFor="let f of floorList" value="{{f.name}}">{{f.name}}</option>
         </select>
       </label>
+      <button class="btn ml-2 bg-secondary text-white height">
+        <h6><i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#addModal"> Thêm tầng</i></h6>
+      </button>
     </h5>
   </div>
 </div>
@@ -79,6 +82,41 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" (click)="delete()" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--thêm tầng-->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addModalLabel">Thêm tầng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>Danh sách các khu vực trong tầng</div>
+        <div class="row">
+          <div class="col-8">
+            <span>Số lượng khu: <input #count type="number" value="1" min="1"></span>
+          </div>
+          <div class="col-4">
+            <input type="submit" value="xác nhận" (click)="prepareListZone(count.value)">
+          </div>
+        </div>
+        <div class="row">
+          <span *ngIf="isDone" class="text-danger mt-2">*các trường để trống tự tạo dữ liệu tự động</span>
+          <label class="ml-3" *ngFor="let zone of listZoneAdd, index as i" >
+            Điền tên khu thứ {{i + 1}}: <input class="mt-2" (change)="zone.name = $event.target.value" placeholder="Tên khu vực">
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" (click)="save()" class="btn btn-primary" data-dismiss="modal" [disabled]="!isDone">Confirm</button>
       </div>
     </div>
   </div>
