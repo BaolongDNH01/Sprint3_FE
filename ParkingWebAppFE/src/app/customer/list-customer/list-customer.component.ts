@@ -168,6 +168,7 @@ export class ListCustomerComponent implements OnInit {
   }
 
   delete(idCar: number, idCustomer): void{
+    console.log(idCar);
     this.carService.deleteCar(idCar).subscribe(
       next => {},
       error => {},
@@ -242,6 +243,7 @@ export class ListCustomerComponent implements OnInit {
   }
 
   deleteCustomer(id: number): void{
+    console.log(id);
     this.customerService.deleteCustomer(id).subscribe(
       next => {},
       error => {},
@@ -257,6 +259,14 @@ export class ListCustomerComponent implements OnInit {
           }
         );
       }
+    );
+  }
+
+  findByIdCustomer(id: number): void{
+    this.customerService.findById(id).subscribe(
+      next => {
+        this.customerClass = next;
+      }, error => {}
     );
   }
 

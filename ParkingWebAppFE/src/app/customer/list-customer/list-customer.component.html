@@ -132,7 +132,7 @@
               </button></td>
               <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop">
+                <button type="button" class="btn fa fa-trash-o" (click)="findByIdCustomer(customer.id)" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop">
                 </button>
 
                 <!-- Modal -->
@@ -140,13 +140,13 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Chắc chắn muốn xóa khách hàng {{customer.nameCustomer}}!</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Chắc chắn muốn xóa khách hàng {{customerClass.nameCustomer}}!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" (click)="deleteCustomer(customer.id)" class="btn btn-primary" data-dismiss="modal">Xóa</button>
+                        <button type="button" (click)="deleteCustomer(customerClass.id)" class="btn btn-primary" data-dismiss="modal">Xóa</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
                       </div>
                     </div>
@@ -295,7 +295,7 @@
               </td>
               <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop3">
+                <button type="button" (click)="findByIdCustomer(customer.id)" class="btn fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop3">
                 </button>
 
                 <!-- Modal -->
@@ -303,13 +303,13 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel3">Chắc chắn muốn xóa khách hàng {{customer.nameCustomer}}!</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel3">Chắc chắn muốn xóa khách hàng {{customerClass.nameCustomer}}!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" (click)="deleteCustomer(customer.id)" class="btn btn-primary" data-dismiss="modal">Xóa</button>
+                        <button type="button" (click)="deleteCustomer(customerClass.id)" class="btn btn-primary" data-dismiss="modal">Xóa</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
                       </div>
                     </div>
