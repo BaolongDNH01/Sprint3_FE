@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CarService, listImage} from '../service/car.service';
 import {Car} from '../car/car';
@@ -79,8 +79,9 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
                 this.formIn.patchValue({customerName: data.customerName});
                 this.formIn.patchValue({email: data.customerEmail});
                 const ticketId = data.ticketId;
+                localStorage.setItem('license', next.results[0].plate);
                 if (ticketId == null) {
-                  this.URL = '/list-user';
+                  this.URL = '/ticket/list';
                   this.modalBody = 'Vé hết hiệu lực hoặc chưa mua vé.\n Mua vé mới?';
                   $('#dialogModal').modal('show');
                 } else {
@@ -88,7 +89,7 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
                   this.formIn.patchValue({parkingLot: data.parkingLotDTO.nameZone + '-' + data.parkingLotDTO.id});
                 }
               }, error => {
-                this.URL = '/ticket/list';
+                this.URL = '/list-user';
                 this.modalBody = 'Xe chưa đăng ký \n Đăng ký thông tin xe?';
                 $('#dialogModal').modal('show');
               });
@@ -114,6 +115,7 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
   changeImage(): void {
     this.formIn.reset();
     this.formOut.reset();
+    localStorage.setItem('license', null);
     if (this.index < this.imageList.length) {
       this.index++;
     } else {
@@ -165,7 +167,6 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
         console.log(error);
       });
     }
-    this.changeImage();
   }
 
   goToLink(url: string): void {
@@ -193,10 +194,17 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
         console.log(error);
       });
     }
+  }
+
+  @HostListener('document:keypress', ['$event'])
+  processChangeImage(event: KeyboardEvent): void {
     this.changeImage();
   }
 
   ngOnDestroy(): void {
     this.index = 0;
+    this.formIn.reset();
+    this.formOut.reset();
+    localStorage.setItem('license', null);
   }
 }
