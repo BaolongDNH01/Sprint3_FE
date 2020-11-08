@@ -27,4 +27,8 @@ export class CustomerService {
   editCustomer(customer: Customer): Observable<void>{
     return this.httpClient.post<void>(this.API_URL + 'edit-customer', customer);
   }
+  // Chau
+  findCustomerByIdCard(idCard: string): Observable<Customer>{
+    return this.httpClient.get<Customer>(this.API_URL + 'customerByIdCard/' + idCard);
+  }
 }

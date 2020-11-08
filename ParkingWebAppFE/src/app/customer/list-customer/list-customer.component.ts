@@ -33,10 +33,10 @@ export class ListCustomerComponent implements OnInit {
       id: [''],
       nameCustomer: ['', [Validators.required]],
       birthday: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.][a-zA-Z0-9]+')]],
+      phone: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(12), Validators.minLength(9)]],
       gender: ['', [Validators.required]],
-      idCard: ['', [Validators.required]],
+      idCard: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(12), Validators.minLength(9)]],
       address: ['', [Validators.required]],
       cars: ['']
     });
@@ -46,8 +46,8 @@ export class ListCustomerComponent implements OnInit {
       color: ['', [Validators.required]],
       producer: ['', [Validators.required]],
       type: ['', Validators.required],
-      ticket: ['', Validators.required],
-      parkings: ['', Validators.required],
+      ticket: [''],
+      parkings: [''],
       customerId: ['']
     });
   }
@@ -168,6 +168,7 @@ export class ListCustomerComponent implements OnInit {
   }
 
   delete(idCar: number, idCustomer): void{
+    console.log(idCar);
     this.carService.deleteCar(idCar).subscribe(
       next => {},
       error => {},
@@ -242,6 +243,7 @@ export class ListCustomerComponent implements OnInit {
   }
 
   deleteCustomer(id: number): void{
+    console.log(id);
     this.customerService.deleteCustomer(id).subscribe(
       next => {},
       error => {},
@@ -257,6 +259,14 @@ export class ListCustomerComponent implements OnInit {
           }
         );
       }
+    );
+  }
+
+  findByIdCustomer(id: number): void{
+    this.customerService.findById(id).subscribe(
+      next => {
+        this.customerClass = next;
+      }, error => {}
     );
   }
 
