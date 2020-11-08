@@ -1,6 +1,6 @@
 <div class="container-fluid m-auto ">
   <div class="row mt-10 ml-5">
-    <div class="col-12">
+    <div class="col-12 mt-5">
       <form [formGroup]="checkDate" (ngSubmit)="onSubmit()">
 
         <label>Ngày bắt đầu : </label>
@@ -40,7 +40,7 @@
           </google-chart>
         </div>
         <div *ngIf="this.dateTotal.length === 0">
-            <h1 class="title">Vui lòng nhập ngày để thống kê</h1>
+            <h1 class="title">Vui lòng nhập ngày để thống kê ...</h1>
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CarService, listImage} from '../service/car.service';
 import {Car} from '../car/car';
@@ -7,9 +7,8 @@ import {Customer} from '../customer/customer';
 import {Parking} from '../service/parking';
 import {ParkingRe} from './model/parkingRe';
 import {TicketService} from '../ticket/services/ticket.service';
-import any = jasmine.any;
-import {Ticket} from '../ticket/models/Ticket';
 import {ParkingReService} from './service/parking-re.service';
+import {ParkingLot} from '../parking-lot-manage/entity/parking-lot';
 
 declare var $: any;
 
@@ -29,8 +28,9 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
   car: Car;
   customer: Customer;
   modalBody: string;
-  newCar = false;
   parking: ParkingRe;
+  URL: string;
+  private idParking: number;
 
   constructor(private formBuilder: FormBuilder,
               private carService: CarService,
@@ -70,14 +70,18 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
           console.log(now);
           switch (camera) {
             case 'in':
+              localStorage.setItem('license', next.results[0].plate);
               this.formIn.patchValue({licenseIn: next.results[0].plate});
               this.formIn.patchValue({dateIn: now});
               this.formIn.patchValue({timeIn: now});
+              console.log(this.formIn.get('dateIn').value);
               this.parkingReService.checkIn(next.results[0].plate).subscribe(data => {
                 this.formIn.patchValue({customerName: data.customerName});
                 this.formIn.patchValue({email: data.customerEmail});
                 const ticketId = data.ticketId;
+                localStorage.setItem('license', next.results[0].plate);
                 if (ticketId == null) {
+                  this.URL = '/ticket/list';
                   this.modalBody = 'Vé hết hiệu lực hoặc chưa mua vé.\n Mua vé mới?';
                   $('#dialogModal').modal('show');
                 } else {
@@ -85,7 +89,7 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
                   this.formIn.patchValue({parkingLot: data.parkingLotDTO.nameZone + '-' + data.parkingLotDTO.id});
                 }
               }, error => {
-                this.newCar = true;
+                this.URL = '/list-user';
                 this.modalBody = 'Xe chưa đăng ký \n Đăng ký thông tin xe?';
                 $('#dialogModal').modal('show');
               });
@@ -95,20 +99,13 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
               this.formOut.patchValue({dateOut: now});
               this.formOut.patchValue({timeOut: now});
               this.parkingReService.checkOut(next.results[0].plate).subscribe(value => {
-                this.formOut.patchValue({type: ''});
+                this.formOut.patchValue({type: value.carType});
                 this.formOut.patchValue({parkingLot: value.parkingLotDTO.nameZone + '-' + value.parkingLotDTO.id});
                 this.formOut.patchValue({ticketStart: value.dateStart});
                 this.formOut.patchValue({ticketEnd: value.dateEnd});
+                this.idParking = value.idParking;
               });
               break;
-          }
-          if (!this.newCar) {
-            this.customerService.findByLicense(next.results[0].plate).subscribe(data => {
-                this.customer = data;
-              },
-              error => {
-                console.log(error);
-              });
           }
         },
         error => console.log(error));
@@ -118,6 +115,7 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
   changeImage(): void {
     this.formIn.reset();
     this.formOut.reset();
+    localStorage.setItem('license', null);
     if (this.index < this.imageList.length) {
       this.index++;
     } else {
@@ -151,22 +149,62 @@ export class ParkingManagementComponent implements OnInit, OnDestroy {
   }
 
   submitIn(): void {
-    this.parking = {
-      idParking: null,
-      dateIn: this.formIn.get('dateIn').value,
-      dateOut: null,
-      status: true,
-      car
-    };
-    console.log(this.parking);
-    this.changeImage();
+    if (this.formIn.valid) {
+      this.parking = {
+        idParking: null,
+        dateStart: this.formIn.get('dateIn').value,
+        dateEnd: null,
+        carType: null,
+        status: true,
+        customerName: null,
+        customerEmail: null,
+        license: this.formIn.get('licenseIn').value,
+        ticketId: null,
+        parkingLotDTO: null,
+      };
+      this.parkingReService.confirmIn(this.parking).subscribe(value => {
+      }, error => {
+        console.log(error);
+      });
+    }
+  }
+
+  goToLink(url: string): void {
+    window.open(url, '_blank');
   }
 
   submitOut(): void {
+    console.log(this.idParking);
+    if (this.formOut.valid) {
+      this.parking = {
+        idParking: this.idParking,
+        dateStart: null,
+        dateEnd: this.formOut.get('dateOut').value,
+        carType: null,
+        status: false,
+        customerName: null,
+        customerEmail: null,
+        license: this.formOut.get('licenseOut').value,
+        ticketId: null,
+        parkingLotDTO: null,
+      };
+      console.log(this.parking);
+      this.parkingReService.confirmOut(this.parking).subscribe(value => {
+      }, error => {
+        console.log(error);
+      });
+    }
+  }
+
+  @HostListener('document:keypress', ['$event'])
+  processChangeImage(event: KeyboardEvent): void {
     this.changeImage();
   }
 
   ngOnDestroy(): void {
     this.index = 0;
+    this.formIn.reset();
+    this.formOut.reset();
+    localStorage.setItem('license', null);
   }
 }
