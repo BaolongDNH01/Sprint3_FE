@@ -30,9 +30,16 @@ export class TicketService {
     return this.http.patch<Ticket>(`${this.TICKET_API}/${ticket.ticketId}`, ticket);
   }
 
+  getDeletedTicket(): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(`${this.TICKET_API}/ticket-deleted`);
+  }
 
   // quan
   getTicket(id: number): Observable<Ticket>{
     return this.http.get<Ticket>(this.TICKET_API + '/' + id);
+  }
+
+  getTicketByLicense(license: string): Observable<Ticket>{
+    return this.http.get(this.TICKET_API + '/get-by-license/' + license);
   }
 }

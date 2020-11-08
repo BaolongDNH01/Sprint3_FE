@@ -1,51 +1,11 @@
-<!--<div class="container-fluid">-->
-<!--  <div class="row text-white page-style align-items-center ">-->
-<!--    <div class="title col-6 mt-2">-->
-<!--      <h4 class="align-items-center">HỆ THỐNG QUẢN LÍ BÃI ĐỖ XE</h4>-->
-<!--    </div>-->
-<!--    <div class="col-6 mt-1">-->
-<!--      <div class="row align-items-center">-->
-<!--        <div class="col-9 text-right">-->
-<!--          <span>Xin chào!</span>-->
-<!--        </div>-->
-<!--        <div class="col-3 text-center">-->
-<!--          <img class="circle-pic" src="resources/unnamed.jpg" alt="profile picture">-->
-<!--          <a class="logout ml-2">Đăng xuất</a>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="row">-->
-<!--    <div class="col-2 border-nav">-->
-<!--      <div class="item-nav row">-->
-<!--        <a class="link" href="#"><i class="fa fa-home fa-2x text-warning" aria-hidden="true"></i> Trang chủ</a>-->
-<!--      </div>-->
-<!--      <div class="item-nav row">-->
-<!--        <a class="link" href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Quản lý nhân viên</a>-->
-<!--      </div>-->
-<!--      <div class="item-nav row">-->
-<!--        <a class="link" href="#"><i class="fa fa-users" aria-hidden="true"></i> Quản lí khách hàng</a>-->
-<!--      </div>-->
-<!--      <div class="item-nav row">-->
-<!--        <a class="link" href="#"><i class="fa fa-car" aria-hidden="true"></i> Quản lí xe ra / vào</a>-->
-<!--      </div>-->
-<!--      <div class="item-nav row main-color">-->
-<!--        <a class="link" href="#"><i class="fa fa-braille" aria-hidden="true"></i> Quản lí bãi đỗ</a>-->
-<!--      </div>-->
-<!--      <div class="item-nav row">-->
-<!--        <a class="link" href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Quản lí vé</a>-->
-<!--      </div>-->
-<!--      <div class="item-nav row">-->
-<!--        <a class="link" href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i> Thống kê</a>-->
-<!--      </div>-->
-<!--    </div>-->
-    <div class="col-10 container-fluid">
+
+    <div class="col-12">
       <div class="row">
         <div class="col-6">
           <h3 class="text-secondary p-3">DANH SÁCH KHÁCH HÀNG</h3>
         </div>
         <div class="col-2 mt-3">
-          <a href="add-customer" class="btn btn-primary">Thêm vị trí mới
+          <a href="add-customer" class="btn btn-primary">Thêm khách hàng
             <i class="fa fa-plus" aria-hidden="true"></i>
           </a>
 
@@ -70,7 +30,7 @@
               <th scope="col" colspan="3">Tác vụ</th>
             </tr>
             </thead>
-            <tbody *ngFor="let customer of customerList| paginate: { itemsPerPage: 1, currentPage: curPage }; let i = index" >
+            <tbody *ngFor="let customer of customerList| paginate: { itemsPerPage: 5, currentPage: curPage }; let i = index" >
             <tr *ngIf="customer.id !== id">
               <th scope="row">{{i+1}}</th>
               <td> <a href="info-customer/{{customer.id}}">{{customer.nameCustomer}}</a> </td>
@@ -110,7 +70,7 @@
                           </thead>
                           <tbody *ngFor="let car of carList">
                           <tr *ngIf="car.carId !== idCar">
-                            <th scope="row">{{car.type}}</th>
+                            <td >{{car.type}}</td>
                             <td>{{car.producer}}</td>
                             <td >{{car.color}}</td>
                             <td>{{car.license}}</td>
@@ -118,20 +78,44 @@
                             <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
                           </tr>
                           <tr *ngIf="car.carId == idCar" [formGroup]="formCar" style="background: #78ffff">
-                            <th scope="row"><input formControlName="type" type="text" class="form-control"></th>
-                            <td><input formControlName="producer" type="text" class="form-control"></td>
-                            <td ><input formControlName="color" type="text" class="form-control"></td>
-                            <td><input formControlName="license" type = "text" class="form-control"></td>
-                            <td><button (click)="editCar(customer.id)" class="btn bg-white fa fa-check-square-o" aria-hidden="true"></button></td>
+                            <td >
+                              <input formControlName="type" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('type').hasError('required') && formCar.get('type').touched">*Nhập kiểu xe!</p>
+                            </td>
+                            <td>
+                              <input formControlName="producer" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('producer').hasError('required') && formCar.get('producer').touched">*Nhập hãng xe!</p>
+                            </td>
+                            <td >
+                              <input formControlName="color" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('color').hasError('required') && formCar.get('color').touched">*Nhập màu xe!</p>
+                            </td>
+                            <td>
+                              <input formControlName="license" type = "text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('license').hasError('required') && formCar.get('license').touched">*Nhập biển số!</p>
+                            </td>
+                            <td><button (click)="editCar(customer.id)" [disabled]="formCar.invalid" class="btn bg-white fa fa-check-square-o" aria-hidden="true"></button></td>
                             <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
                           </tr>
                           </tbody>
                           <tr *ngIf="showAddCar === true" [formGroup]="formCar" style="background: #78ffff">
-                            <th scope="row"><input formControlName="type" type="text" class="form-control"></th>
-                            <td><input formControlName="producer" type="text" class="form-control"></td>
-                            <td ><input formControlName="color" type="text" class="form-control"></td>
-                            <td><input formControlName="license" type = "text" class="form-control"></td>
-                            <td><button (click)="addCar(customer.id)" class="btn bg-white"  data-dismiss="modal">Thêm</button></td>
+                            <td scope="row">
+                              <input formControlName="type" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('type').hasError('required') && formCar.get('type').touched">*Nhập kiểu xe!</p>
+                            </td>
+                            <td>
+                              <input formControlName="producer" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('producer').hasError('required') && formCar.get('producer').touched">*Nhập hãng xe!</p>
+                            </td>
+                            <td >
+                              <input formControlName="color" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('color').hasError('required') && formCar.get('color').touched">*Nhập màu xe!</p>
+                            </td>
+                            <td>
+                              <input formControlName="license" type = "text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('license').hasError('required') && formCar.get('license').touched">*Nhập biển số!</p>
+                            </td>
+                            <td><button (click)="addCar(customer.id)" [disabled]="formCar.invalid" class="btn bg-white"  data-dismiss="modal">Thêm</button></td>
                             <td><button (click)="close()" class="btn bg-white">Hủy</button></td>
                           </tr>
                         </table>
@@ -148,7 +132,7 @@
               </button></td>
               <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop">
+                <button type="button" class="btn fa fa-trash-o" (click)="findByIdCustomer(customer.id)" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop">
                 </button>
 
                 <!-- Modal -->
@@ -156,13 +140,13 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Chắc chắn muốn xóa khách hàng {{customer.nameCustomer}}!</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Chắc chắn muốn xóa khách hàng {{customerClass.nameCustomer}}!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" (click)="deleteCustomer(customer.id)" class="btn btn-primary" data-dismiss="modal">Xóa</button>
+                        <button type="button" (click)="deleteCustomer(customerClass.id)" class="btn btn-primary" data-dismiss="modal">Xóa</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
                       </div>
                     </div>
@@ -181,18 +165,42 @@
            Edit customer-->
             <tr *ngIf="customer.id === id" [formGroup]="formCustomer" style="background: #78ffff">
               <th scope="row">1</th>
-              <td><input class="form-control w-75" formControlName="nameCustomer" type = text></td>
-              <td><input class="form-control" formControlName="birthday" type = date></td>
+              <td>
+                <input class="form-control w-75" formControlName="nameCustomer" type = text>
+                <p class="text-danger mt-1" *ngIf="formCustomer.get('nameCustomer').hasError('required') && formCustomer.get('nameCustomer').touched">*Nhập tên!</p>
+              </td>
+              <td>
+                <input class="form-control" formControlName="birthday" type = date>
+                <p class="text-danger mt-1" *ngIf="formCustomer.get('birthday').hasError('required') && formCustomer.get('birthday').touched">*Nhập ngày sinh!</p>
+              </td>
               <td width="10%">
                 <select class="form-control"  formControlName="gender">
                   <option>Nam</option>
                   <option>Nữ</option>
                 </select>
               </td>
-              <td><input class="form-control" formControlName="idCard" type = text></td>
-              <td><input class="form-control" formControlName="phone" type = text></td>
-              <td><input class="form-control" formControlName="email" type = text></td>
-              <td><input class="form-control" formControlName="address" type =text></td>
+              <td>
+                <input class="form-control" formControlName="idCard" type = text>
+                <p class="text-danger" *ngIf="(formCustomer.get('idCard').hasError('required')) && formCustomer.get('idCard').touched">*Nhập chứng minh thư!</p>
+                <p class="text-danger mt-1" *ngIf="(!formCustomer.get('idCard').hasError('required') &&
+          (formCustomer.get('idCard').hasError('pattern') || formCustomer.get('idCard').hasError('minlength') || formCustomer.get('idCard').hasError('maxlength'))) &&
+          formCustomer.get('idCard').touched">*Chứng minh thư 9-12 số!</p>
+              </td>
+              <td>
+                <input class="form-control" formControlName="phone" type = text>
+                <p class="text-danger" *ngIf="(formCustomer.get('phone').hasError('required')) && formCustomer.get('phone').touched">*Nhập số điện thoại!</p>
+                <p class="text-danger mt-1" *ngIf="(!formCustomer.get('phone').hasError('required') &&
+          (formCustomer.get('phone').hasError('pattern') || formCustomer.get('phone').hasError('minlength') || formCustomer.get('phone').hasError('maxlength'))) &&
+          formCustomer.get('phone').touched">*Số điện thoại 9-12 số!</p>
+              </td>
+              <td>
+                <input class="form-control" formControlName="email" type = text>
+                <p class="text-danger" *ngIf="(formCustomer.get('email').hasError('required') || formCustomer.get('email').hasError('pattern')) && formCustomer.get('email').touched">*Email có dạng abc@abc.abc!</p>
+              </td>
+              <td>
+                <input class="form-control" formControlName="address" type =text>
+                <p class="text-danger" *ngIf="(formCustomer.get('address').hasError('required')) && formCustomer.get('address').touched">*Nhập đại chỉ!</p>
+              </td>
               <td>
                 <!-- Button trigger modal -->
                 <button (click)="findCarByCustomer(customer.id)" type="button" class="btn" data-toggle="modal" data-target="#exampleModal5">
@@ -223,7 +231,7 @@
                           </thead>
                           <tbody *ngFor="let car of carList">
                           <tr *ngIf="car.carId !== idCar">
-                            <th scope="row">{{car.type}}</th>
+                            <td scope="row">{{car.type}}</td>
                             <td>{{car.producer}}</td>
                             <td >{{car.color}}</td>
                             <td>{{car.license}}</td>
@@ -231,20 +239,44 @@
                             <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
                           </tr>
                           <tr *ngIf="car.carId == idCar" [formGroup]="formCar" style="background: #78ffff">
-                            <th scope="row"><input formControlName="type" type="text" class="form-control"></th>
-                            <td><input formControlName="producer" type="text" class="form-control"></td>
-                            <td ><input formControlName="color" type="text" class="form-control"></td>
-                            <td><input formControlName="license" type = "text" class="form-control"></td>
-                            <td><button (click)="editCar(customer.id)" class="btn bg-white fa fa-check-square-o" aria-hidden="true"></button></td>
+                            <td scope="row">
+                              <input formControlName="type" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('type').hasError('required') && formCar.get('type').touched">*Nhập kiểu xe!</p>
+                            </td>
+                            <td>
+                              <input formControlName="producer" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('producer').hasError('required') && formCar.get('producer').touched">*Nhập hãng xe!</p>
+                            </td>
+                            <td >
+                              <input formControlName="color" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('color').hasError('required') && formCar.get('color').touched">*Nhập màu xe!</p>
+                            </td>
+                            <td>
+                              <input formControlName="license" type = "text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('license').hasError('required') && formCar.get('license').touched">*Nhập biển số!</p>
+                            </td>
+                            <td><button (click)="editCar(customer.id)" [disabled]="formCar.invalid" class="btn bg-white fa fa-check-square-o" aria-hidden="true"></button></td>
                             <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash" aria-hidden="true"></button></td>
                           </tr>
                           </tbody>
                           <tr *ngIf="showAddCar === true" [formGroup]="formCar" style="background: #78ffff">
-                            <th scope="row"><input formControlName="type" type="text" class="form-control"></th>
-                            <td><input formControlName="producer" type="text" class="form-control"></td>
-                            <td ><input formControlName="color" type="text" class="form-control"></td>
-                            <td><input formControlName="license" type = "text" class="form-control"></td>
-                            <td><button (click)="addCar(customer.id)" class="btn bg-white"  data-dismiss="modal">Thêm</button></td>
+                            <td scope="row">
+                              <input formControlName="type" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('type').hasError('required') && formCar.get('type').touched">*Nhập kiểu xe!</p>
+                            </td>
+                            <td>
+                              <input formControlName="producer" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('producer').hasError('required') && formCar.get('producer').touched">*Nhập hãng xe!</p>
+                            </td>
+                            <td >
+                              <input formControlName="color" type="text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('color').hasError('required') && formCar.get('color').touched">*Nhập hãng xe!</p>
+                            </td>
+                            <td>
+                              <input formControlName="license" type = "text" class="form-control">
+                              <p class="text-danger mt-1" *ngIf="formCar.get('license').hasError('required') && formCar.get('license').touched">*Nhập hãng xe!</p>
+                            </td>
+                            <td><button [disabled]="formCar.invalid" (click)="addCar(customer.id)" class="btn bg-white"  data-dismiss="modal">Thêm</button></td>
                             <td><button (click)="close()" class="btn bg-white">Hủy</button></td>
                           </tr>
                         </table>
@@ -259,11 +291,11 @@
               </td>
               <td>
                 <button *ngIf="customer.id !== id" (click)="editFormCustomer(customer.id)" class="btn fa fa-pencil" aria-hidden="true"></button>
-                <button *ngIf="customer.id === id" (click)="editCustomer()" class="btn fa fa-check" aria-hidden="true"></button>
+                <button *ngIf="customer.id === id" (click)="editCustomer()" [disabled]="formCustomer.invalid" class="btn fa fa-check" aria-hidden="true"></button>
               </td>
               <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop3">
+                <button type="button" (click)="findByIdCustomer(customer.id)" class="btn fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#staticBackdrop3">
                 </button>
 
                 <!-- Modal -->
@@ -271,13 +303,13 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel3">Chắc chắn muốn xóa khách hàng {{customer.nameCustomer}}!</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel3">Chắc chắn muốn xóa khách hàng {{customerClass.nameCustomer}}!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" (click)="deleteCustomer(customer.id)" class="btn btn-primary" data-dismiss="modal">Xóa</button>
+                        <button type="button" (click)="deleteCustomer(customerClass.id)" class="btn btn-primary" data-dismiss="modal">Xóa</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
                       </div>
                     </div>
@@ -305,5 +337,3 @@
       </div>
     </div>
 
-<!--  </div>-->
-<!--</div>-->

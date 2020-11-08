@@ -1,4 +1,3 @@
-
 export class Car {
   carId: number;
   license: string;
