@@ -1,23 +1,31 @@
-<div class="container-fluid p-0 m-0">
+<div class="p-0 m-0">
 
   <div class="main-list shadow pb-md-5 pl-md-5 pr-md-5 pt-md-1">
     <br>
     <h2>THÊM KHÁCH HÀNG</h2>
     <!---->
+    <div class="err-input"
+         *ngIf="
+         (customerForm.get('nameCustomer').invalid && customerForm.get('nameCustomer').touched)||
+        (customerForm.get('birthday').invalid && customerForm.get('birthday').touched)
+
+">
+      Không được để trống
+    </div>
+<!---->
     <br>
     <form class="ml-5" [formGroup]="customerForm" (ngSubmit)="customerSubmit()">
-      <div class="row">
+      <div class="form-row">
         <div class="col-md-6">
-
           <div class="row">
             <div class="input-info col-md-3">
               Họ tên:
             </div>
             <div class="input-info col-md-7 ml-md-1">
-                            <div class="notice"
-                                 *ngIf="customerForm.get('nameCustomer').invalid && customerForm.get('nameCustomer').touched">
-                              Name invalid!
-                            </div>
+              <div class="notice"
+                   *ngIf="customerForm.get('nameCustomer').invalid && customerForm.get('nameCustomer').touched">
+                Name invalid!
+              </div>
               <input type="text" class="form-control" placeholder="Nhập họ tên..." formControlName="nameCustomer">
             </div>
           </div>
@@ -27,40 +35,26 @@
               Ngày sinh:
             </div>
             <div class="col-md-7 ml-md-1">
-                            <div class="notice"
-                                 *ngIf="customerForm.get('birthday').invalid && customerForm.get('birthday').touched">
-                              Birthday invalid!
-                            </div>
+              <div class="notice"
+                   *ngIf="customerForm.get('birthday').invalid && customerForm.get('birthday').touched">
+                Birthday invalid!
+              </div>
               <input type="text" class="form-control" placeholder="Nhập ngày sinh..." formControlName="birthday">
             </div>
           </div>
           <br>
           <div class="row">
             <div class="input-info col-md-3">
-              Địa chỉ:
+              CMND:
             </div>
             <div class="col-md-7">
-                            <div class="notice ml-md-1"
-                                 *ngIf="customerForm.get('address').invalid && customerForm.get('address').touched">
-                              Address invalid!
-                            </div>
-              <input type="text" class="form-control ml-md-1" placeholder="Nhập địa chỉ..." formControlName="address">
+              <div class="notice ml-md-1"
+                   *ngIf="customerForm.get('idCard').invalid && customerForm.get('idCard').touched">
+                Id Card invalid!
+              </div>
+              <input type="text" class="form-control ml-md-1" placeholder="Nhập CMND..." formControlName="idCard">
             </div>
           </div>
-
-          <div class="row">
-            <div class="input-info col-md-3">
-              ID card:
-            </div>
-            <div class="col-md-7">
-                            <div class="notice ml-md-1"
-                                 *ngIf="customerForm.get('address').invalid && customerForm.get('address').touched">
-                              Address invalid!
-                            </div>
-              <input type="text" class="form-control ml-md-1" placeholder="Nhập địa chỉ..." formControlName="idCard">
-            </div>
-          </div>
-
         </div>
         <div class="col-md-6">
           <div class="row">
@@ -68,29 +62,17 @@
               Giới tính:
             </div>
             <div class="col-md-7">
-                            <div class="notice"
-                                 *ngIf="customerForm.get('gender').invalid && customerForm.get('gender').touched">
-                              Gender invalid!
-                            </div>
-<!--                          <input type="text" class="form-control" placeholder="Nhập giới tính..." formControlName="gender">-->
-              <div class="form-check-inline">
-                <label class="form-check-label">
-                  <input type="radio" class="form-check-input" name="optradio" value="Nam" formControlName="gender"
-                         checked>Nam
-                </label>
+              <div class="form-check form-check-inline">
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optradio" value="Nam" formControlName="gender"
+                           checked>Nam
+                  </label>
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optradio" value="Nữ" formControlName="gender">Nữ
+                  </label>
+                </div>
               </div>
-              <div class="form-check-inline">
-                <label class="form-check-label">
-                  <input type="radio" class="form-check-input" name="optradio" value="Nữ" formControlName="gender">Nữ
-                </label>
-              </div>
-
-              <div class="form-check-inline">
-                <label class="form-check-label">
-                  <input type="radio" class="form-check-input" name="optradio" value="Khác" formControlName="gender">Khác
-                </label>
-              </div>
-
             </div>
           </div>
           <br>
@@ -99,10 +81,10 @@
               Số điện thoại:
             </div>
             <div class="col-md-7">
-                            <div class="notice"
-                                 *ngIf="customerForm.get('phone').invalid && customerForm.get('phone').touched">
-                              Phone number invalid!
-                            </div>
+              <div class="notice"
+                   *ngIf="customerForm.get('phone').invalid && customerForm.get('phone').touched">
+                Phone number invalid!
+              </div>
               <input type="text" class="form-control"
                      placeholder="Nhập số điện thoại..." formControlName="phone">
             </div>
@@ -113,13 +95,26 @@
               Email:
             </div>
             <div class="col-md-7">
-                            <div class="notice"
-                                 *ngIf="customerForm.get('email').invalid && customerForm.get('email').touched">
-                              Email invalid!
-                            </div>
+              <div class="notice"
+                   *ngIf="customerForm.get('email').invalid && customerForm.get('email').touched">
+                Email invalid!
+              </div>
               <input type="text" class="form-control" placeholder="Nhập email..." formControlName="email">
             </div>
           </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="input-info col-md-1">
+          Địa chỉ:
+        </div>
+        <div class="col-md-9 addres">
+          <div class="notice ml-md-1"
+               *ngIf="customerForm.get('address').invalid && customerForm.get('address').touched">
+            Address invalid!
+          </div>
+          <input type="text" class="form-control" placeholder="Nhập địa chỉ..." formControlName="address">
         </div>
       </div>
     </form>
@@ -128,7 +123,7 @@
     <!--    -->
     <h2>THÊM XE KHÁCH HÀNG</h2>
     <br>
-    <form [formGroup]="carForm" >
+    <form [formGroup]="carForm">
       <div class="row">
         <table class="table table-bordered">
           <thead>
