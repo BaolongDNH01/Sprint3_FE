@@ -4,6 +4,7 @@ import {ParkingLot} from '../entity/parking-lot';
 import {Floor} from '../entity/floor';
 import {Zone} from '../entity/zone';
 import {ActivatedRoute, Router} from '@angular/router';
+import set = Reflect.set;
 
 @Component({
   selector: 'app-parking-map',
@@ -21,10 +22,11 @@ export class ParkingMapComponent implements OnInit {
   private parkingLotsEachZone: ParkingLot[] = [];
   floorList: Floor[] = [];
   private contentSize = 50;
-  private outlineSize = 40;
+  private outlineSize = 20;
   private centerSize = 20;
-  private parSizeW = 120;
-  private parSizeH = 60;
+  private parSizeW = 70;
+  private parSizeH = 50;
+  private fixBg = 90;
   zoneName: string;
   arrParkingLotPosition = [];
   parkingLotView = new ParkingLot;
@@ -32,26 +34,50 @@ export class ParkingMapComponent implements OnInit {
   scrWidth: number;
   isInit = false;
   floorShow = 1;
+  imgCarLeft = new Image();
+  imgCarRight = new Image();
+  imgCarUp = new Image();
+  imgCarDown = new Image();
+  imgBgZone = new Image();
+  imgBg = new Image();
+  carLeft = 'assets/images/map-resource/carLeft.png';
+  carRight = 'assets/images/map-resource/carRight.png';
+  carUp = 'assets/images/map-resource/carUp.png';
+  carDown = 'assets/images/map-resource/carDown.png';
+  bgZone = 'assets/images/map-resource/bgZone.jpg';
+  bg = 'assets/images/map-resource/bg.png';
 
   constructor(private parkingLotService: ParkingLotService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
+    this.imgBg.src = this.bg;
+    this.imgCarLeft.src = this.carLeft;
+    this.imgCarRight.src = this.carRight;
+    this.imgCarDown.src = this.carDown;
+    this.imgCarUp.src = this.carUp;
+    this.imgBgZone.src = this.bgZone;
   }
 
   ngOnInit(): void {
-    this.getScreenSize();
+    setTimeout(() => {
+      this.getScreenSize();
+    }, 200);
   }
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?): void {
     this.arrParkingLotPosition = [];
+    this.parkingLotsEachZone = [];
+    this.parkingLotList = [];
     this.scrWidth = window.innerWidth * 67 / 100;
-
     this.parkingLotService.getAllFloor().subscribe(
       list => this.floorList = list,
-      e => console.log(e)
+      e => console.log(e),
+      () => this.getApi()
     );
+  }
 
+  getApi(): void {
     // lấy tất cả chỗ đậu xe
     this.parkingLotService.getAllParkingLot().subscribe(
       list => {
@@ -66,11 +92,15 @@ export class ParkingMapComponent implements OnInit {
 
   prepare(floor: number): void {
     //  ve nen
+    this.floorShow = floor;
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.view = this.ctx.canvas;
     this.ctx.clearRect(0, 0, this.view.width, this.view.height);
+    this.ctx.globalAlpha = 0.5;
     this.ctx.fillStyle = 'gray';
     this.ctx.fillRect(0, 0, this.view.width, this.view.height);
+    this.ctx.drawImage(this.imgBg, 0 - this.fixBg, 0 - this.fixBg, this.view.width + this.fixBg * 2, this.view.height + this.fixBg * 2);
+    this.ctx.globalAlpha = 1;
 
     // lấy zone theo tầng
     this.parkingLotService.getAllZoneByFloor(floor).subscribe(
@@ -145,8 +175,7 @@ export class ParkingMapComponent implements OnInit {
     let parPositionY = zone.positionY;
 
     //  vẽ ra khu
-    this.ctx.fillStyle = 'yellow';
-    this.ctx.fillRect(zone.positionX, zone.positionY, width, height);
+    this.ctx.drawImage(this.imgBgZone, zone.positionX, zone.positionY, width, height);
     //  vẽ tên khu
     this.ctx.textAlign = 'center';
     this.ctx.fillStyle = 'red';
@@ -174,28 +203,30 @@ export class ParkingMapComponent implements OnInit {
       const a = {parPositionX, parPositionY, width, height, par};
       this.arrParkingLotPosition.push(a);
 
+      this.ctx.fillStyle = 'lightBlue';
+      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH - 5);
       if (par.status) {
-        this.ctx.fillStyle = 'green';
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillText(this.zoneName + ' - ' + count, parPositionX + this.parSizeW / 2, parPositionY + this.parSizeH / 2);
       } else {
-        this.ctx.fillStyle = 'red';
+        if (count % 2 === 1) {
+          this.ctx.drawImage(this.imgCarRight, parPositionX, parPositionY, this.parSizeW, this.parSizeH);
+        } else if (count % 2 === 0) {
+          this.ctx.drawImage(this.imgCarLeft, parPositionX, parPositionY, this.parSizeW, this.parSizeH);
+        }
       }
-      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH);
-      this.ctx.fillStyle = 'black';
-      this.ctx.fillText(this.zoneName + ' - ' + par.id, parPositionX + this.parSizeW / 2, parPositionY + this.parSizeH / 2);
-      this.ctx.stroke();
     });
   }
 
   drawHorizontal(zone: Zone): void {
     const height = this.parSizeW * 2 + this.outlineSize * 2 + this.centerSize;
-    const width = this.outlineSize * 2 + this.parSizeH * (Math.ceil(this.parkingLotsEachZone.length / 2)) + this.contentSize * 2;
+    const width = this.outlineSize * 2 + this.parSizeH * (Math.ceil(this.parkingLotsEachZone.length / 2)) + this.contentSize * 1.5;
     let count = 0;
     let parPositionX = zone.positionX;
     let parPositionY = zone.positionY;
 
     //  vẽ ra khu
-    this.ctx.fillStyle = 'yellow';
-    this.ctx.fillRect(zone.positionX, zone.positionY, width, height);
+    this.ctx.drawImage(this.imgBgZone, zone.positionX, zone.positionY, width, height);
 
     //  vẽ tên khu
     this.ctx.textAlign = 'center';
@@ -206,7 +237,7 @@ export class ParkingMapComponent implements OnInit {
 
     //  vẽ chỗ đỗ xe
     parPositionY = parPositionY + this.outlineSize;
-    parPositionX = parPositionX + this.outlineSize + this.contentSize;
+    parPositionX = parPositionX + this.outlineSize + this.contentSize * 1.5;
     this.parkingLotsEachZone.forEach(par => {
       count++;
       if (count % 2 === 1 && count !== 1) {
@@ -222,16 +253,30 @@ export class ParkingMapComponent implements OnInit {
       const height = this.parSizeH;
       const a = {parPositionX, parPositionY, width, height, par};
       this.arrParkingLotPosition.push(a);
-      if (par.status) {
-        this.ctx.fillStyle = 'green';
-      } else {
-        this.ctx.fillStyle = 'red';
-      }
-      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH, this.parSizeW);
 
-      this.ctx.fillStyle = 'black';
-      this.ctx.fillText(this.zoneName + '-' + par.id, parPositionX + this.parSizeW / 4, parPositionY + this.parSizeW / 2);
-      this.ctx.stroke();
+      this.ctx.fillStyle = 'lightBlue';
+      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH - 5 , this.parSizeW);
+      if (par.status) {
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillText(this.zoneName + ' - ' + count, parPositionX + this.parSizeH / 2, parPositionY + this.parSizeW / 2);
+      } else {
+        if (count % 2 === 1) {
+          this.ctx.drawImage(
+            this.imgCarDown,
+            parPositionX - this.parSizeW / 10,
+            parPositionY * 1.1,
+            this.parSizeW * 0.8,
+            this.parSizeH * 1.2
+          );
+        } else if (count % 2 === 0) {
+          this.ctx.drawImage(
+            this.imgCarUp,
+            parPositionX - this.parSizeW / 20,
+            parPositionY * 1.05,
+            this.parSizeW * 0.8,
+            this.parSizeH * 1.2);
+        }
+      }
     });
   }
 
@@ -261,7 +306,7 @@ export class ParkingMapComponent implements OnInit {
     this.parkingLotService.editZonePositionX(id, pX).subscribe(
       () => null,
       () => null,
-      () => window.location.reload()
+      () => this.getScreenSize()
     );
   }
 
@@ -269,7 +314,7 @@ export class ParkingMapComponent implements OnInit {
     this.parkingLotService.editZonePositionY(id, pY).subscribe(
       () => null,
       () => null,
-      () => window.location.reload()
+      () => this.getScreenSize()
     );
   }
 
@@ -278,6 +323,10 @@ export class ParkingMapComponent implements OnInit {
     sessionStorage.setItem('zone', par.nameZone);
     sessionStorage.setItem('idParkingLot', String(par.id));
     this.router.navigateByUrl('ticket/list').then();
+  }
+
+  scroll(i: number): void {
+    document.documentElement.scrollTop =  window.pageYOffset + i;
   }
 }
 
