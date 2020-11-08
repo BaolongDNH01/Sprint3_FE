@@ -94,3 +94,19 @@ body {
   color: #0f6674;
   font-weight: bold;
 }
+
+.container-fluid {
+  height: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+#noNav {
+  height: 95% ;
+  overflow: auto;
+  /*background-color: rgba(255, 255, 255, 0.7);*/
+}
+
+#routing {
+  height: 90%;
+}
