@@ -186,7 +186,7 @@ export class ListCustomerComponent implements OnInit {
   }
 
   formAddCar(id: number): void{
-    this.formCar.patchValue({carId: null});
+    this.formCar.patchValue({carId: 0});
     this.formCar.patchValue({license: ''});
     this.formCar.patchValue({color: ''});
     this.formCar.patchValue({producer: ''});
