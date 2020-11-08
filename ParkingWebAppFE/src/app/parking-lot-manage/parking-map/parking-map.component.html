@@ -1,49 +1,25 @@
 <div class="row">
   <div class="col-12">
-    <div class="row d-flex">
-      <button class="btn btn-info mt-1" [routerLink]="['../listParkingLot']">Quay lại danh sách bãi đỗ</button>
+    <div class="row d-flex m-3">
+      <div class="col-5">
+        <button class="btn btn-info h-75" [routerLink]="['../listParkingLot']">Quay lại danh sách bãi đỗ</button>
+      </div>
+      <div class="col-6 ml-5">
+        <label>
+          <select class="btn btn-warning" (change)="prepare($event.target.value)">
+            <option class="bg-light text-dark" *ngFor="let floor of floorList"
+                    value="{{floor.id}}">{{floor.name}}</option>
+          </select>
+        </label>
+        <button class="btn btn-secondary h-75" [routerLink]="['../addParkingLot']">Thêm vị trí mới</button>
+        <button class="btn btn-secondary h-75" data-toggle="modal" data-target="#editModal" data-backdrop="false">Chỉnh sửa bản đồ</button>
+      </div>
     </div>
-    <div class="row d-flex">
-      <label>
-        <select class="btn btn-warning mt-1 mb-3" (change)="prepare($event.target.value)">
-          <option class="bg-light text-dark" *ngFor="let floor of floorList" value="{{floor.id}}">{{floor.name}}</option>
-        </select>
-      </label>
-      <button class="btn btn-secondary mt-1 mb-3 ml-4 h-75" [routerLink]="['../addParkingLot']">Thêm vị trí mới</button>
-    </div>
+
     <div class="row">
       <div class="col-9">
         <canvas #canvas width="970" height="1000">
         </canvas>
-      </div>
-      <div class="col-3">
-        <table class="table table-light table-bordered">
-          <thead>
-          <tr>
-            <th>khu vực</th>
-            <th>X</th>
-            <th>Y</th>
-            <th>Chiều</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let zone of zoneInFloor">
-            <th>{{zone.name}}</th>
-            <td><label>
-              <input class="" type="number" value="{{zone.positionX}}" (change)="changePositionX(zone.id, $event.target.value)">
-            </label></td>
-            <td><label>
-              <input class="" type="number" value="{{zone.positionY}}" (change)="changePositionY(zone.id, $event.target.value)">
-            </label></td>
-            <td><label>
-              <select [value]="zone.direction" class="">
-                <option value="0">Dọc</option>
-                <option value="1">Ngang</option>
-              </select>
-            </label></td>
-          </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </div>
@@ -89,3 +65,55 @@
   </div>
 </div>
 
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog opacity">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="editModalLabel">Chỉnh sửa giao diện</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <table class="table table-light table-bordered">
+            <thead>
+            <tr>
+              <th>khu vực</th>
+              <th>X</th>
+              <th>Y</th>
+              <th>Chiều</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let zone of zoneInFloor">
+              <th>{{zone.name}}</th>
+              <td><label>
+                <input class="width" type="number" value="{{zone.positionX}}"
+                       (change)="changePositionX(zone.id, $event.target.value)">
+              </label></td>
+              <td><label>
+                <input class="width" type="number" value="{{zone.positionY}}"
+                       (change)="changePositionY(zone.id, $event.target.value)">
+              </label></td>
+              <td><label>
+                <select [value]="zone.direction" class="">
+                  <option value="0">Dọc</option>
+                  <option value="1">Ngang</option>
+                </select>
+              </label></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="mr-5">
+          <button type="button" class="btn btn-secondary" (click)="scroll(-200)">page up</button>
+          <button type="button" class="btn btn-secondary ml-3" (click)="scroll(200)">page down</button>
+        </div>
+        <button type="button" class="btn btn-secondary ml-5" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
