@@ -53,4 +53,12 @@ export class ParkingLotService {
   addFloor(zones: Zone[]): Observable<any>{
     return this.httpClient.post<any>(this.api + '/saveFloor', zones);
   }
+
+  editZoneDirection(dir: number, id: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + '/changeDirection/' + id + '/' + dir);
+  }
+
+  editZoneName(id: number, name: string): Observable<any> {
+    return this.httpClient.get<any>(this.api + '/changeZoneName/' + id + '/' + name);
+  }
 }

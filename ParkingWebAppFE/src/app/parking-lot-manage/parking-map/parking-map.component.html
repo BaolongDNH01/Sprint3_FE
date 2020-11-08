@@ -18,7 +18,7 @@
 
     <div class="row">
       <div class="col-9">
-        <canvas #canvas width="970" height="1000">
+        <canvas #canvas width="{{scrWidth}}" height="{{scrHeight}}">
         </canvas>
       </div>
     </div>
@@ -40,17 +40,21 @@
         <div id="confirmBody">
           <div class="row">
             <div class="col-6">
-              <span>ID: {{parkingLotView.id}}</span>
+              <h6>ID: {{parkingLotView.idFake}}</h6>
             </div>
             <div class="col-6">
               <span>Tầng: {{parkingLotView.nameFloor}}</span>
             </div>
             <div class="col-6">
+              <h6 class="text-danger" *ngIf="parkingLotView.status">Trạng thái: Chưa có xe</h6>
+              <h6 class="text-danger" *ngIf="!parkingLotView.status">Trạng thái: Đã có xe</h6>
+            </div>
+            <div class="col-6">
               <span>Khu vực: {{parkingLotView.nameZone}}</span>
             </div>
             <div class="col-6">
-              <h6 class="text-danger" *ngIf="parkingLotView.status">Trạng thái: Chưa có xe</h6>
-              <h6 class="text-danger" *ngIf="!parkingLotView.status">Trạng thái: Đã có xe</h6>
+              <span>{{parkingLotView.carLicense}}
+              </span>
             </div>
           </div>
         </div>
@@ -79,6 +83,23 @@
           <table class="table table-light table-bordered">
             <thead>
             <tr>
+              <th>Bản đồ</th>
+              <td>chiều dài</td>
+              <td>chiều rộng</td>
+            </tr>
+            </thead>
+            <tr>
+              <td></td>
+              <td><input  class="width" type="number" (change)="changeSizeMap($event.target.value, 'w')" value="{{scrWidth}}"></td>
+              <td><input class="width" type="number" (change)="changeSizeMap($event.target.value, 'h')" value="{{scrHeight}}"></td>
+            </tr>
+          </table>
+        </div>
+        <hr>
+        <div>
+          <table class="table table-light table-bordered">
+            <thead>
+            <tr>
               <th>khu vực</th>
               <th>X</th>
               <th>Y</th>
@@ -87,7 +108,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let zone of zoneInFloor">
-              <th>{{zone.name}}</th>
+              <th><input (change)="changeZoneName(zone.id, $event.target.value)" type="text" value="{{zone.name}}"></th>
               <td><label>
                 <input class="width" type="number" value="{{zone.positionX}}"
                        (change)="changePositionX(zone.id, $event.target.value)">
@@ -97,7 +118,7 @@
                        (change)="changePositionY(zone.id, $event.target.value)">
               </label></td>
               <td><label>
-                <select [value]="zone.direction" class="">
+                <select (change)="changeDirection(zone.id, $event.target.value)" [value]="zone.direction">
                   <option value="0">Dọc</option>
                   <option value="1">Ngang</option>
                 </select>
