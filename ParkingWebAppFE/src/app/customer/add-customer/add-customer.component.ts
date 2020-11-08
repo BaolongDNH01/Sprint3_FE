@@ -17,6 +17,7 @@ export class AddCustomerComponent implements OnInit {
   carForm: FormGroup;
   car: Car;
   idCustomer: Customer;
+  carId: number;
 
   constructor(
     private fb: FormBuilder,
@@ -77,14 +78,22 @@ export class AddCustomerComponent implements OnInit {
         this.customerService.findCustomerByIdCard(this.customerForm.value.idCard).subscribe(
           list => {
             this.idCustomer = list;
-            console.log(list);
             this.carForm.value.customerId = this.idCustomer.id;
-            console.log(this.carForm.value);
+
           }, error => {
           },
           () => {
+            this.carService.findAllCar().subscribe(
+              listCar => {
+                this.carId = listCar.length + 1;
+              }, error => {
+              },
+              () => {
+                this.carSubmit();
+              }
+            );
             console.log(this.carForm.value);
-            this.carSubmit();
+
           }
         );
       }
@@ -98,6 +107,7 @@ export class AddCustomerComponent implements OnInit {
 
   carSubmit(): void {
     this.car = Object.assign({}, this.carForm.value);
+    this.car.carId = this.carId;
     this.carService.addCar(this.car).subscribe(
       list => {
       }, error => {
