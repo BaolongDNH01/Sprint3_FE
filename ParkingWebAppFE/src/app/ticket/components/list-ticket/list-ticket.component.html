@@ -22,9 +22,14 @@
           <pagination-controls (pageChange)="page = $event" class="text-light"></pagination-controls>
         </div>
 
-        <div class="ml-auto p-2">
+        <div class="ml-auto p-2" *ngIf="!checkGetDeleteList">
           <button class="btn btn-success ml-4 shadow plus mr-3" (click)="showCreateForm()">Thêm mới
             <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="ml-auto p-2" *ngIf="checkGetDeleteList">
+          <button class="btn btn-success ml-4 shadow plus mr-3" (click)="checkGetDeleteList = false">Quay lại
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
           </button>
         </div>
         <div class="mr-4 mt-2">
@@ -34,14 +39,14 @@
             </button>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#">Danh sách vé hết hạn</a>
-              <a class="dropdown-item" href="#">Danh sách vé xoá</a>
+              <a class="dropdown-item" (click)="getDeletedTicket()">Danh sách vé xoá</a>
               <a class="dropdown-item" href="#">Cài đặt</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row p-0 m-0">
+      <div class="row p-0 m-0" *ngIf="checkGetDeleteList; else showAll">
         <table class="table main-table">
           <thead>
             <tr>
@@ -61,7 +66,7 @@
           </thead>
           <tbody>
             <tr
-              *ngFor="let ticket of ticketList | filter: keywordSearch | paginate: { itemsPerPage: 5, currentPage: page }">
+              *ngFor="let ticket of deletedTicketList | filter: keywordSearch | paginate: { itemsPerPage: 5, currentPage: page }">
               <td class="text-center">{{ ticket.ticketId }}</td>
               <td class="text-center">{{ ticket.carPlate }}</td>
               <td class="text-center">{{ ticket.customerName }}</td>
@@ -75,6 +80,87 @@
               <td class="text-center">
                 <span class="badge badge-pill badge-info"> {{ ticket.ticketStatus }}</span>
               </td>
+              <td class="text-center">
+                <a class="border-0 text-info action-icon" [routerLink]="['edit', ticket.ticketId]">
+                  <i class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+              </td>
+              <td class="text-center" data-toggle="tooltip" data-placement="left">
+                <a class="border-0 text-danger action-icon" data-toggle="modal"
+                  [attr.data-target]="'#deleteModal'+ ticket.ticketId">
+                  <i class="fa fa-2x fa-trash-o" aria-hidden="true"></i>
+                </a>
+              </td>
+
+
+              <!-- Delete confirm dialog -->
+              <div class="modal fade" [id]="'deleteModal' + ticket.ticketId" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Xoá vé xe [{{ ticket.carPlate }}]?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-lg btn-success plus shadow"
+                        (click)="acceptDelete(ticket.ticketId)">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Đồng ý
+                      </button>
+                      <button type="button" class="btn btn-lg btn-danger plus shadow" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        Huỷ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #showAll>
+        <table class="table main-table">
+          <thead>
+            <tr>
+              <th class="text-center border-top-0">ID VÉ</th>
+              <th class="text-center border-top-0">ID XE</th>
+              <th class="text-center border-top-0">KHÁCH HÀNG</th>
+              <th class="text-center border-top-0">TẦNG</th>
+              <th class="text-center border-top-0">KHU</th>
+              <th class="text-center border-top-0">VỊ TRÍ</th>
+              <th class="text-center border-top-0">BẮT ĐẦU</th>
+              <th class="text-center border-top-0">LOẠI VÉ</th>
+              <th class="text-center border-top-0">KẾT THÚC</th>             
+              <th class="text-center border-top-0">GIÁ</th>
+              <!-- <th class="text-center border-top-0">TRẠNG THÁI</th> -->
+              <th class="text-center border-top-0" colspan="2">TÁC VỤ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let ticket of ticketList | filter: keywordSearch | paginate: { itemsPerPage: 5, currentPage: page }">
+              <td class="text-center">{{ ticket.ticketId }}</td>
+              <td class="text-center">{{ ticket.carPlate }}</td>
+              <td class="text-center">{{ ticket.customerName }}</td>
+              <td class="text-center">{{ ticket.floorName }}</td>
+              <td class="text-center">{{ ticket.zoneName }}</td>
+              <td class="text-center">{{ ticket.parkingLot }}</td>
+              <td class="text-center">{{ ticket.startDate | date: 'dd/MM/yy'}}</td>
+              <td class="text-center">{{ ticket.ticketTypeDetail }}</td>
+              <td class="text-center">{{ ticket.endDate | date: 'dd/MM/yy'}}</td>
+              
+              <td class="text-center">{{ ticket.price | currency: 'VND'}}</td>
+              <!-- <td class="text-center">
+                <span class="badge badge-pill badge-info"> {{ ticket.ticketStatus }}</span>
+              </td> -->
               <td class="text-center">
                 <a class="border-0 text-info action-icon" [routerLink]="['edit', ticket.ticketId]">
                   <i class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i>
@@ -118,60 +204,68 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </ng-template>
 
-      <div class="row px-3 m-0">
+      <div class="row m-0 px-0">
         <form [formGroup]="createTicketForm" *ngIf="checkCreate" (ngSubmit)="submitCreateTicket()">
           <table class="table main-table">
-            <tbody>
-              <td class="text-center">
-                <input type="text" class="form-control" formControlName="ticketId">
+            <tr>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="ticketId" style="width: 55px;" disabled>
+
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" formControlName="carPlate">
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="carPlate" style="width: 120px;" disabled>
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" formControlName="customerName">
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="customerName" style="width: 180px;" disabled>
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" formControlName="startDate">
+
+              <td class="text-center px-1 mx-0" (click)="onChoosePostion()" >
+                <input type="text" class="form-control" placeholder="Nhấn chọn" formControlName="floorName" style="width: 73px;" disabled>
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" formControlName="endDate">
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" placeholder="Chờ..." formControlName="zoneName" style="width: 63px;" disabled>
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" placeholder="" formControlName="floorName">
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" placeholder="Chờ..." formControlName="parkingLot" style="width: 40px;" disabled>
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" placeholder="" formControlName="zoneName">
+
+              <td class="text-center px-1 mx-0">
+                <input type="date" class="form-control" formControlName="startDate"
+                  [min]="minDate | date : 'yyyy-MM-dd'" style="width: 170px;">
+                  <!-- (change)="handlingStartDateToEndDate()"> -->
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" placeholder="" formControlName="parkingLot">
+              <td class="form-group px-1 mx-0">
+                <select formControlName="ticketTypeDetail" class="form-control" (change)="handlingTicketWithPrice()" style="width: 100px;">
+                  <option disabled selected>Loại</option>
+                  <option *ngFor="let detail of ticketTypeList" [value]="detail.detail">
+                    {{detail.detail}}
+                  </option>
+                </select>
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" placeholder="" formControlName="ticketTypeDetail">
+              <td class="text-center px-1 mx-0" style="width: 10%">
+                <input type="text" class="form-control" formControlName="endDate"
+                  [(ngModel)]="endDate" disabled>
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" placeholder="" formControlName="price">
+              
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" disabled formControlName="price" [(ngModel)]="currentPrice" style="width: 100px;" disabled>
               </td>
-              <td class="text-center">
-                <input type="text" class="form-control" placeholder="" formControlName="ticketStatus">
-              </td>
-              <td class="text-center">
-                <button class=" btn btn-info border-0 text-info action-icon" type="submit">
-                  <i class="fa fa-2x fa-check" aria-hidden="true"></i>
+              <td class="text-center px-1 mx-0">
+                <button class="btn btn-info border-0 action-icon" type="submit" [disabled]="createTicketForm.invalid">
+                  <i class="fa fa-check" aria-hidden="true"></i>
                 </button>
               </td>
-              <td class="text-center">
-                <a class="border-0 text-danger action-icon" (click)="showCreateForm()">
-                  <i class="fa fa-2x fa-times" aria-hidden="true"></i>
-                </a>
+              <td class="text-center px-1 mx-0">
+                <button class="btn btn-danger border-0 action-icon" (click)="showCreateForm()">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
               </td>
-            </tbody>
+            </tr>
           </table>
         </form>
       </div>
-
     </div>
   </div>
 </div>
