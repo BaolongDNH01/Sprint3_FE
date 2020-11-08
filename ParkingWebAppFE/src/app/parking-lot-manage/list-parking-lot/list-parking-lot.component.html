@@ -8,7 +8,7 @@
     <label>
       <input class="input-custom" placeholder="Tìm kiếm ... ">
     </label>
-    <button class="button-custom bg-info" [routerLink]="['../parkingMap']">Bản đồ bãi đỗ</button>
+    <button class="button-custom bg-success" [routerLink]="['../parkingMap']">Bản đồ bãi đỗ</button>
   </div>
 </div>
 <div class="row text-secondary">
@@ -48,8 +48,8 @@
       <th>{{par.id}}</th>
       <td>{{par.nameZone + '-' + par.id}}</td>
       <td>{{par.nameFloor}}</td>
-      <td *ngIf="par.status">Chưa có xe</td>
-      <td *ngIf="!par.status">Đã có xe</td>
+      <th class="text-success" *ngIf="par.status">Chưa có xe</th>
+      <th class="text-danger" *ngIf="!par.status">Đã có xe</th>
       <td>
         <a class="text-danger m-3" data-toggle="modal" data-target="#deleteModal" (click)="checkDelete(par)">
           <i class="fa fa-trash-o" aria-hidden="true"></i>

@@ -40,6 +40,6 @@ export class TicketService {
   }
 
   getTicketByLicense(license: string): Observable<Ticket>{
-    return this.http.get(this.TICKET_API + '/get-by-license/' + license);
+    return this.http.get<Ticket>(this.TICKET_API + '/get-by-license/' + license);
   }
 }
