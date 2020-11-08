@@ -50,14 +50,7 @@ export class ParkingLotService {
     return this.httpClient.delete(this.api + '/deleteParkingLot/' + id);
   }
 
-  addFloor(): Observable<Floor>{
-    return this.httpClient.get<Floor>(this.api + '/saveFloor');
-  }
-
-  addZone(floorChoose: Floor, zone: Zone): Observable<any>{
-    return this.httpClient.post<any>(this.api + '/saveZone', {
-      floorChoose,
-      zone,
-    });
+  addFloor(zones: Zone[]): Observable<any>{
+    return this.httpClient.post<any>(this.api + '/saveFloor', zones);
   }
 }

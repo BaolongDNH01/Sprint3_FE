@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ParkingLotService} from '../service/parking-lot.service';
 import {ParkingLot} from '../entity/parking-lot';
 import {Floor} from '../entity/floor';
-import {FormGroup} from '@angular/forms';
 import {Zone} from '../entity/zone';
 
 @Component({
@@ -79,17 +78,6 @@ export class ListParkingLotComponent implements OnInit {
   }
 
   save(): void {
-    this.parkingLotService.addFloor().subscribe(
-      floor => {
-        this.floorAdding = floor;
-        this.saveZone();
-      }
-    );
-  }
-
-  saveZone(): void {
-    this.listZoneAdd.forEach(zone => {
-      this.parkingLotService.addZone(this.floorAdding, zone).subscribe();
-    });
+    this.parkingLotService.addFloor(this.listZoneAdd).subscribe();
   }
 }

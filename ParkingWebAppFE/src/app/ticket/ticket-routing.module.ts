@@ -20,7 +20,7 @@ export const ticketRoutes: Routes = [
         component: EditTicketComponent
       },
       {
-        path: 'delete',
+        path: 'get-deleted',
         component: DeleteTicketComponent
       },
     ]
