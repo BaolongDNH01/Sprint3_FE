@@ -97,7 +97,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <div>Danh sách các khu vực trong tầng</div>
         <div class="row">
           <div class="col-8">
             <span>Số lượng khu: <input #count type="number" value="1" min="1"></span>
@@ -107,15 +106,16 @@
           </div>
         </div>
         <div class="row">
-          <span *ngIf="isDone" class="text-danger mt-2">*các trường để trống tự tạo dữ liệu tự động</span>
+          <div class="ml-3" *ngIf="isDone"><hr><h5>Danh sách các khu vực trong tầng</h5></div>
+          <span *ngIf="isDone" class="text-danger mt-2 text-small">*các trường để trống tự tạo dữ liệu tự động</span>
           <label class="ml-3" *ngFor="let zone of listZoneAdd, index as i" >
             Điền tên khu thứ {{i + 1}}: <input class="mt-2" (change)="zone.name = $event.target.value" placeholder="Tên khu vực">
           </label>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" (click)="save()" class="btn btn-primary" data-dismiss="modal" [disabled]="!isDone">Confirm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

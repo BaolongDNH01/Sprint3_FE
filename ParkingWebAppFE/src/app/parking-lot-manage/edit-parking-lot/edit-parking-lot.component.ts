@@ -18,6 +18,7 @@ export class EditParkingLotComponent implements OnInit {
   listZoneApi: Zone[];
   listZoneShow: Zone[];
   id: number;
+  message: string;
 
   constructor(private formBuilder: FormBuilder,
               private parkingLotService: ParkingLotService,
@@ -59,7 +60,11 @@ export class EditParkingLotComponent implements OnInit {
 
   editParkingLot(): void {
     this.parkingLot = this.editParkingLotForm.value;
-    this.parkingLotService.editParkingLot(this.parkingLot).subscribe();
+    this.parkingLotService.editParkingLot(this.parkingLot).subscribe(
+      () => null,
+      () =>  null,
+      () => this.showMessage()
+    );
   }
 
   switchFloor(floor: number): void {
@@ -69,5 +74,14 @@ export class EditParkingLotComponent implements OnInit {
         return zone;
       }
     });
+  }
+
+  showMessage(): void{
+    let a;
+    this.message = 'Đã chỉnh sửa vị trí thành công!';
+    clearTimeout(a);
+    a = setTimeout(() => {
+      this.message = '';
+    }, 5000);
   }
 }

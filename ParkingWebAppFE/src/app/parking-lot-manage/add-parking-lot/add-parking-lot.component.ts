@@ -16,6 +16,9 @@ export class AddParkingLotComponent implements OnInit {
   listFloor: Floor[];
   listZoneApi: Zone[];
   listZoneShow: Zone[];
+  message: string;
+  count = 0;
+  timeOut: any;
 
   constructor(private formBuilder: FormBuilder,
               private parkingLotService: ParkingLotService) {
@@ -43,7 +46,11 @@ export class AddParkingLotComponent implements OnInit {
 
   addParkingLot(): void {
     this.parkingLot = this.addParkingLotForm.value;
-    this.parkingLotService.addParkingLot(this.parkingLot).subscribe();
+    this.parkingLotService.addParkingLot(this.parkingLot).subscribe(
+      () => null,
+      () => null,
+      () => this.showMessage()
+    );
   }
 
   switchFloor(floor: number): void {
@@ -53,5 +60,14 @@ export class AddParkingLotComponent implements OnInit {
       }
     });
     this.buildForm();
+  }
+
+  showMessage(): void{
+    this.count ++;
+    this.message = 'Đã thêm mới ' + this.count + ' vị trí thành công!';
+    clearTimeout(this.timeOut);
+    this.timeOut = setTimeout(() => {
+      this.message = '';
+    }, 5000);
   }
 }

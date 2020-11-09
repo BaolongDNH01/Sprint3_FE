@@ -87,3 +87,7 @@ thead{
   height: 31px;
   margin-top: -5px;
 }
+
+.text-small{
+  font-size: 12px;
+}
