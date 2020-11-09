@@ -108,7 +108,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let zone of zoneInFloor">
-              <th><input (change)="changeZoneName(zone.id, $event.target.value)" type="text" value="{{zone.name}}"></th>
+              <th><input class="w-75" (change)="changeZoneName(zone.id, $event.target.value)" type="text" value="{{zone.name}}"></th>
               <td><label>
                 <input class="width" type="number" value="{{zone.positionX}}"
                        (change)="changePositionX(zone.id, $event.target.value)">
