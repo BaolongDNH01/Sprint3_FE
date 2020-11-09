@@ -25,46 +25,37 @@ export class AddCustomerComponent implements OnInit {
     private customerService: CustomerService,
     private carService: CarService
   ) {
-    // this.customerForm = this.fb.group({
-    //   nameCustomer: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
-    //   birthday: ['', [Validators.required]],
-    //   gender: ['', [Validators.required]],
-    //   phone: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]],
-    //   address: ['', [Validators.required]],
-    //   email: ['', [Validators.required, Validators.email]]
-    // });
-    // Họ tên phải viết hoa chữ cái đầu
-    // Ngày sinh dd/MM/yyyy
-    // Giới tính: chỉ được chọn nam hoặc nữ, mặc định là nam
-    // Số điện thoại từ 10 - 12 số
+
+    // Họ tên không chứa kí tự đặc biệt
+    // Ngày sinh yyyy-MM-dd
+    // Giới tính: chỉ được chọn Nam hoặc Nữ
+    // Số điện thoại phải đúng định dạng 08xxxxxxxx hoặc 09xxxxxxxx
     // Địa chỉ không được để trống
     // Email theo định dạng acb@def.com
-
   }
 
   ngOnInit(): void {
     this.customerForm = new FormGroup({
-      nameCustomer: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]),
-      birthday: new FormControl('', [Validators.required]),
-      idCard: new FormControl(''),
+      nameCustomer: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" +\n' +
+        '            "ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ" +\n' +
+        '            "ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\\\s]+$')]),
+      birthday: new FormControl('', [Validators.required, Validators.pattern('^\\d{4}-\\d{2}-\\d{2}$')]),
+      idCard: new FormControl('', [Validators.required, Validators.pattern('([0-9]{9})$')]),
       address: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]),
+      phone: new FormControl('', [Validators.required, Validators.pattern('^((09)|(08))\\d{8}$')]),
       gender: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$')]),
       cars: new FormControl([]),
     });
     this.carForm = new FormGroup({
-      type: new FormControl(''),
-      producer: new FormControl(''),
-      color: new FormControl(''),
-      license: new FormControl(''),
+      type: new FormControl('', [Validators.required]),
+      producer: new FormControl('', [Validators.required]),
+      color: new FormControl('', [Validators.required]),
+      license: new FormControl('', [Validators.required]),
       parkings: new FormControl([]),
       ticket: new FormControl([]),
     });
-
-
   }
-
 
   customerSubmit(): void {
     console.log(this.customerForm.value);
@@ -82,7 +73,6 @@ export class AddCustomerComponent implements OnInit {
           list => {
             this.idCustomer = list;
             this.carForm.value.customerId = this.idCustomer.id;
-
           }, error => {
           },
           () => {
@@ -96,7 +86,6 @@ export class AddCustomerComponent implements OnInit {
               }
             );
             console.log(this.carForm.value);
-
           }
         );
       }
@@ -118,6 +107,5 @@ export class AddCustomerComponent implements OnInit {
       }, () => {
       }
     );
-
   }
 }

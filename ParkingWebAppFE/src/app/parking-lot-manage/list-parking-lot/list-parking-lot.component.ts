@@ -68,6 +68,7 @@ export class ListParkingLotComponent implements OnInit {
   }
 
   prepareListZone(count: number): void {
+    this.listZoneAdd = [];
     for (let i = 0; i < count; i++) {
       const zone = new Zone();
       zone.id = i;

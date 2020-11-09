@@ -12,7 +12,7 @@ export class HomepageComponent implements OnInit {
   roles: string[];
   userId: string;
   checkAdmin = false;
-
+  username:string;
   constructor(private jwt: JwtService, private router: Router,
               private jwtService: JwtService,
   ) {
@@ -32,6 +32,7 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.jwt.getUserId();
+    this.username=this.jwt.getUsername();
   }
 
   logOut(): void {
