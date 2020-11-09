@@ -4,118 +4,107 @@
     <br>
     <h2>THÊM KHÁCH HÀNG</h2>
     <!---->
-    <div class="err-input"
-         *ngIf="
-         (customerForm.get('nameCustomer').invalid && customerForm.get('nameCustomer').touched)||
-        (customerForm.get('birthday').invalid && customerForm.get('birthday').touched)
-
-">
-      Không được để trống
-    </div>
-<!---->
     <br>
     <form class="ml-5" [formGroup]="customerForm" (ngSubmit)="customerSubmit()">
       <div class="form-row">
-        <div class="col-md-6">
-          <div class="row">
-            <div class="input-info col-md-3">
-              Họ tên:
-            </div>
-            <div class="input-info col-md-7 ml-md-1">
-              <div class="notice"
-                   *ngIf="customerForm.get('nameCustomer').invalid && customerForm.get('nameCustomer').touched">
-                Name invalid!
-              </div>
-              <input type="text" class="form-control" placeholder="Nhập họ tên..." formControlName="nameCustomer">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="input-info col-md-3">
-              Ngày sinh:
-            </div>
-            <div class="col-md-7 ml-md-1">
-              <div class="notice"
-                   *ngIf="customerForm.get('birthday').invalid && customerForm.get('birthday').touched">
-                Birthday invalid!
-              </div>
-              <input type="text" class="form-control" placeholder="Nhập ngày sinh..." formControlName="birthday">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="input-info col-md-3">
-              CMND:
-            </div>
-            <div class="col-md-7">
-              <div class="notice ml-md-1"
-                   *ngIf="customerForm.get('idCard').invalid && customerForm.get('idCard').touched">
-                Id Card invalid!
-              </div>
-              <input type="text" class="form-control ml-md-1" placeholder="Nhập CMND..." formControlName="idCard">
-            </div>
-          </div>
+        <!--Họ tên, Ngày sinh, Giới tính-->
+        <div class="form-group col-md-4">
+          <label [hidden]="(customerForm.controls.nameCustomer.errors?.required &&
+                    customerForm.controls.nameCustomer.touched)||
+          (customerForm.controls.nameCustomer.errors?.pattern &&
+                    customerForm.controls.nameCustomer.touched)">Họ tên</label>
+          <label *ngIf="customerForm.controls.nameCustomer.errors?.required &&
+                    customerForm.controls.nameCustomer.touched" class="text-danger">
+            Họ tên không được để trống</label>
+          <label class="notice"
+                 *ngIf="customerForm.controls.nameCustomer.errors?.pattern &&
+                    customerForm.controls.nameCustomer.touched">
+            Họ tên không được chứa kí tự đặc biệt</label>
+          <input type="text" class="form-control" id="name" placeholder="Họ tên không chứa kí tự đặc biệt"
+                 formControlName="nameCustomer">
         </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="input-info col-md-4">
-              Giới tính:
-            </div>
-            <div class="col-md-7">
-              <div class="form-check form-check-inline">
-                <div class="form-check-inline">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optradio" value="Nam" formControlName="gender"
-                           checked>Nam
-                  </label>
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optradio" value="Nữ" formControlName="gender">Nữ
-                  </label>
-                </div>
-              </div>
-            </div>
+        <div class="form-group col-md-4">
+          <label [hidden]="(customerForm.controls.birthday.errors?.required &&
+                    customerForm.controls.birthday.touched)||
+          (customerForm.controls.birthday.errors?.pattern &&
+                    customerForm.controls.birthday.touched)">Ngày sinh</label>
+          <label *ngIf="customerForm.controls.birthday.errors?.required &&
+                    customerForm.controls.birthday.touched" class="text-danger">
+            Ngày sinh không được để trống</label>
+          <label class="notice"
+                 *ngIf="customerForm.controls.birthday.errors?.pattern &&
+                    customerForm.controls.birthday.touched">
+            Ngày sinh theo định dạng yyyy-MM-dd</label>
+          <input type="text" class="form-control" id="birthday"
+                 placeholder="yyyy-MM-dd" formControlName="birthday">
+        </div>
+        <div class="form-group col-md-4">
+          <div>Giới tính</div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Nam" formControlName="gender">
+            <label class="form-check-label" for="inlineRadio1">Nam</label>
           </div>
-          <br>
-          <div class="row">
-            <div class="input-info col-md-4">
-              Số điện thoại:
-            </div>
-            <div class="col-md-7">
-              <div class="notice"
-                   *ngIf="customerForm.get('phone').invalid && customerForm.get('phone').touched">
-                Phone number invalid!
-              </div>
-              <input type="text" class="form-control"
-                     placeholder="Nhập số điện thoại..." formControlName="phone">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="input-info col-md-4">
-              Email:
-            </div>
-            <div class="col-md-7">
-              <div class="notice"
-                   *ngIf="customerForm.get('email').invalid && customerForm.get('email').touched">
-                Email invalid!
-              </div>
-              <input type="text" class="form-control" placeholder="Nhập email..." formControlName="email">
-            </div>
+          <div class="form-check form-check-inline tbl-gender">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Nữ" formControlName="gender">
+            <label class="form-check-label" for="inlineRadio2">Nữ</label>
           </div>
         </div>
       </div>
-      <br>
-      <div class="row">
-        <div class="input-info col-md-1">
-          Địa chỉ:
+      <!--      CMND, SĐT, EMAIL-->
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label [hidden]="(customerForm.controls.idCard.errors?.required &&
+                    customerForm.controls.idCard.touched)||
+          (customerForm.controls.idCard.errors?.pattern &&
+                    customerForm.controls.idCard.touched)">CMND</label>
+          <label *ngIf="customerForm.controls.idCard.errors?.required &&
+                    customerForm.controls.idCard.touched" class="text-danger">
+            CMND không được để trống</label>
+          <label class="notice"
+                 *ngIf="customerForm.controls.idCard.errors?.pattern &&
+                    customerForm.controls.idCard.touched">
+            CMND có 9 chữ số</label>
+          <input type="text" class="form-control" placeholder="CMND có 9 chữ số" formControlName="idCard">
         </div>
-        <div class="col-md-9 addres">
-          <div class="notice ml-md-1"
-               *ngIf="customerForm.get('address').invalid && customerForm.get('address').touched">
-            Address invalid!
-          </div>
-          <input type="text" class="form-control" placeholder="Nhập địa chỉ..." formControlName="address">
+        <div class="form-group col-md-4">
+          <label [hidden]="(customerForm.controls.phone.errors?.required &&
+                    customerForm.controls.phone.touched)||
+          (customerForm.controls.phone.errors?.pattern &&
+                    customerForm.controls.phone.touched)">Số điện thoại</label>
+          <label *ngIf="customerForm.controls.phone.errors?.required &&
+                    customerForm.controls.phone.touched" class="text-danger">
+            Số điện thoại không được để trống</label>
+          <label class="notice"
+                 *ngIf="customerForm.controls.phone.errors?.pattern &&
+                    customerForm.controls.phone.touched">
+            Số điện thoại phải đúng định dạng 09xxxxxxxx hoặc 08xxxxxxxx </label>
+          <input type="text" class="form-control" placeholder="SĐT 09, 08"
+                 formControlName="phone">
         </div>
+        <div class="form-group col-md-4">
+          <label [hidden]="(customerForm.controls.email.errors?.required &&
+                    customerForm.controls.email.touched)||
+          (customerForm.controls.email.errors?.pattern &&
+                    customerForm.controls.email.touched)">Email</label>
+          <label *ngIf="customerForm.controls.email.errors?.required &&
+                    customerForm.controls.email.touched" class="text-danger">
+            Email không được để trống</label>
+          <label class="notice"
+                 *ngIf="customerForm.controls.email.errors?.pattern &&
+                    customerForm.controls.email.touched">
+            Email phải đúng định dạng acb@def.com</label>
+          <input type="text" class="form-control" placeholder="Email có dạng acb@def.com"
+                 formControlName="email">
+        </div>
+      </div>
+      <!--      Địa chỉ-->
+      <div class="form-group">
+        <label [hidden]="(customerForm.controls.address.errors?.required &&
+                    customerForm.controls.address.touched)">Địa chỉ</label>
+        <label class="notice" *ngIf="customerForm.controls.address.errors?.required &&
+                    customerForm.controls.address.touched" class="text-danger">
+          Địa chỉ không được để trống</label>
+        <input type="text" class="form-control" placeholder="Nhập địa chỉ ..." formControlName="address">
       </div>
     </form>
     <br>
@@ -128,10 +117,34 @@
         <table class="table table-bordered">
           <thead>
           <tr class="title-customer bg-info mt-md-0">
-            <th class="text-center">KIỂU XE</th>
-            <th class="text-center">HÃNG XE</th>
-            <th class="text-center">MÀU XE</th>
-            <th class="text-center">BIỂN SỐ</th>
+            <th class="text-danger border-danger text-center" *ngIf="carForm.controls.type.errors?.required &&
+                    carForm.controls.type.touched">
+              NHẬP KIỂU XE</th>
+            <th class="text-center" [hidden]="(carForm.controls.type.errors?.required &&
+                    carForm.controls.type.touched)">
+              KIỂU XE
+            </th>
+            <th class="text-danger border-danger text-center" *ngIf="carForm.controls.producer.errors?.required &&
+                    carForm.controls.producer.touched">
+              NHẬP HÃNG XE</th>
+            <th class="text-center" [hidden]="(carForm.controls.producer.errors?.required &&
+                    carForm.controls.producer.touched)">
+              HÃNG XE
+            </th>
+            <th class="text-danger border-danger text-center" *ngIf="carForm.controls.color.errors?.required &&
+                    carForm.controls.color.touched">
+              NHẬP MÀU XE</th>
+            <th class="text-center" [hidden]="(carForm.controls.color.errors?.required &&
+                    carForm.controls.color.touched)">
+              MÀU XE
+            </th>
+            <th class="text-danger border-danger text-center" *ngIf="carForm.controls.license.errors?.required &&
+                    carForm.controls.license.touched">
+              NHẬP BIỂN SỐ</th>
+            <th class="text-center" [hidden]="(carForm.controls.license.errors?.required &&
+                    carForm.controls.license.touched)">
+              BIỂN SỐ
+            </th>
           </thead>
           <tbody>
           <tr>
@@ -156,11 +169,12 @@
       <div class="col-md-5">
       </div>
       <div class="col-md-4">
-        <button type="submit" class="btn-save btn btn-success" (click)="submitAll()">Lưu</button>
+        <button type="submit" [disabled]="customerForm.invalid&&carForm.invalid" class="btn-save btn btn-success "
+                (click)="submitAll()">Lưu
+        </button>
       </div>
     </div>
   </div>
-
 </div>
 
 

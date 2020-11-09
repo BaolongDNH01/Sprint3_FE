@@ -3,76 +3,41 @@
     <br>
     <h2>THÔNG TIN KHÁCH HÀNG</h2>
     <br>
-    <!---->
-    <div class="row">
-      <div class="col-md-6">
-        <div class="row">
-          <div class="input-info col-md-3">
-            Họ tên:
-          </div>
-          <div class="input-info col-md-6">
-            <input disabled type="text" class="form-control" placeholder="{{customer.nameCustomer}}">
-          </div>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="name">Họ tên</label>
+          <input disabled type="text" class="form-control" id="name" placeholder="{{customer.nameCustomer}}">
         </div>
-        <br>
-        <div class="row">
-          <div class="input-info col-md-3">
-            Ngày sinh:
-          </div>
-          <div class="col-md-6">
-            <input disabled type="text" class="form-control disabled" placeholder="{{customer.birthday| date: 'dd/MM/yyyy'}}">
-          </div>
+        <div class="form-group col-md-4">
+          <label for="birthday">Ngày sinh</label>
+          <input disabled type="text" class="form-control" id="birthday"
+                 placeholder="{{customer.birthday| date: 'dd/MM/yyyy'}}">
         </div>
-        <br>
-        <div class="row">
-          <div class="input-info col-md-3">
-            CMND:
-          </div>
-          <div class="col-md-6">
-            <input disabled type="text" class="form-control disabled" placeholder="{{customer.idCard}}">
-          </div>
+        <div class="form-group col-md-4">
+          <label for="gender">Giới tính</label>
+          <input disabled type="text" class="form-control" id="gender" placeholder="{{customer.gender}}">
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="row">
-          <div class="input-info col-md-3">
-            Giới tính:
-          </div>
-          <div class="col-md-6">
-            <input disabled type="text" class="form-control disabled" placeholder="{{customer.gender}}">
-          </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="idCard">CMND</label>
+          <input disabled type="text" class="form-control" id="idCard" placeholder="{{customer.idCard}}">
         </div>
-        <br>
-        <div class="row">
-          <div class="input-info col-md-3">
-            Số điện thoại:
-          </div>
-          <div class="col-md-6">
-            <input disabled type="text" class="form-control disabled"
-                   placeholder="{{customer.phone}}">
-          </div>
+        <div class="form-group col-md-4">
+          <label for="phone">Số điện thoại</label>
+          <input disabled type="text" class="form-control" id="phone" placeholder="{{customer.phone}}">
         </div>
-        <br>
-        <div class="row">
-          <div class="input-info col-md-3">
-            Email:
-          </div>
-          <div class="col-md-6">
-            <input disabled type="text" class="form-control disabled" placeholder="{{customer.email}}">
-          </div>
+        <div class="form-group col-md-4">
+          <label for="email">Email</label>
+          <input disabled type="text" class="form-control" id="email" placeholder="{{customer.email}}">
         </div>
       </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-md-1">
-        Địa chỉ:
+      <div class="form-group">
+        <label for="inputAddress">Địa chỉ</label>
+        <input disabled type="text" class="form-control" id="inputAddress" placeholder="{{customer.address}}">
       </div>
-      <div class="col-md-9 addres">
-        <input disabled type="text" class="form-control disabled" placeholder="{{customer.address}}">
-      </div>
-    </div>
-
+    </form>
     <!--    -->
     <br>
     <h2>XE KHÁCH HÀNG</h2>
