@@ -80,17 +80,7 @@
               <td class="text-center">
                 <span class="badge badge-pill badge-info"> {{ ticket.ticketStatus }}</span>
               </td>
-              <td class="text-center">
-                <a class="border-0 text-info action-icon" [routerLink]="['edit', ticket.ticketId]">
-                  <i class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i>
-                </a>
-              </td>
-              <td class="text-center" data-toggle="tooltip" data-placement="left">
-                <a class="border-0 text-danger action-icon" data-toggle="modal"
-                  [attr.data-target]="'#deleteModal'+ ticket.ticketId">
-                  <i class="fa fa-2x fa-trash-o" aria-hidden="true"></i>
-                </a>
-              </td>
+              
 
 
               <!-- Delete confirm dialog -->
@@ -144,9 +134,8 @@
               <th class="text-center border-top-0" colspan="2">TÁC VỤ</th>
             </tr>
           </thead>
-          <tbody>
-            <tr
-              *ngFor="let ticket of ticketList | filter: keywordSearch | paginate: { itemsPerPage: 5, currentPage: page }">
+          <tbody *ngFor="let ticket of ticketList | filter: keywordSearch | paginate: { itemsPerPage: 5, currentPage: page }">
+            <tr *ngIf="ticket.ticketId !== ticketEditId">
               <td class="text-center">{{ ticket.ticketId }}</td>
               <td class="text-center">{{ ticket.carPlate }}</td>
               <td class="text-center">{{ ticket.customerName }}</td>
@@ -162,7 +151,7 @@
                 <span class="badge badge-pill badge-info"> {{ ticket.ticketStatus }}</span>
               </td> -->
               <td class="text-center">
-                <a class="border-0 text-info action-icon" [routerLink]="['edit', ticket.ticketId]">
+                <a class="border-0 text-info action-icon" (click)="updateTicket(ticket.ticketId)">
                   <i class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i>
                 </a>
               </td>
@@ -201,6 +190,48 @@
                   </div>
                 </div>
               </div>
+            </tr>
+            <tr *ngIf="ticket.ticketId === ticketEditId; " [formGroup]="editTicketForm">
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="ticketId" disabled>
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="carPlate"  disabled>
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="customerName"  disabled>
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="date" class="form-control" formControlName="startDate">
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="endDate"  disabled>
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="floorName" disabled>
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="zoneName"  disabled>
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="parkingLot"  disabled>
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="ticketTypeDetail"  disabled>
+              </td>
+              <td class="text-center px-1 mx-0" >
+                <input type="text" class="form-control" formControlName="price"  disabled>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <button class="btn btn-info border-0 action-icon" type="submit" [disabled]="createTicketForm.invalid">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <button class="btn btn-danger border-0 action-icon">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>

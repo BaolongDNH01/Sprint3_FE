@@ -101,12 +101,12 @@ body {
   margin-left: 0;
 }
 
-#noNav {
-  height: 95% ;
-  overflow: auto;
-  /*background-color: rgba(255, 255, 255, 0.7);*/
-}
+/*#noNav {*/
+/*  height: 95% ;*/
+/*  overflow: auto;*/
+/*  !*background-color: rgba(255, 255, 255, 0.7);*!*/
+/*}*/
 
-#routing {
-  height: 90%;
-}
+/*#routing {*/
+/*  height: 90%;*/
+/*}*/
