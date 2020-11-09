@@ -30,8 +30,8 @@ export class TicketService {
     return this.http.post<void>((`${this.TICKET_API}/create`), ticket);
   }
 
-  putEmployee(ticket: Ticket): Observable<Ticket> {
-    return this.http.put<Ticket>(`${this.TICKET_API}/${ticket.ticketId}`, ticket);
+  patchTicket(ticket: Ticket): Observable<Ticket> {
+    return this.http.patch<Ticket>(`${this.TICKET_API}/edit/${ticket.ticketId}`, ticket);
   }
 
   getDeletedTicket(): Observable<Ticket[]> {

@@ -176,6 +176,16 @@ export class ListTicketComponent implements OnInit, OnDestroy {
     });
   }
 
+  submitEditForm(): void {
+    this.editTicket = Object.assign({}, this.editTicketForm.value);
+    this.editTicket.ticketId = this.ticketEditId;
+
+    this.subscription = this.ticketService.patchTicket(this.editTicket).subscribe({
+      next: () => this.router.navigateByUrl('/ticket/list'),
+      error: err => console.log(err),
+    });
+  }
+
   handlingStartDateToEndDate(): void {
     this.selectedDate = (this.createTicketForm.get('startDate').value);
 
