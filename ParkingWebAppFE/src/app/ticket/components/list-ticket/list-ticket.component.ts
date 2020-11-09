@@ -23,7 +23,6 @@ export class ListTicketComponent implements OnInit, OnDestroy {
   ticketTypeList: TicketType[];
   deletedTicketList: Ticket[];
 
-
   keywordSearch: string;
   startDate: string;
   endDate: string;
@@ -41,14 +40,13 @@ export class ListTicketComponent implements OnInit, OnDestroy {
   checkCreate = false;
   checkEdit = false;
   checkGetDeleteList = false;
-
-
   page = 1;
 
   createTicketForm: FormGroup;
+  editTicketForm: FormGroup;
   newTicket: Ticket;
-
-  data: any;
+  editTicket: Ticket;
+  ticketEditId: number;
 
   constructor(
     private ticketService: TicketService,
@@ -58,17 +56,16 @@ export class ListTicketComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('idParkingLot') || localStorage.getItem('customerName')) {
+      this.showCreateForm();
+    } else {
+      this.checkCreate = false;
+    }
     this.getListTicket();
     this.getListTicketType();
 
     this.minDate = new Date();
 
-    if(sessionStorage.getItem('idParkingLot')) {
-      // this.checkCreate = true;
-      this.showCreateForm();
-    } else {
-      this.checkCreate = false;
-    }
   }
 
   getListTicket(): void {
@@ -109,13 +106,14 @@ export class ListTicketComponent implements OnInit, OnDestroy {
 
   showCreateForm(): void {
     this.createTicketForm = this.fb.group({
-      ticketId: ['666'],
-      carPlate: ['43-1234'], // get car plate cua ben car
-      customerName: ['thien'], // get customer name cua ben customer
+      ticketId: [''],
+      carPlate: [localStorage.getItem('license'), [Validators.required]],
+      customerName: [localStorage.getItem('customerName'), [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: [''],
-      floorName: [sessionStorage.getItem('floor')],
+      floorName: [sessionStorage.getItem('floor'), [Validators.required]],
       zoneName: [sessionStorage.getItem('zone'), [Validators.required]],
+      // tslint:disable-next-line: radix
       parkingLot: [parseInt(sessionStorage.getItem('idParkingLot')), [Validators.required]],
       ticketTypeDetail: ['Loại', [Validators.required]],
       price: [''],
@@ -123,53 +121,64 @@ export class ListTicketComponent implements OnInit, OnDestroy {
     });
     this.checkCreate = !this.checkCreate;
     console.log('created');
-    // console.log(this.currentDate);
   }
 
   submitCreateTicket(): void {
-
-
-    // this.subscription = this.ticketList.createTicket(newTicket).subscribe({
-    //   next: data => console.log(data),
-    //   error: err => console.log(err)
-    // });
-    this.checkCreate = false;
-    sessionStorage.removeItem('zone');
-    sessionStorage.removeItem('floor');
-    sessionStorage.removeItem('idParkingLot');
-
-    console.log(this.createTicketForm.value)
-
-  }
-
-  showEditForm(): void {
-    this.checkEdit = true;
+    this.newTicket = Object.assign({}, this.createTicketForm.value);
+    this.subscription = this.ticketService.createTicket(this.newTicket).subscribe({
+      next: () => {
+        localStorage.removeItem('customerName');
+        localStorage.removeItem('license');
+        sessionStorage.removeItem('zone');
+        sessionStorage.removeItem('floor');
+        sessionStorage.removeItem('idParkingLot');
+      },
+      error: err => console.log(err),
+      complete: () => {
+        this.checkCreate = false;
+        this.getListTicket();
+      }
+    });
   }
 
   acceptDelete(idTicket: number): void {
     $('#deleteModal' + idTicket).modal('hide');
     this.subscription = this.ticketService.deleteTicket(idTicket).subscribe({
-      next: () => {
-        this.getListTicket();
-      },
       error: err => console.log(err),
       complete: () => {
+        this.getListTicket();
         this.router.navigateByUrl('ticket/list');
       }
     });
   }
 
-  onDelete(idTicket: number): void {
-
-  }
-
-  onEdit(idTicket: number): void {
-
+  updateTicket(idTicket: number): void {
+    this.checkEdit = true;
+    this.ticketEditId = idTicket;
+    console.log(idTicket);
+    this.subscription = this.ticketService.getTicketById(idTicket).subscribe({
+      next: data => {
+        this.editTicketForm = this.fb.group({
+          ticketId: [data.ticketId],
+          carPlate: [data.carPlate, [Validators.required]],
+          customerName: [data.customerName, [Validators.required]],
+          startDate: [data.startDate, [Validators.required]],
+          endDate: [data.endDate],
+          floorName: [data.floorName, [Validators.required]],
+          zoneName: [data.zoneName, [Validators.required]],
+          // tslint:disable-next-line: radix
+          parkingLot: [data.parkingLot, [Validators.required]],
+          ticketTypeDetail: [data.ticketTypeDetail, [Validators.required]],
+          price: [data.price],
+          ticketStatus: ['TICKET_ENABLE'],
+        });
+      }
+    });
   }
 
   handlingStartDateToEndDate(): void {
     this.selectedDate = (this.createTicketForm.get('startDate').value);
-   
+
     this.currentDate = new Date(this.selectedDate);
 
     // Handling end date via ticket type
@@ -180,7 +189,7 @@ export class ListTicketComponent implements OnInit, OnDestroy {
       default: instadate.addDays(this.currentDate, 1); break;
     }
     this.endDate = instadate.isoDateString(this.endDateHandle);
-    
+
   }
 
   handlingTicketWithPrice(): void {
@@ -202,9 +211,6 @@ export class ListTicketComponent implements OnInit, OnDestroy {
   onChoosePostion(): void {
     this.router.navigateByUrl('listParkingLot');
   }
-
-
-
 
   ngOnDestroy(): void {
     if (this.subscription) {
