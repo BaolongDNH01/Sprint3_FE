@@ -4,7 +4,6 @@ import {ParkingLot} from '../entity/parking-lot';
 import {Floor} from '../entity/floor';
 import {Zone} from '../entity/zone';
 import {ActivatedRoute, Router} from '@angular/router';
-import set = Reflect.set;
 
 @Component({
   selector: 'app-parking-map',
@@ -31,7 +30,6 @@ export class ParkingMapComponent implements OnInit {
   arrParkingLotPosition = [];
   parkingLotView = new ParkingLot;
   zoneEdit: Zone;
-  scrWidth: number;
   isInit = false;
   floorShow = 1;
   imgCarLeft = new Image();
@@ -46,6 +44,8 @@ export class ParkingMapComponent implements OnInit {
   carDown = 'assets/images/map-resource/carDown.png';
   bgZone = 'assets/images/map-resource/bgZone.jpg';
   bg = 'assets/images/map-resource/bg.png';
+  scrHeight: number;
+  scrWidth: number;
 
   constructor(private parkingLotService: ParkingLotService,
               private router: Router,
@@ -59,9 +59,11 @@ export class ParkingMapComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.scrWidth = window.innerWidth * 10 / 12;
+    this.scrHeight = 1500;
     setTimeout(() => {
       this.getScreenSize();
-    }, 200);
+    }, 400);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -69,7 +71,6 @@ export class ParkingMapComponent implements OnInit {
     this.arrParkingLotPosition = [];
     this.parkingLotsEachZone = [];
     this.parkingLotList = [];
-    this.scrWidth = window.innerWidth * 67 / 100;
     this.parkingLotService.getAllFloor().subscribe(
       list => this.floorList = list,
       e => console.log(e),
@@ -201,6 +202,7 @@ export class ParkingMapComponent implements OnInit {
       // tslint:disable-next-line:no-shadowed-variable
       const height = this.parSizeH;
       const a = {parPositionX, parPositionY, width, height, par};
+      par.idFake = this.zoneName + ' - ' + count;
       this.arrParkingLotPosition.push(a);
 
       this.ctx.fillStyle = 'lightBlue';
@@ -252,6 +254,7 @@ export class ParkingMapComponent implements OnInit {
       // tslint:disable-next-line:no-shadowed-variable
       const height = this.parSizeH;
       const a = {parPositionX, parPositionY, width, height, par};
+      par.idFake = this.zoneName + ' - ' + count;
       this.arrParkingLotPosition.push(a);
 
       this.ctx.fillStyle = 'lightBlue';
@@ -318,6 +321,22 @@ export class ParkingMapComponent implements OnInit {
     );
   }
 
+  changeDirection(id: number, dir: number): void {
+    this.parkingLotService.editZoneDirection(dir, id).subscribe(
+      () => null,
+      () => null,
+      () => this.getScreenSize()
+    );
+  }
+
+  changeZoneName(id: number, name: string): void {
+    this.parkingLotService.editZoneName(id, name).subscribe(
+      () => null,
+      () => null,
+      () => this.getScreenSize()
+    );
+  }
+
   saveParkingLotToCreateTicket(par: ParkingLot): void {
     sessionStorage.setItem('floor', par.nameFloor);
     sessionStorage.setItem('zone', par.nameZone);
@@ -327,6 +346,22 @@ export class ParkingMapComponent implements OnInit {
 
   scroll(i: number): void {
     document.documentElement.scrollTop =  window.pageYOffset + i;
+  }
+
+  changeSizeMap(value: number, per: string): void {
+    switch (per) {
+      case 'w': {
+        this.scrWidth = value;
+        this.getScreenSize();
+        break;
+      }
+      case 'h': {
+        this.scrHeight = value;
+        this.getScreenSize();
+        break;
+      }
+      default: break;
+    }
   }
 }
 

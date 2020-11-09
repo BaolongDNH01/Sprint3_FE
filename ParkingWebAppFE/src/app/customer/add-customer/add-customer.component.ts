@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Customer} from '../customer';
-import {Router} from '@angular/router';
-import {CustomerService} from '../customer.service';
-import {Car} from '../../car/car';
-import {CarService} from '../../car/car.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Customer } from '../customer';
+import { Router } from '@angular/router';
+import { CustomerService } from '../customer.service';
+import { Car } from '../../car/car';
+import { CarService } from '../../car/car.service';
 
 @Component({
   selector: 'app-add-customer',
@@ -63,6 +63,9 @@ export class AddCustomerComponent implements OnInit {
     this.customerService.createCustomer(this.customer).subscribe(
       next => {
         console.log('Create process!');
+
+        // Thien lưu tên khách hàng và biển số xe để tạo vé
+        localStorage.setItem('customerName', this.customer.nameCustomer);
       }, error => {
         console.log('Create failed!');
       }, () => {
@@ -87,7 +90,7 @@ export class AddCustomerComponent implements OnInit {
         );
       }
     );
-    this.router.navigateByUrl('/list-customer');
+    this.router.navigateByUrl('ticket/list');
   }
 
   submitAll(): void {
@@ -99,6 +102,7 @@ export class AddCustomerComponent implements OnInit {
     this.car.carId = this.carId;
     this.carService.addCar(this.car).subscribe(
       list => {
+        localStorage.setItem('license', this.car.license);
       }, error => {
       }, () => {
       }

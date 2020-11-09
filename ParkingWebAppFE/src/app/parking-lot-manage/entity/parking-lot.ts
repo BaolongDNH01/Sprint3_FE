@@ -5,8 +5,9 @@ export class ParkingLot {
   idZone: number;
   nameZone: string;
   status: boolean;
-  license: string;
+  carLicense: string;
   direction: number;
+  idFake: string;
 
   constructor() {
   }

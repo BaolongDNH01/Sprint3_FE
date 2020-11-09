@@ -18,6 +18,10 @@ export class TicketService {
     return this.http.get<Ticket[]>(`${this.TICKET_API}/all`);
   }
 
+  getTicketById(idTicket: number): Observable<Ticket> {
+    return this.http.get<Ticket>(`${this.TICKET_API}/${idTicket}`);
+  }
+
   deleteTicket(idTicket: number): Observable<void> {
     return this.http.delete<void>(`${this.TICKET_API}/delete/${idTicket}`);
   }
@@ -26,8 +30,8 @@ export class TicketService {
     return this.http.post<void>((`${this.TICKET_API}/create`), ticket);
   }
 
-  patchEmployee(ticket: Ticket): Observable<Ticket> {
-    return this.http.patch<Ticket>(`${this.TICKET_API}/${ticket.ticketId}`, ticket);
+  putEmployee(ticket: Ticket): Observable<Ticket> {
+    return this.http.put<Ticket>(`${this.TICKET_API}/${ticket.ticketId}`, ticket);
   }
 
   getDeletedTicket(): Observable<Ticket[]> {
