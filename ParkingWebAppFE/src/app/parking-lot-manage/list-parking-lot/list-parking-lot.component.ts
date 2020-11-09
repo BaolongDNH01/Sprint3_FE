@@ -17,9 +17,10 @@ export class ListParkingLotComponent implements OnInit {
   floorList: Floor[];
   deleteItem = new ParkingLot;
   listZoneAdd: Zone[] = [];
-  countZoneAdd = 1;
   isDone = false;
-  floorAdding: Floor;
+  listZoneApi: Zone[] = [];
+  listZoneShow: Zone[] = [];
+  idFloorChoose: number;
 
   constructor(private parkingLotService: ParkingLotService) {
   }
@@ -29,6 +30,7 @@ export class ListParkingLotComponent implements OnInit {
   }
 
   prepare(): void {
+    this.isDone = false;
     this.parkingLotService.getAllParkingLot().subscribe(
       list => {
         this.listParkingLotApi = list;
@@ -40,6 +42,22 @@ export class ListParkingLotComponent implements OnInit {
 
     this.parkingLotService.getAllFloor().subscribe(
       list => this.floorList = list
+    );
+
+    this.getZone();
+  }
+
+  getZone(): void {
+    this.parkingLotService.getAllZone().subscribe(
+      list => {
+        this.listZoneApi = list;
+      },
+      () => null,
+      () => {
+        if (this.isDone) {
+          this.getZoneByFloor(this.idFloorChoose);
+        }
+      }
     );
   }
 
@@ -79,6 +97,48 @@ export class ListParkingLotComponent implements OnInit {
   }
 
   save(): void {
-    this.parkingLotService.addFloor(this.listZoneAdd).subscribe();
+    this.parkingLotService.addFloor(this.listZoneAdd).subscribe(
+      () => null,
+      () => null,
+      () => this.prepare()
+    );
+  }
+
+  getZoneByFloor(id: number): void {
+    this.idFloorChoose = id;
+    this.listZoneShow = this.listZoneApi.filter(zone => {
+      if (zone.idFloor == id) {
+        return zone;
+      }
+    });
+    this.isDone = true;
+  }
+
+  deleteZone(id: number): void {
+    this.parkingLotService.deleteZone(id).subscribe(
+      () => {
+        this.getZone();
+      },
+    );
+  }
+
+  addZone(): void {
+    this.parkingLotService.addZone(this.idFloorChoose).subscribe(
+      () => {
+        this.getZone();
+      },
+    );
+  }
+
+  deleteFloor(id: number): void {
+    this.parkingLotService.deleteFloor(id).subscribe(
+      () => {
+        this.prepare();
+        setTimeout(() => {
+          document.getElementById('cancel').click();
+          document.getElementById('mag').click();
+        }, 1000);
+      }
+    );
   }
 }

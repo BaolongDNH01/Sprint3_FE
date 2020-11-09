@@ -23,6 +23,9 @@
       <button class="btn ml-2 bg-secondary text-white height">
         <h6><i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#addModal"> Thêm tầng</i></h6>
       </button>
+      <button id="mag" class="btn ml-2 bg-secondary text-white height">
+        <h6><i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#floorManageModal"> Quản lí tầng</i></h6>
+      </button>
     </h5>
   </div>
 </div>
@@ -98,6 +101,7 @@
       </div>
       <div class="modal-body">
         <div class="row">
+          <p class="text-success text-small ml-2x">*số lượng khu vực chia trong tầng</p>
           <div class="col-8">
             <span>Số lượng khu: <input #count type="number" value="1" min="1"></span>
           </div>
@@ -108,14 +112,72 @@
         <div class="row">
           <div class="ml-3" *ngIf="isDone"><hr><h5>Danh sách các khu vực trong tầng</h5></div>
           <span *ngIf="isDone" class="text-danger mt-2 text-small">*các trường để trống tự tạo dữ liệu tự động</span>
-          <label class="ml-3" *ngFor="let zone of listZoneAdd, index as i" >
-            Điền tên khu thứ {{i + 1}}: <input class="mt-2" (change)="zone.name = $event.target.value" placeholder="Tên khu vực">
-          </label>
+          <table *ngIf="isDone" class="table table-bordered mt-4 text-center">
+            <tr>
+              <th>#</th>
+              <th>Tên khu vực</th>
+              <th>Loại khu vực</th>
+            </tr>
+            <tr *ngFor="let zone of listZoneAdd, index as i" >
+              <th>{{i + 1}}</th>
+              <td><input class="mt-2" (change)="zone.name = $event.target.value" placeholder="Tên khu vực"></td>
+              <td><select class="mt-2" (change)="zone.typeZone = $event.target.value">
+                <option value="0">Mặc định</option>
+                <option value="1">Lớn (xe bán tải, xe tải,...)</option>
+              </select>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" (click)="save()" class="btn btn-primary" data-dismiss="modal" [disabled]="!isDone">Confirm</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--chỉnh tầng-->
+<div class="modal fade" id="floorManageModal" tabindex="-1" aria-labelledby="floorManageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="floorManageModalLabel">Quản lí tầng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-6">
+            <span>Chọn tầng: <select #floor>
+              <option *ngFor="let floor of floorList" value="{{floor.id}}">{{floor.name}}</option>
+            </select></span>
+          </div>
+          <div class="col-4">
+            <input id="sub" type="submit" value="xác nhận" (click)="getZoneByFloor(floor.value)">
+          </div>
+        </div>
+        <div class="row">
+          <div class="ml-3" *ngIf="isDone"><hr><h5>Danh sách các khu vực trong tầng</h5></div>
+          <div class="col-12 ml-4">
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-secondary w-50 text-center" *ngFor="let zone of listZoneShow">
+                {{zone.name}}
+                <a (click)="deleteZone(zone.id)" class="text-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr>
+        <div *ngIf="isDone" class="row text-center">
+          <button *ngIf="isDone" class="btn btn-info ml-5" (click)="addZone()">Thêm khu</button>
+          <button *ngIf="isDone" class="btn btn-danger ml-2" (click)="deleteFloor(idFloorChoose)">Xóa tầng</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -5,4 +5,5 @@ export class Zone {
   positionY: number;
   direction: number;
   idFloor: number;
+  typeZone: number
 }
