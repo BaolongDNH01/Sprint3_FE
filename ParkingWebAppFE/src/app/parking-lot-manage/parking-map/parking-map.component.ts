@@ -46,6 +46,7 @@ export class ParkingMapComponent implements OnInit {
   bg = 'assets/images/map-resource/bg.png';
   scrHeight: number;
   scrWidth: number;
+  ratio = 1;
 
   constructor(private parkingLotService: ParkingLotService,
               private router: Router,
@@ -68,9 +69,12 @@ export class ParkingMapComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?): void {
+    // set lại giá trị mặc định
     this.arrParkingLotPosition = [];
     this.parkingLotsEachZone = [];
     this.parkingLotList = [];
+    // --------------------------------
+
     this.parkingLotService.getAllFloor().subscribe(
       list => this.floorList = list,
       e => console.log(e),
@@ -116,8 +120,10 @@ export class ParkingMapComponent implements OnInit {
   }
 
   private getParkingLotByZone(): void {
+    this.arrParkingLotPosition = [];
     // lấy chỗ đổ từng zone rồi gọi vẽ
     this.zoneInFloor.forEach(zone => {
+      this.setDefaultSize();
       this.parkingLotsEachZone = this.parkingLotList.filter(par => {
         if (par.idZone === zone.id) {
           return par;
@@ -135,6 +141,18 @@ export class ParkingMapComponent implements OnInit {
         }
         this.zoneName = this.zoneName.trim();
       }
+      //  kiểm tra loại khu -> đưa ra tỉ lệ vẽ
+      if (zone.typeZone === 0) {
+        this.ratio = 1;
+      } else if (zone.typeZone === 1) {
+        this.ratio = 1.5;
+      }
+      this.contentSize *= this.ratio;
+      this.outlineSize *= this.ratio;
+      this.centerSize *= this.ratio;
+      this.parSizeW *= this.ratio;
+      this.parSizeH *= this.ratio;
+      this.fixBg *= this.ratio;
       this.showAllComponent(zone);
     });
 
@@ -148,6 +166,15 @@ export class ParkingMapComponent implements OnInit {
       });
     }
     this.isInit = true;
+  }
+
+  setDefaultSize(): void {
+    this.contentSize = 50;
+    this.outlineSize = 20;
+    this.centerSize = 20;
+    this.parSizeW = 70;
+    this.parSizeH = 50;
+    this.fixBg = 90;
   }
 
   showAllComponent(zone: Zone): void {
@@ -205,16 +232,27 @@ export class ParkingMapComponent implements OnInit {
       par.idFake = this.zoneName + ' - ' + count;
       this.arrParkingLotPosition.push(a);
 
-      this.ctx.fillStyle = 'lightBlue';
-      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH - 5);
-      if (par.status) {
+      if (par.carLicense === null) {
+        this.ctx.fillStyle = 'lightGreen';
+        this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH - 5);
         this.ctx.fillStyle = 'black';
-        this.ctx.fillText(this.zoneName + ' - ' + count, parPositionX + this.parSizeW / 2, parPositionY + this.parSizeH / 2);
+        this.ctx.fillText(par.idFake, parPositionX + this.parSizeW / 2, parPositionY + this.parSizeH / 2);
       } else {
-        if (count % 2 === 1) {
-          this.ctx.drawImage(this.imgCarRight, parPositionX, parPositionY, this.parSizeW, this.parSizeH);
-        } else if (count % 2 === 0) {
-          this.ctx.drawImage(this.imgCarLeft, parPositionX, parPositionY, this.parSizeW, this.parSizeH);
+        if (!par.status) {
+          this.ctx.fillStyle = 'gray';
+          this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH - 5);
+          this.ctx.fillStyle = 'white';
+          this.ctx.fillText(par.idFake, parPositionX + this.parSizeW / 2, parPositionY + this.parSizeH / 2);
+        } else {
+          this.ctx.fillStyle = 'gray';
+          this.ctx.fillRect(parPositionX, parPositionY, this.parSizeW, this.parSizeH - 5);
+          this.ctx.fillStyle = 'white';
+          this.ctx.fillText(par.idFake, parPositionX + this.parSizeW / 2, parPositionY + this.parSizeH / 4);
+          if (count % 2 === 1) {
+            this.ctx.drawImage(this.imgCarRight, parPositionX, parPositionY + this.parSizeH / 10, this.parSizeW, this.parSizeH);
+          } else if (count % 2 === 0) {
+            this.ctx.drawImage(this.imgCarLeft, parPositionX, parPositionY + this.parSizeH / 10, this.parSizeW, this.parSizeH);
+          }
         }
       }
     });
@@ -236,7 +274,6 @@ export class ParkingMapComponent implements OnInit {
     this.ctx.font = '15px Arial';
     this.ctx.fillText(zone.name, zone.positionX + this.centerSize * 2, zone.positionY + height / 2);
 
-
     //  vẽ chỗ đỗ xe
     parPositionY = parPositionY + this.outlineSize;
     parPositionX = parPositionX + this.outlineSize + this.contentSize * 1.5;
@@ -257,27 +294,38 @@ export class ParkingMapComponent implements OnInit {
       par.idFake = this.zoneName + ' - ' + count;
       this.arrParkingLotPosition.push(a);
 
-      this.ctx.fillStyle = 'lightBlue';
-      this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH - 5 , this.parSizeW);
-      if (par.status) {
+      if (par.carLicense === null) {
+        this.ctx.fillStyle = 'lightGreen';
+        this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH - 5, this.parSizeW);
         this.ctx.fillStyle = 'black';
-        this.ctx.fillText(this.zoneName + ' - ' + count, parPositionX + this.parSizeH / 2, parPositionY + this.parSizeW / 2);
+        this.ctx.fillText(par.idFake, parPositionX + this.parSizeH / 2, parPositionY + this.parSizeW / 2);
       } else {
-        if (count % 2 === 1) {
-          this.ctx.drawImage(
-            this.imgCarDown,
-            parPositionX - this.parSizeW / 10,
-            parPositionY * 1.1,
-            this.parSizeW * 0.8,
-            this.parSizeH * 1.2
-          );
-        } else if (count % 2 === 0) {
-          this.ctx.drawImage(
-            this.imgCarUp,
-            parPositionX - this.parSizeW / 20,
-            parPositionY * 1.05,
-            this.parSizeW * 0.8,
-            this.parSizeH * 1.2);
+        if (!par.status) {
+          this.ctx.fillStyle = 'gray';
+          this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH - 5, this.parSizeW);
+          this.ctx.fillStyle = 'white';
+          this.ctx.fillText(par.idFake, parPositionX + this.parSizeH / 2, parPositionY + this.parSizeW / 2);
+        } else {
+          this.ctx.fillStyle = 'gray';
+          this.ctx.fillRect(parPositionX, parPositionY, this.parSizeH - 5, this.parSizeW);
+          this.ctx.fillStyle = 'white';
+          this.ctx.fillText(par.idFake, parPositionX + this.parSizeW / 3, parPositionY + this.parSizeH / 4);
+          if (count % 2 === 1) {
+            this.ctx.drawImage(
+              this.imgCarDown,
+              parPositionX - this.parSizeW / 10,
+              parPositionY + this.parSizeH / 4,
+              this.parSizeW * 0.8,
+              this.parSizeH * 1.2
+            );
+          } else if (count % 2 === 0) {
+            this.ctx.drawImage(
+              this.imgCarUp,
+              parPositionX - this.parSizeW / 20,
+              parPositionY  + this.parSizeH / 4,
+              this.parSizeW * 0.8,
+              this.parSizeH * 1.2);
+          }
         }
       }
     });
@@ -345,7 +393,7 @@ export class ParkingMapComponent implements OnInit {
   }
 
   scroll(i: number): void {
-    document.documentElement.scrollTop =  window.pageYOffset + i;
+    document.documentElement.scrollTop = window.pageYOffset + i;
   }
 
   changeSizeMap(value: number, per: string): void {
@@ -360,8 +408,17 @@ export class ParkingMapComponent implements OnInit {
         this.getScreenSize();
         break;
       }
-      default: break;
+      default:
+        break;
     }
+  }
+
+  changeTypeZone(id: number, value: number): void {
+    this.parkingLotService.editTypeZone(id, value).subscribe(
+      () => null,
+      () => null,
+      () => this.getScreenSize()
+    );
   }
 }
 

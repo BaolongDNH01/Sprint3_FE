@@ -104,23 +104,30 @@
               <th>X</th>
               <th>Y</th>
               <th>Chiều</th>
+              <th>Loại</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let zone of zoneInFloor">
               <th><input class="w-75" (change)="changeZoneName(zone.id, $event.target.value)" type="text" value="{{zone.name}}"></th>
               <td><label>
-                <input class="width" type="number" value="{{zone.positionX}}"
+                <input class="w-75" type="number" value="{{zone.positionX}}"
                        (change)="changePositionX(zone.id, $event.target.value)">
               </label></td>
               <td><label>
-                <input class="width" type="number" value="{{zone.positionY}}"
+                <input class="w-75" type="number" value="{{zone.positionY}}"
                        (change)="changePositionY(zone.id, $event.target.value)">
               </label></td>
               <td><label>
                 <select (change)="changeDirection(zone.id, $event.target.value)" [value]="zone.direction">
                   <option value="0">Dọc</option>
                   <option value="1">Ngang</option>
+                </select>
+              </label></td>
+              <td><label>
+                <select (change)="changeTypeZone(zone.id, $event.target.value)" [value]="zone.typeZone">
+                  <option value="0">Mặc định</option>
+                  <option value="1">Lớn</option>
                 </select>
               </label></td>
             </tr>

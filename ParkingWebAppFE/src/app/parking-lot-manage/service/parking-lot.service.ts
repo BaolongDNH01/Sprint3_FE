@@ -18,6 +18,10 @@ export class ParkingLotService {
     return this.httpClient.get<Zone[]>(this.api + '/getAllZone/' + floor);
   }
 
+  getAllZone(): Observable<Zone[]> {
+    return this.httpClient.get<Zone[]>(this.api + '/getAllZone');
+  }
+
   getAllParkingLot(): Observable<ParkingLot[]> {
     return this.httpClient.get<ParkingLot[]>(this.api + '/getAllParkingLot');
   }
@@ -50,7 +54,7 @@ export class ParkingLotService {
     return this.httpClient.delete(this.api + '/deleteParkingLot/' + id);
   }
 
-  addFloor(zones: Zone[]): Observable<any>{
+  addFloor(zones: Zone[]): Observable<any> {
     return this.httpClient.post<any>(this.api + '/saveFloor', zones);
   }
 
@@ -60,5 +64,21 @@ export class ParkingLotService {
 
   editZoneName(id: number, name: string): Observable<any> {
     return this.httpClient.get<any>(this.api + '/changeZoneName/' + id + '/' + name);
+  }
+
+  editTypeZone(id: number, value: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + '/changeTypeZone/' + id + '/' + value);
+  }
+
+  deleteZone(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + '/deleteZone/' + id);
+  }
+
+  addZone(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + '/addZone/' + id);
+  }
+
+  deleteFloor(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.api + '/deleteFloor/' + id);
   }
 }
