@@ -7,5 +7,6 @@ export class Car {
   ticket: number[];
   customerId: number;
   parkings: number[];
+  ticketStatusList: string[];
   constructor() {}
 }

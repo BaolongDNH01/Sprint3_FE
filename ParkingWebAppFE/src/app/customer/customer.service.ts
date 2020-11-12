@@ -31,4 +31,8 @@ export class CustomerService {
   findCustomerByIdCard(idCard: string): Observable<Customer>{
     return this.httpClient.get<Customer>(this.API_URL + 'customerByIdCard/' + idCard);
   }
+
+  findCustomerByCarLicense(carPlate: string): Observable<string> {
+    return this.httpClient.get(`${this.API_URL}ticket/get-customer-by-lisence/${carPlate}`, {responseType: 'text'});
+  }
 }

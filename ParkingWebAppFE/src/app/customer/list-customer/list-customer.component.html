@@ -70,6 +70,7 @@
                             <th scope="col">Hãng xe</th>
                             <th scope="col">Màu xe</th>
                             <th scope="col">Biển số</th>
+                            <th scope="col">Tình trạng vé</th>
                             <th colspan="2"></th>
                           </tr>
                         </thead>
@@ -79,6 +80,13 @@
                             <td>{{car.producer}}</td>
                             <td>{{car.color}}</td>
                             <td>{{car.license}}</td>
+                            <td>
+                              <span class="badge badge-pill badge-info"> {{car.ticketStatusList[0]}}</span>
+                              <button class="btn btn-danger float-right" 
+                              [disabled]="car.ticketStatusList[0]==='CÒN HẠN'"
+                              (click)="goToCreate(car.license)"
+                              >Thêm vé</button>
+                            </td>
                             <td><button (click)="formEditCar(car.carId)" class="btn bg-white fa fa-pencil-square-o"
                                 aria-hidden="true"></button></td>
                             <td><button (click)="delete(car.carId, customer.id)" class="btn bg-white fa fa-trash"

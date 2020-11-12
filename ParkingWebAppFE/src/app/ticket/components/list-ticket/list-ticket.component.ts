@@ -7,8 +7,6 @@ import { TicketService } from './../../services/ticket.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import instadate from 'instadate';
-import { stringify } from '@angular/compiler/src/util';
-
 declare var $: any;
 @Component({
   selector: 'app-list-ticket',
@@ -48,6 +46,8 @@ export class ListTicketComponent implements OnInit, OnDestroy {
   editTicket: Ticket;
   ticketEditId: number;
 
+ 
+
   constructor(
     private ticketService: TicketService,
     private ticketTypeService: TicketTypeService,
@@ -56,11 +56,6 @@ export class ListTicketComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if (sessionStorage.getItem('idParkingLot') || localStorage.getItem('customerName')) {
-      this.showCreateForm();
-    } else {
-      this.checkCreate = false;
-    }
     this.getListTicket();
     this.getListTicketType();
 
@@ -105,22 +100,23 @@ export class ListTicketComponent implements OnInit, OnDestroy {
   }
 
   showCreateForm(): void {
-    this.createTicketForm = this.fb.group({
-      ticketId: [''],
-      carPlate: [localStorage.getItem('license'), [Validators.required]],
-      customerName: [localStorage.getItem('customerName'), [Validators.required]],
-      startDate: ['', [Validators.required]],
-      endDate: [''],
-      floorName: [sessionStorage.getItem('floor'), [Validators.required]],
-      zoneName: [sessionStorage.getItem('zone'), [Validators.required]],
-      // tslint:disable-next-line: radix
-      parkingLot: [parseInt(sessionStorage.getItem('idParkingLot')), [Validators.required]],
-      ticketTypeDetail: ['Loại', [Validators.required]],
-      price: [''],
-      ticketStatus: ['TICKET_ENABLE'],
-    });
-    this.checkCreate = !this.checkCreate;
-    console.log('created');
+    // this.createTicketForm = this.fb.group({
+    //   ticketId: [''],
+    //   carPlate: [localStorage.getItem('license'), [Validators.required]],
+    //   customerName: [localStorage.getItem('customerName'), [Validators.required]],
+    //   startDate: ['', [Validators.required]],
+    //   endDate: [''],
+    //   floorName: [sessionStorage.getItem('floor'), [Validators.required]],
+    //   zoneName: [sessionStorage.getItem('zone'), [Validators.required]],
+    //   // tslint:disable-next-line: radix
+    //   parkingLot: [parseInt(sessionStorage.getItem('idParkingLot')), [Validators.required]],
+    //   ticketTypeDetail: ['Loại', [Validators.required]],
+    //   price: [''],
+    //   ticketStatus: ['TICKET_ENABLE'],
+    // });
+    // this.checkCreate = !this.checkCreate;
+    // console.log('created');
+    this.router.navigateByUrl('ticket/create');
   }
 
   submitCreateTicket(): void {

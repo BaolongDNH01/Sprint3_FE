@@ -26,7 +26,10 @@ export const routes: Routes = [
       {path: 'login', component: AuthLoginComponent},
       {
         path: '', component: HomepageComponent, children: [
-          {path: '', component: ParkingManagementComponent},
+          {
+            path: '',
+            component: ParkingManagementComponent
+          },
           {
             path: 'ticket',
             loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)

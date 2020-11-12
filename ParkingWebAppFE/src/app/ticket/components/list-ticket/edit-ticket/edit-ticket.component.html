@@ -1,1 +1,233 @@
-<p>edit-ticket works!</p>
+<div class="container-fluid p-0">
+  <div class="main-area d-flex justify-content-center align-items-start">
+    <div class="main-list rounded shadow-lg mt-5">
+      <div class="row p-0 m-0 d-flex align-items-center main-title">
+        <div class="col-6 p-3 m-0">
+          <h1>CHỈNH SỬA VÉ</h1>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between" style="background-color: teal;">
+        <div class="p-2">
+          <div class="input-group ml-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+            </div>
+            <input type="text" class="form-control" placeholder="Nhập từ khoá..." [(ngModel)]="keywordSearch">
+            <!-- <button class="btn btn-danger ml-4 shadow plus">Tìm kiếm</button> -->
+          </div>
+        </div>
+        <div class="ml-auto p-2">
+          <pagination-controls (pageChange)="page = $event" class="text-light"></pagination-controls>
+        </div>
+
+        <div class="ml-auto p-2" *ngIf="!checkGetDeleteList">
+          <button class="btn btn-danger ml-4 shadow plus mr-3" (click)="comeBackToList()">Quay về
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="ml-auto p-2" *ngIf="checkGetDeleteList">
+          <button class="btn btn-success ml-4 shadow plus mr-3" (click)="checkGetDeleteList = false">Quay lại
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="mr-4 mt-2">
+          <div class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle border-dark bg-dark shadow"
+              data-toggle="dropdown">
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Danh sách vé hết hạn</a>
+              <a class="dropdown-item" (click)="getDeletedTicket()">Danh sách vé xoá</a>
+              <a class="dropdown-item" href="#">Cài đặt</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row p-0 m-0" *ngIf="checkGetDeleteList; else showAll">
+        <table class="table main-table">
+          <thead>
+            <tr>
+              <th class="text-center border-top-0">KHÁCH</th>
+              <th class="text-center border-top-0">BIỂN SỐ XE</th>
+              <th class="text-center border-top-0">BẮT ĐẦU</th>
+              <th class="text-center border-top-0">KẾT THÚC</th>
+              <th class="text-center border-top-0">TẦNG</th>
+              <th class="text-center border-top-0">KHU</th>
+              <th class="text-center border-top-0">VỊ TRÍ</th>
+              <th class="text-center border-top-0">LOẠI VÉ</th>
+              <th class="text-center border-top-0">GIÁ</th>
+              <th class="text-center border-top-0">TRẠNG THÁI</th>
+              <th class="text-center border-top-0" colspan="2">TÁC VỤ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let ticket of deletedTicketList | filter: keywordSearch | paginate: { itemsPerPage: 5, currentPage: page }">
+                            <td class="text-center">{{ ticket.customerName }}</td>
+              <td class="text-center">{{ ticket.carPlate }}</td>
+              <td class="text-center">{{ ticket.startDate | date: 'dd/MM/yy'}}</td>
+              <td class="text-center">{{ ticket.endDate | date: 'dd/MM/yy'}}</td>
+              <td class="text-center">{{ ticket.floorName }}</td>
+              <td class="text-center">{{ ticket.zoneName }}</td>
+              <td class="text-center">{{ ticket.parkingLot }}</td>
+              <td class="text-center">{{ ticket.ticketTypeDetail }}</td>
+              <td class="text-center">{{ ticket.price | currency: 'VND'}}</td>
+              <td class="text-center">
+                <span class="badge badge-pill badge-info"> {{ ticket.ticketStatus }}</span>
+              </td>
+
+
+
+              <!-- Delete confirm dialog -->
+              <div class="modal fade" [id]="'deleteModal' + ticket.ticketId" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Xoá vé xe [{{ ticket.carPlate }}]?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-lg btn-success plus shadow"
+                        (click)="acceptDelete(ticket.ticketId)">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Đồng ý
+                      </button>
+                      <button type="button" class="btn btn-lg btn-danger plus shadow" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        Huỷ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #showAll>
+        <table class="table main-table">
+          <thead>
+            <tr>
+              <th class="text-center border-top-0">KHÁCH</th>
+              <th class="text-center border-top-0">BIỂN SỐ XE</th>
+              <th class="text-center border-top-0">TẦNG</th>
+              <th class="text-center border-top-0">KHU</th>
+              <th class="text-center border-top-0">VỊ TRÍ</th>
+              <th class="text-center border-top-0">BẮT ĐẦU</th>
+              <th class="text-center border-top-0">LOẠI VÉ</th>
+              <th class="text-center border-top-0">KẾT THÚC</th>
+              <th class="text-center border-top-0">GIÁ</th>
+              <th class="text-center border-top-0" colspan="2">TÁC VỤ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ticket of ticketList 
+              | filter: keywordSearch 
+              | paginate: { itemsPerPage: 5, currentPage: page }">
+              <td class="text-center">{{ ticket.customerName }}</td>
+              <td class="text-center">{{ ticket.carPlate }}</td>
+              <td class="text-center">{{ ticket.floorName }}</td>
+              <td class="text-center">{{ ticket.zoneName }}</td>
+              <td class="text-center">{{ ticket.parkingLot }}</td>
+              <td class="text-center">{{ ticket.startDate | date: 'dd/MM/yy'}}</td>
+              <td class="text-center">{{ ticket.ticketTypeDetail }}</td>
+              <td class="text-center">{{ ticket.endDate | date: 'dd/MM/yy'}}</td>
+              <td class="text-center">{{ ticket.price | currency: 'VND'}}</td>
+              <td class="text-center">
+                <a class="border-0 text-info action-icon">
+                  <i class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+              </td>
+              <td class="text-center" data-toggle="tooltip" data-placement="left">
+                <a class="border-0 text-danger action-icon" data-toggle="modal"
+                  [attr.data-target]="'#deleteModal'+ ticket.ticketId">
+                  <i class="fa fa-2x fa-trash-o" aria-hidden="true"></i>
+                </a>
+              </td>
+
+              <!-- Delete confirm dialog -->
+              <div class="modal fade" [id]="'deleteModal' + ticket.ticketId" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Xoá vé xe [{{ ticket.carPlate }}]?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-lg btn-success plus shadow"
+                        (click)="acceptDelete(ticket.ticketId)">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Đồng ý
+                      </button>
+                      <button type="button" class="btn btn-lg btn-danger plus shadow" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        Huỷ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+            <tr [formGroup]="createTicketForm">
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="carPlate" disabled>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="customerName" disabled>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="floorName" disabled>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="zoneName" disabled>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="parkingLot" disabled>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <input type="date" class="form-control" formControlName="startDate">
+              </td>
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="endDate" disabled>
+              </td>
+              
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="ticketTypeDetail" disabled>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <input type="text" class="form-control" formControlName="price" disabled>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <button class="btn btn-info border-0 action-icon" type="submit" [disabled]="createTicketForm.invalid">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+              </td>
+              <td class="text-center px-1 mx-0">
+                <button class="btn btn-danger border-0 action-icon" (click)="comeBackToList()">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </ng-template>
+    </div>
+  </div>
+</div>
