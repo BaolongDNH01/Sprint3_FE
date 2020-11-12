@@ -44,4 +44,8 @@ export class CarService {
           Authorization: 'Token b254bd5bb420657fdf9b07b597db61a8dbaee6e8'
         }});
   }
+
+  getCarByCustomerName(customerName: string): Observable<Car[]> {
+    return this.httpClient.get<Car[]>(`${this.API_URL}/getCarByCustomerName/${customerName}`);
+  }
 }

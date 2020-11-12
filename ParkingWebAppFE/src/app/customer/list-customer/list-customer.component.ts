@@ -1,11 +1,13 @@
+import { Ticket } from './../../ticket/models/Ticket';
 import { Component, OnInit } from '@angular/core';
-import {CustomerService} from '../customer.service';
-import {Customer} from '../customer';
-import {CarService} from '../../car/car.service';
-import {Car} from '../../car/car';
-import {TicketService} from '../../ticket/services/ticket.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router, Routes} from '@angular/router';
+import { CustomerService } from '../customer.service';
+import { Customer } from '../customer';
+import { CarService } from '../../car/car.service';
+import { Car } from '../../car/car';
+import { TicketService } from '../../ticket/services/ticket.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, Routes } from '@angular/router';
+declare var $: any;
 
 @Component({
   selector: 'app-list-customer',
@@ -17,7 +19,7 @@ export class ListCustomerComponent implements OnInit {
   customerList = [];
   carList: Car[];
   showCar = true;
-  customerDetail =  new Customer();
+  customerDetail = new Customer();
   arrCar = [];
   customerClass = new Customer();
   id = 0;
@@ -27,8 +29,13 @@ export class ListCustomerComponent implements OnInit {
   carClass = new Car();
   showAddCar = false;
   key = '';
+  ticketFollowCar: Ticket;
+
+  isShouldCreate = false;
+
+
   constructor(private customerService: CustomerService, private carService: CarService, private ticketService: TicketService,
-              private fb: FormBuilder, private router: Router) {
+    private fb: FormBuilder, private router: Router) {
     this.formCustomer = this.fb.group({
       id: [''],
       nameCustomer: ['', [Validators.required]],
@@ -62,7 +69,7 @@ export class ListCustomerComponent implements OnInit {
       }
     );
   }
-  findCarByCustomer(id: number): void{
+  findCarByCustomer(id: number): void {
     this.showAddCar = false;
     this.idCar = 0;
     this.arrCar = [];
@@ -75,6 +82,18 @@ export class ListCustomerComponent implements OnInit {
         this.carService.findCarByCustomer(id).subscribe(
           next => {
             this.carList = next;
+            for (let car of this.carList) {
+              if (car.ticketStatusList[0] === 'TICKET_ENABLE') {
+                car.ticketStatusList[0] = 'CÒN HẠN';
+              }
+              if (car.ticketStatusList[0] === 'TICKET_DELETED') {
+                car.ticketStatusList[0] = 'HẾT HẠN';
+              }
+              if (car.ticketStatusList.length === 0) {
+                car.ticketStatusList[0] = 'CHƯA MUA VÉ';
+              }
+            }
+
           }, error => {
             console.log('error');
             this.carList = new Array();
@@ -86,9 +105,19 @@ export class ListCustomerComponent implements OnInit {
     );
   }
 
+  goToCreate(carPlate: string): void {
+    this.customerService.findCustomerByCarLicense(carPlate).subscribe({
+      next: data => {
+        localStorage.setItem('customerName', data);
+      },
+      error: err => console.log(err)
+    });
+    localStorage.setItem('carPlate', carPlate);
+    $('#exampleModal').modal('hide');
+    this.router.navigateByUrl('ticket/create');
+  }
 
-
-  editFormCustomer(id: number): void{
+  editFormCustomer(id: number): void {
     this.id = id;
     this.customerService.findById(id).subscribe(
       next => {
@@ -96,23 +125,23 @@ export class ListCustomerComponent implements OnInit {
       }, error => {
         this.customerClass = new Customer();
       }, () => {
-        this.formCustomer.patchValue({id: this.customerClass.id});
-        this.formCustomer.patchValue({nameCustomer: this.customerClass.nameCustomer});
-        this.formCustomer.patchValue({birthday: this.customerClass.birthday});
-        this.formCustomer.patchValue({email: this.customerClass.email});
-        this.formCustomer.patchValue({phone: this.customerClass.phone});
-        this.formCustomer.patchValue({gender: this.customerClass.gender});
-        this.formCustomer.patchValue({idCard: this.customerClass.idCard});
-        this.formCustomer.patchValue({address: this.customerClass.address});
-        this.formCustomer.patchValue({cars: this.customerClass.cars});
+        this.formCustomer.patchValue({ id: this.customerClass.id });
+        this.formCustomer.patchValue({ nameCustomer: this.customerClass.nameCustomer });
+        this.formCustomer.patchValue({ birthday: this.customerClass.birthday });
+        this.formCustomer.patchValue({ email: this.customerClass.email });
+        this.formCustomer.patchValue({ phone: this.customerClass.phone });
+        this.formCustomer.patchValue({ gender: this.customerClass.gender });
+        this.formCustomer.patchValue({ idCard: this.customerClass.idCard });
+        this.formCustomer.patchValue({ address: this.customerClass.address });
+        this.formCustomer.patchValue({ cars: this.customerClass.cars });
       }
     );
   }
 
-  editCustomer(): void{
+  editCustomer(): void {
     this.customerClass = Object.assign({}, this.formCustomer.value);
     this.customerService.editCustomer(this.customerClass).subscribe(
-      next => {},
+      next => { },
       error => {
         alert('Hãy nhập email, số điện thoại, chứng minh nhân dân chính xác!');
       },
@@ -129,31 +158,31 @@ export class ListCustomerComponent implements OnInit {
       }
     );
   }
-  formEditCar(id: number): void{
+  formEditCar(id: number): void {
     this.carService.findById(id).subscribe(
       next => {
         this.carClass = next;
-      }, error => {},
+      }, error => { },
       () => {
-        this.formCar.patchValue({carId: this.carClass.carId});
-        this.formCar.patchValue({license: this.carClass.license});
-        this.formCar.patchValue({color: this.carClass.color});
-        this.formCar.patchValue({producer: this.carClass.producer});
-        this.formCar.patchValue({type: this.carClass.type});
-        this.formCar.patchValue({ticket: this.carClass.ticket});
-        this.formCar.patchValue({customerId: this.carClass.customerId});
-        this.formCar.patchValue({parkings: this.carClass.parkings});
+        this.formCar.patchValue({ carId: this.carClass.carId });
+        this.formCar.patchValue({ license: this.carClass.license });
+        this.formCar.patchValue({ color: this.carClass.color });
+        this.formCar.patchValue({ producer: this.carClass.producer });
+        this.formCar.patchValue({ type: this.carClass.type });
+        this.formCar.patchValue({ ticket: this.carClass.ticket });
+        this.formCar.patchValue({ customerId: this.carClass.customerId });
+        this.formCar.patchValue({ parkings: this.carClass.parkings });
         this.showAddCar = false;
       }
     );
     this.idCar = id;
   }
-  editCar(id: number): void{
+  editCar(id: number): void {
     this.carClass = Object.assign({}, this.formCar.value);
     console.log(this.carClass);
     this.carService.editCar(this.carClass).subscribe(
       next => {
-      }, error => {},
+      }, error => { },
       () => {
         this.idCar = 0;
         this.carService.findCarByCustomer(id).subscribe(
@@ -167,11 +196,11 @@ export class ListCustomerComponent implements OnInit {
     );
   }
 
-  delete(idCar: number, idCustomer): void{
+  delete(idCar: number, idCustomer): void {
     console.log(idCar);
     this.carService.deleteCar(idCar).subscribe(
-      next => {},
-      error => {},
+      next => { },
+      error => { },
       () => {
         alert('Xóa thành công!');
         this.carService.findCarByCustomer(idCustomer).subscribe(
@@ -185,28 +214,29 @@ export class ListCustomerComponent implements OnInit {
     );
   }
 
-  formAddCar(id: number): void{
-    this.formCar.patchValue({carId: 0});
-    this.formCar.patchValue({license: ''});
-    this.formCar.patchValue({color: ''});
-    this.formCar.patchValue({producer: ''});
-    this.formCar.patchValue({type: ''});
-    this.formCar.patchValue({ticket: []});
-    this.formCar.patchValue({customerId: id});
-    this.formCar.patchValue({parkings: []});
+  formAddCar(id: number): void {
+    this.formCar.patchValue({ carId: 0 });
+    this.formCar.patchValue({ license: '' });
+    this.formCar.patchValue({ color: '' });
+    this.formCar.patchValue({ producer: '' });
+    this.formCar.patchValue({ type: '' });
+    this.formCar.patchValue({ ticket: [] });
+    this.formCar.patchValue({ customerId: id });
+    this.formCar.patchValue({ parkings: [] });
+    this.formCar.patchValue({ ticketStatusList: []});
     this.showAddCar = true;
     this.idCar = 0;
   }
-  close(): void{
+  close(): void {
     this.showAddCar = false;
   }
 
-  addCar(id: number): void{
+  addCar(id: number): void {
     this.carClass = Object.assign({}, this.formCar.value);
     console.log(this.carClass);
     this.carService.addCar(this.carClass).subscribe(
-      next => {},
-      error => {},
+      next => { },
+      error => { },
       () => {
         this.carService.findCarByCustomer(id).subscribe(
           next => {
@@ -217,13 +247,12 @@ export class ListCustomerComponent implements OnInit {
           }, () => {
             this.showAddCar = false;
             this.showCar = this.carList.length !== 0;
-            this.router.navigateByUrl('/ticket/list');
           }
         );
       }
     );
   }
-  search(): void{
+  search(): void {
     this.customerService.findAll().subscribe(
       next => {
         this.customerList = next;
@@ -237,16 +266,16 @@ export class ListCustomerComponent implements OnInit {
       }
     );
   }
-  reset(): void{
+  reset(): void {
     this.key = '';
     this.search();
   }
 
-  deleteCustomer(id: number): void{
+  deleteCustomer(id: number): void {
     console.log(id);
     this.customerService.deleteCustomer(id).subscribe(
-      next => {},
-      error => {},
+      next => { },
+      error => { },
       () => {
         this.curPage = 1;
         this.customerService.findAll().subscribe(
@@ -262,11 +291,11 @@ export class ListCustomerComponent implements OnInit {
     );
   }
 
-  findByIdCustomer(id: number): void{
+  findByIdCustomer(id: number): void {
     this.customerService.findById(id).subscribe(
       next => {
         this.customerClass = next;
-      }, error => {}
+      }, error => { }
     );
   }
 

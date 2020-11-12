@@ -8,22 +8,25 @@ import { DeleteTicketComponent } from './components/list-ticket/delete-ticket/de
 
 export const ticketRoutes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'list'
+  },
+  {
     path: 'list',
-    component: ListTicketComponent,
-    children: [
-      {
-        path: 'create',
-        component: CreateTicketComponent
-      },
-      {
-        path: 'edit/:idTicket',
-        component: EditTicketComponent
-      },
-      {
-        path: 'get-deleted',
-        component: DeleteTicketComponent
-      },
-    ]
+    component: ListTicketComponent
+  },
+  {
+    path: 'create',
+    component: CreateTicketComponent
+  },
+  {
+    path: 'edit/:idTicket',
+    component: EditTicketComponent
+  },
+  {
+    path: 'get-deleted',
+    component: DeleteTicketComponent
   },
 ];
 
